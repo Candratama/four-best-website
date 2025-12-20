@@ -50,3 +50,5 @@ next-env.d.ts
 
 
 !.dev.vars.example
+
+read-only-resource-residem
