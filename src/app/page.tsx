@@ -1,52 +1,315 @@
-import Image from "next/image";
+"use client";
+
+import {
+  Hero,
+  Overview,
+  Facilities,
+  RoomGrid,
+  HalfFluid,
+  Stats,
+} from "@/components/sections";
+import { HotspotImage } from "@/components/ui";
+
+// Room data for the homepage
+const rooms = [
+  {
+    name: "The Cozy Studio",
+    slug: "cozy-studio",
+    image: "/images/apartment/1.jpg",
+    size: "37 m²",
+  },
+  {
+    name: "The Nook Alcove",
+    slug: "nook-alcove",
+    image: "/images/apartment/2.jpg",
+    size: "46 m²",
+  },
+  {
+    name: "The Junior Suite",
+    slug: "junior-suite",
+    image: "/images/apartment/3.jpg",
+    size: "60 m²",
+  },
+  {
+    name: "The Urban Retreat",
+    slug: "urban-retreat",
+    image: "/images/apartment/4.jpg",
+    size: "93 m²",
+  },
+  {
+    name: "The Family Haven",
+    slug: "family-haven",
+    image: "/images/apartment/5.jpg",
+    size: "139 m²",
+  },
+  {
+    name: "The Penthouse Oasis",
+    slug: "penthouse-oasis",
+    image: "/images/apartment/6.jpg",
+    size: "186 m²",
+  },
+];
+
+// Facilities list
+const facilities = [
+  "Swimming Pools",
+  "Fitness Center",
+  "Rooftop Lounge",
+  "Community Event Spaces",
+  "Play Areas",
+  "Tennis and Sports Courts",
+  "Restaurant and Café",
+  "Business Center",
+  "Sauna and Spa",
+  "Parking Facilities",
+];
+
+// Hotspots for the interactive image
+const hotspots = [
+  {
+    id: "office",
+    title: "Office Area",
+    description:
+      "Eiusmod quis est do id excepteur ut mollit cupidatat quis consequat cillum aute culpa aliqua ut dolor.",
+    left: "61%",
+    top: "10%",
+  },
+  {
+    id: "garden",
+    title: "City Garden",
+    description:
+      "Eiusmod quis est do id excepteur ut mollit cupidatat quis consequat cillum aute culpa aliqua ut dolor.",
+    left: "68%",
+    top: "77%",
+  },
+  {
+    id: "sports",
+    title: "Sports Center",
+    description:
+      "Eiusmod quis est do id excepteur ut mollit cupidatat quis consequat cillum aute culpa aliqua ut dolor.",
+    left: "30%",
+    top: "35%",
+  },
+  {
+    id: "lake",
+    title: "Lake",
+    description:
+      "Eiusmod quis est do id excepteur ut mollit cupidatat quis consequat cillum aute culpa aliqua ut dolor.",
+    left: "4%",
+    top: "58%",
+  },
+];
+
+// Stats data
+const stats = [
+  { value: 25000, label: "Square Areas" },
+  { value: 150, label: "Luxurious Unit" },
+  { value: 300, label: "Parking Spaces" },
+  { value: 20, label: "Public Facilities" },
+];
 
 export default function Home() {
-	return (
-		<div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-			<main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-				<Image className="dark:invert" src="/next.svg" alt="Next.js logo" width={180} height={38} priority />
-				<ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-					<li className="mb-2 tracking-[-.01em]">
-						Get started by editing{" "}
-						<code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-							src/app/page.tsx
-						</code>
-						.
-					</li>
-					<li className="tracking-[-.01em]">Save and see your changes instantly.</li>
-				</ol>
+  return (
+    <>
+      {/* Hero Section with Swiper Slider */}
+      <Hero
+        title="Sunvale Residences"
+        address="320 40th Street B4, New York, NY 10019"
+        mapUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2517.288901886818!2d-73.93141732484813!3d40.68555563923556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25c739e350217%3A0x413f827e0e00fac3!2s712%20Jefferson%20Ave%2C%20Brooklyn%2C%20NY%2011221%2C%20USA!5e1!3m2!1sen!2sid!4v1746687511128!5m2!1sen!2sid"
+        slides={[
+          { image: "/images/slider/apt-1.webp", overlay: 0.4 },
+          { image: "/images/slider/apt-2.webp", overlay: 0.4 },
+        ]}
+      />
 
-				<div className="flex gap-4 items-center flex-col sm:flex-row">
-					<a
-						className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-						href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						Read our docs
-					</a>
-				</div>
-			</main>
-			<footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-				<a
-					className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-					href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<Image aria-hidden src="/file.svg" alt="File icon" width={16} height={16} />
-					Learn
-				</a>
-				<a
-					className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-					href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<Image aria-hidden src="/globe.svg" alt="Globe icon" width={16} height={16} />
-					Go to nextjs.org →
-				</a>
-			</footer>
-		</div>
-	);
+      {/* Overview Section */}
+      <Overview
+        subtitle="Home Overview"
+        title="Luxury living where comfort meets timeless style, effortlessly"
+        description="Eu eiusmod ut ut dolore nulla in incididunt nulla elit ea aute in adipisicing officia ullamco qui proident non est laboris commodo deserunt magna deserunt voluptate laborum irure cillum dolor mollit ea cupidatat occaecat."
+        ctaText="Schedule Visit"
+        ctaHref="/contact"
+        images={[
+          "/images/misc/s2.webp",
+          "/images/misc/s3.webp",
+          "/images/misc/s4.webp",
+          "/images/misc/s5.webp",
+        ]}
+      />
+
+      {/* Facilities Section */}
+      <Facilities
+        subtitle="Facilities"
+        title="Amenities Designed for Your Lifestyle"
+        facilities={facilities}
+      />
+
+      {/* Hotspot Image Section */}
+      <HotspotImage
+        image="/images/background/1.webp"
+        hotspots={hotspots}
+        alt="Property overview with interactive hotspots"
+      />
+
+      {/* Room Grid Section */}
+      <RoomGrid
+        subtitle="Elevated Comfort"
+        title="Choose a Room"
+        rooms={rooms}
+      />
+
+      {/* Half-Fluid Sections */}
+      <HalfFluid
+        subtitle="Facilities"
+        title="Comfort. Style. Location"
+        description="Discover modern, light-filled apartments that blend style, comfort, and convenience in every detail. Choose from cozy studios to spacious three-bedrooms, each designed to suit your lifestyle. Enjoy exclusive amenities like rooftop lounges and a fitness center, all in a vibrant city location. Welcome to a community where luxury living meets urban energy."
+        backgroundImage="/images/misc/l4.webp"
+        imagePosition="right"
+      />
+
+      <HalfFluid
+        subtitle="Facilities"
+        title="Live. Laugh. Lounge."
+        description="Discover modern, light-filled apartments that blend style, comfort, and convenience in every detail. Choose from cozy studios to spacious three-bedrooms, each designed to suit your lifestyle. Enjoy exclusive amenities like rooftop lounges and a fitness center, all in a vibrant city location. Welcome to a community where luxury living meets urban energy."
+        backgroundImage="/images/misc/l5.webp"
+        imagePosition="left"
+      />
+
+      {/* Stats Section */}
+      <Stats stats={stats} />
+
+      {/* Video Section */}
+      <section
+        aria-label="section"
+        className="section-dark relative p-0 text-light"
+      >
+        <div className="container-fluid">
+          <div className="row">
+            <div className="col-lg-12">
+              <a
+                className="d-block hover popup-youtube"
+                href="https://www.youtube.com/watch?v=C6rf51uHWJg"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <div className="relative overflow-hidden z-3">
+                  <div className="absolute start-0 w-100 abs-middle fs-36 text-white text-center z-2">
+                    <div className="player circle wow scaleIn">
+                      <span></span>
+                    </div>
+                  </div>
+                  <div className="absolute w-100 h-100 top-0 bg-dark hover-op-05"></div>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="/images/background/3.webp"
+                    className="w-100 hover-scale-1-1"
+                    alt="Virtual Tour"
+                  />
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="abs bottom-10 z-2 w-100">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-6">
+                <h1 className="fs-120 text-uppercase fs-sm-10vw mb-4 lh-1">
+                  Virtual Tour
+                </h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact/Agents Section */}
+      <section id="contact" className="relative">
+        <div className="container relative z-2">
+          <div className="row g-4 justify-content-center">
+            <div className="col-lg-6 text-center">
+              <div
+                className="subtitle s2 mb-3 wow fadeInUp"
+                data-wow-delay=".0s"
+              >
+                Contact Us
+              </div>
+              <h2 className="wow fadeInUp" data-wow-delay=".2s">
+                Talk to a Sales Agent
+              </h2>
+            </div>
+          </div>
+
+          <div className="row g-4 gx-5">
+            <div className="col-md-4">
+              <div
+                style={{
+                  textAlign: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/agents/1.webp"
+                  className="w-60 circle"
+                  alt="Emily Rodriguez"
+                />
+                <div className="mt-3" style={{ textAlign: "center" }}>
+                  <h4 className="mb-0">Emily Rodriguez</h4>
+                  <div className="fw-500 id-color">(555) 234-5678</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-md-4">
+              <div
+                style={{
+                  textAlign: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/agents/2.webp"
+                  className="w-60 circle"
+                  alt="Michael Chen"
+                />
+                <div className="mt-3" style={{ textAlign: "center" }}>
+                  <h4 className="mb-0">Michael Chen</h4>
+                  <div className="fw-500 id-color">(555) 345-6789</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="col-md-4">
+              <div
+                style={{
+                  textAlign: "center",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/agents/3.webp"
+                  className="w-60 circle"
+                  alt="Jessica Patel"
+                />
+                <div className="mt-3" style={{ textAlign: "center" }}>
+                  <h4 className="mb-0">Jessica Patel</h4>
+                  <div className="fw-500 id-color">(555) 567-8901</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
+  );
 }

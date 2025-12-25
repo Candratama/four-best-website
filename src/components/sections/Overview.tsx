@@ -1,5 +1,6 @@
-import { AnimatedSection, Button } from '@/components/ui';
-import Image from 'next/image';
+"use client";
+
+import Link from "next/link";
 
 interface OverviewProps {
   subtitle?: string;
@@ -11,62 +12,77 @@ interface OverviewProps {
 }
 
 export default function Overview({
-  subtitle = 'Home Overview',
+  subtitle = "Home Overview",
   title,
   description,
-  ctaText = 'Schedule Visit',
-  ctaHref = '/contact',
-  images = [],
+  ctaText = "Schedule Visit",
+  ctaHref = "/contact",
+  images = [
+    "/images/misc/s2.webp",
+    "/images/misc/s3.webp",
+    "/images/misc/s4.webp",
+    "/images/misc/s5.webp",
+  ],
 }: OverviewProps) {
   return (
-    <section className="py-20 lg:py-32">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+    <section id="section-overview">
+      <div className="container">
+        <div className="row g-4 align-items-center justify-content-between">
           {/* Text Content */}
-          <div className="lg:pr-8">
-            <AnimatedSection animation="fadeInUp" delay={0.2}>
-              <p className="subtitle">{subtitle}</p>
-            </AnimatedSection>
-            <AnimatedSection animation="fadeInUp" delay={0.4}>
-              <h2 className="text-3xl lg:text-4xl font-light leading-tight mb-6">
+          <div className="col-lg-5">
+            <div className="ps-lg-3">
+              <div className="subtitle wow fadeInUp" data-wow-delay=".2s">
+                {subtitle}
+              </div>
+              <h2 className="wow fadeInUp" data-wow-delay=".4s">
                 {title}
               </h2>
-            </AnimatedSection>
-            <AnimatedSection animation="fadeInUp" delay={0.6}>
-              <p className="text-gray-600 mb-8 leading-relaxed">{description}</p>
-              <Button href={ctaHref}>{ctaText}</Button>
-            </AnimatedSection>
+              <p className="wow fadeInUp" data-wow-delay=".6s">
+                {description}
+              </p>
+              <Link
+                href={ctaHref}
+                className="btn-main fx-slide"
+                data-hover={ctaText}
+              >
+                <span>{ctaText}</span>
+              </Link>
+            </div>
           </div>
 
           {/* Images Grid */}
-          <div className="grid grid-cols-2 gap-4">
-            {images.length > 0 ? (
-              images.slice(0, 4).map((img, index) => (
-                <AnimatedSection
-                  key={index}
-                  animation="scaleIn"
-                  delay={0.2 * index}
-                  className={index % 2 === 1 ? 'mt-8' : ''}
-                >
-                  <div className="relative aspect-[4/5] overflow-hidden rounded">
-                    <Image
-                      src={img}
-                      alt={`Overview ${index + 1}`}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                </AnimatedSection>
-              ))
-            ) : (
-              // Placeholder grid
-              <>
-                <div className="aspect-[4/5] bg-gray-200 rounded" />
-                <div className="aspect-[4/5] bg-gray-200 rounded mt-8" />
-                <div className="aspect-[4/5] bg-gray-200 rounded" />
-                <div className="aspect-[4/5] bg-gray-200 rounded mt-8" />
-              </>
-            )}
+          <div className="col-lg-6">
+            <div className="row g-4">
+              <div className="col-6">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={images[0]}
+                  className="img-fluid mb-4 w-70 ms-30 wow scaleIn"
+                  alt="Overview 1"
+                />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={images[1]}
+                  className="img-fluid wow scaleIn"
+                  alt="Overview 2"
+                />
+              </div>
+              <div className="col-6">
+                <div className="spacer-single sm-hide"></div>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={images[2]}
+                  className="img-fluid mb-4 wow scaleIn"
+                  alt="Overview 3"
+                />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={images[3]}
+                  className="img-fluid w-70 wow scaleIn"
+                  alt="Overview 4"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

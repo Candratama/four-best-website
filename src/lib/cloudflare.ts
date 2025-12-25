@@ -5,7 +5,7 @@ import { getCloudflareContext } from "@opennextjs/cloudflare";
  * Use this in Server Components, Server Actions, and API Routes
  */
 export async function getCloudflareEnv() {
-  const { env } = await getCloudflareContext();
+  const { env } = await getCloudflareContext({ async: true });
   return env as CloudflareEnv;
 }
 

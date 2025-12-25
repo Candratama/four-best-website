@@ -1,4 +1,6 @@
-@import "tailwindcss";
+@import "tailwindcss" layer(utilities);
+
+/* Custom effects */
 @import "../styles/effects.css";
 
 @theme inline {
@@ -10,14 +12,19 @@
 
 :root {
   /* 4best brand colors */
+  /* Primary: Dark green, Secondary: Light brown */
   --primary-color: #103C3B;
   --primary-color-rgb: 16, 60, 59;
-  --secondary-color: #1E4645;
+  --secondary-color: #C9976A;
+  --secondary-color-rgb: 201, 151, 106;
   --bg-dark-1: #103C3B;
   --bg-dark-2: #1E4645;
   --bg-dark-3: #0c3130;
   --bg-light: #F8F9FA;
   --bg-grey: #eeeeee;
+  
+  /* Button hover background - use secondary color */
+  --btn-hover-bg: var(--secondary-color);
 
   /* Typography */
   --heading-font: var(--font-geist-sans);
@@ -39,3 +46,45 @@ body {
   color: var(--foreground);
   font-family: var(--font-sans);
 }
+
+/* Override Tailwind's hidden class that might conflict */
+section {
+  display: block !important;
+  visibility: visible !important;
+}
+
+/* Override WOW.js hidden state - we handle animations differently */
+.wow {
+  visibility: visible !important;
+}
+
+/* Partner Card Button Hover Effects */
+.hover .abs-centered a {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.3s ease;
+}
+
+.hover:hover .abs-centered a {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Button hover state */
+.hover:hover .abs-centered a:hover {
+  background: var(--secondary-color) !important;
+  border-color: var(--secondary-color) !important;
+  color: #ffffff !important;
+}
+
+/* All button hover states use secondary color */
+a.btn-main:hover,
+.btn-main:hover,
+a.btn-main.btn-line:hover,
+.btn-line:hover {
+  background: var(--secondary-color) !important;
+  border-color: var(--secondary-color) !important;
+  color: #ffffff !important;
+}
+
+

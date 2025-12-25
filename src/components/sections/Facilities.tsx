@@ -1,4 +1,4 @@
-import { AnimatedSection } from '@/components/ui';
+"use client";
 
 interface FacilitiesProps {
   subtitle?: string;
@@ -8,10 +8,10 @@ interface FacilitiesProps {
 }
 
 export default function Facilities({
-  subtitle = 'Facilities',
+  subtitle = "Facilities",
   title,
   facilities,
-  className = '',
+  className = "",
 }: FacilitiesProps) {
   // Split facilities into two columns
   const midpoint = Math.ceil(facilities.length / 2);
@@ -19,38 +19,38 @@ export default function Facilities({
   const rightColumn = facilities.slice(midpoint);
 
   return (
-    <section className={`section-dark py-20 lg:py-32 ${className}`}>
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Title */}
-          <div>
-            <AnimatedSection animation="fadeInUp" delay={0}>
-              <p className="subtitle">{subtitle}</p>
-            </AnimatedSection>
-            <AnimatedSection animation="fadeInUp" delay={0.2}>
-              <h2 className="text-3xl lg:text-4xl font-light text-white">
+    <section className={`section-dark bg-dark text-light ${className}`}>
+      <div className="container">
+        <div className="row g-4 justify-content-between">
+          <div className="col-lg-4 relative z-3">
+            <div className="me-lg-3">
+              <div className="subtitle wow fadeInUp" data-wow-delay=".0s">
+                {subtitle}
+              </div>
+              <h2 className="wow fadeInUp" data-wow-delay=".2s">
                 {title}
               </h2>
-            </AnimatedSection>
+            </div>
           </div>
 
-          {/* Facilities List */}
-          <div className="lg:mt-16">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12">
-              <AnimatedSection animation="fadeInUp" delay={0.2}>
-                <ul className="ul-check text-light">
+          <div className="col-lg-6">
+            <div className="spacer-single spacer-double"></div>
+            <div className="row">
+              <div className="col-md-5 wow fadeInUp" data-wow-delay=".2s">
+                <ul className="ul-check fs-500 text-light">
                   {leftColumn.map((facility, index) => (
                     <li key={index}>{facility}</li>
                   ))}
                 </ul>
-              </AnimatedSection>
-              <AnimatedSection animation="fadeInUp" delay={0.4}>
-                <ul className="ul-check text-light">
+              </div>
+
+              <div className="col-md-5 wow fadeInUp" data-wow-delay=".4s">
+                <ul className="ul-check fs-500 text-light">
                   {rightColumn.map((facility, index) => (
                     <li key={index}>{facility}</li>
                   ))}
                 </ul>
-              </AnimatedSection>
+              </div>
             </div>
           </div>
         </div>

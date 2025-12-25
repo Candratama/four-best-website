@@ -1,12 +1,12 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Image from "next/image";
+import Link from "next/link";
 
 interface ProductCardProps {
   name: string;
   slug: string;
   partnerSlug: string;
   image?: string;
-  category?: 'komersil' | 'subsidi';
+  category?: "komersil" | "subsidi";
   location?: string;
   price?: string;
   specs?: {
@@ -51,9 +51,9 @@ export default function ProductCard({
           {category && (
             <div
               className={`absolute top-4 left-4 px-3 py-1 text-xs font-semibold uppercase rounded ${
-                category === 'subsidi'
-                  ? 'bg-green-600 text-white'
-                  : 'bg-blue-600 text-white'
+                category === "subsidi"
+                  ? "bg-green-600 text-white"
+                  : "bg-blue-600 text-white"
               }`}
             >
               {category}
@@ -63,7 +63,10 @@ export default function ProductCard({
           {/* Overlay on hover */}
           <div className="abs bg-blur z-2 top-0 w-100 h-100 hover-op-1" />
           <div className="abs w-100 px-4 hover-op-1 z-4 hover-mt-40 abs-centered text-center">
-            <span className="btn-line fx-slide px-6 py-2 text-sm border border-white/30 inline-block">
+            <span
+              className="btn-line fx-slide px-6 py-2 text-sm border border-white/30 inline-block"
+              data-hover="View Details"
+            >
               <span>View Details</span>
             </span>
           </div>
@@ -74,9 +77,7 @@ export default function ProductCard({
           <h3 className="text-lg font-medium mb-1 group-hover:text-[var(--primary-color)] transition-colors">
             {name}
           </h3>
-          {location && (
-            <p className="text-sm text-gray-500 mb-2">{location}</p>
-          )}
+          {location && <p className="text-sm text-gray-500 mb-2">{location}</p>}
 
           {/* Specs */}
           {specs && (

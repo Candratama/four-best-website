@@ -1,65 +1,56 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import Link from "next/link";
 
-interface PartnerCardProps {
+export interface PartnerCardProps {
   name: string;
   slug: string;
-  logo?: string;
-  description?: string;
-  location?: string;
-  productCount?: number;
+  image: string;
+  size: string;
+  href?: string;
 }
 
 export default function PartnerCard({
   name,
   slug,
-  logo,
-  description,
-  location,
-  productCount,
+  image,
+  size,
+  href,
 }: PartnerCardProps) {
+  const linkHref = href || `/partners/${slug}`;
+
   return (
-    <Link href={`/partners/${slug}`} className="block group">
-      <div className="hover overflow-hidden relative text-white">
-        {/* Card Image */}
-        <div className="relative aspect-[4/3] overflow-hidden">
-          {logo ? (
-            <Image
-              src={logo}
-              alt={name}
-              fill
-              className="object-cover hover-scale-1-1 transition-transform duration-300"
-            />
-          ) : (
-            <div className="w-full h-full bg-[var(--bg-dark-2)] flex items-center justify-center">
-              <span className="text-4xl font-bold text-white/20">
-                {name.charAt(0)}
-              </span>
-            </div>
-          )}
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition-colors" />
-
-          {/* Content on hover */}
-          <div className="abs w-full px-4 hover-op-1 z-4 abs-centered text-center">
-            <span className="btn-line fx-slide px-6 py-2 text-sm border border-white/30 inline-block">
-              <span>View Details</span>
-            </span>
-          </div>
-        </div>
-
-        {/* Card Info */}
-        <div className="absolute bottom-0 left-0 right-0 p-4 z-10">
-          <div className="gradient-edge-bottom absolute inset-0 -z-10" />
-          <h3 className="text-xl font-medium mb-1">{name}</h3>
-          <div className="flex items-center justify-between text-sm text-white/70">
-            {location && <span>{location}</span>}
-            {productCount !== undefined && (
-              <span>{productCount} Products</span>
-            )}
-          </div>
+    <div
+      className="hover overflow-hidden relative text-light text-center wow zoomIn"
+      data-wow-delay=".0s"
+    >
+      <div className="wow scaleIn overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={image} className="hover-scale-1-1 w-100" alt={name} />
+      </div>
+      <div className="abs w-100 px-4 hover-op-1 z-4 hover-mt-40 abs-centered">
+        <Link
+          href={linkHref}
+          className="btn-main btn-line fx-slide"
+          data-hover="View Details"
+        >
+          <span>View Details</span>
+        </Link>
+      </div>
+      <div className="abs bg-blur z-2 top-0 w-100 h-100 hover-op-1"></div>
+      {/* Dark background for text readability - using bg-dark-2 color */}
+      <div
+        className="abs z-3 bottom-0 w-100 h-50"
+        style={{
+          background:
+            "linear-gradient(to top, var(--bg-dark-2) 0%, rgba(30, 70, 69, 0.6) 50%, transparent 100%)",
+        }}
+      ></div>
+      <div className="abs z-4 bottom-0 p-30 w-100 text-center hover-op-0">
+        <div className="d-flex justify-content-between align-items-center">
+          <h3 className="mb-0">{name}</h3>
+          <div>{size}</div>
         </div>
       </div>
-    </Link>
+      <div className="gradient-edge-bottom abs w-100 h-40 bottom-0 z-1"></div>
+    </div>
   );
 }

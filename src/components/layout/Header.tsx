@@ -1,88 +1,148 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { useState } from 'react';
+import Link from "next/link";
+import Image from "next/image";
+import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isSmaller, setIsSmaller] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
 
-  const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/partners', label: 'Partners' },
-    { href: '/about', label: 'About' },
-    { href: '/contact', label: 'Contact' },
-  ];
+  // Check if a menu item is active (only after mounted to prevent hydration mismatch)
+  const isActive = (href: string) => {
+    if (!mounted) return false;
+    if (href === "/") {
+      return pathname === "/";
+    }
+    return pathname.startsWith(href);
+  };
+
+  // Handle scroll behavior for "smaller" class
+  useEffect(() => {
+    // Set mounted flag to prevent hydration mismatch
+    setMounted(true);
+
+    const handleScroll = () => {
+      const scrollTop = window.scrollY;
+      if (scrollTop > 50) {
+        setIsSmaller(true);
+      } else {
+        setIsSmaller(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // Handle mobile menu toggle
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
+  // Close mobile menu when clicking a link
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
+  };
+
+  // Prevent hydration mismatch by not rendering dynamic classes until mounted
+  const headerClass = mounted
+    ? `transparent logo-center ${isSmaller ? "smaller" : ""} ${
+        mobileMenuOpen ? "menu-open" : ""
+      }`
+    : "transparent logo-center";
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-transparent">
-      <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex items-center justify-between py-4">
-          {/* Logo */}
-          <Link href="/" className="flex-shrink-0">
-            <span className="text-2xl font-bold text-white">4best</span>
-          </Link>
+    <header className={headerClass}>
+      <div className="container-fluid px-lg-5 px-3">
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="de-flex">
+              {/* Left Navigation */}
+              <div className="col-start">
+                <ul id="mainmenu">
+                  <li>
+                    <Link
+                      className={`menu-item ${isActive("/") ? "active" : ""}`}
+                      href="/"
+                      onClick={closeMobileMenu}
+                    >
+                      Home
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className={`menu-item ${
+                        isActive("/partners") ? "active" : ""
+                      }`}
+                      href="/partners"
+                      onClick={closeMobileMenu}
+                    >
+                      Partners
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className={`menu-item ${
+                        isActive("/about") ? "active" : ""
+                      }`}
+                      href="/about"
+                      onClick={closeMobileMenu}
+                    >
+                      About
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      className={`menu-item ${
+                        isActive("/contact") ? "active" : ""
+                      }`}
+                      href="/contact"
+                      onClick={closeMobileMenu}
+                    >
+                      Contact
+                    </Link>
+                  </li>
+                </ul>
+              </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8" role="navigation">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="text-white font-medium hover:opacity-80 transition-opacity"
-              >
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+              {/* Center Logo */}
+              <div className="col-center">
+                <Link href="/" onClick={closeMobileMenu}>
+                  <Image
+                    src="/images/logo.webp"
+                    alt="4best Logo"
+                    width={150}
+                    height={50}
+                    priority
+                  />
+                </Link>
+              </div>
 
-          {/* CTA Button */}
-          <div className="hidden lg:block">
-            <Link
-              href="/contact"
-              className="btn-main btn-line bg-blur fx-slide px-6 py-2 text-white border border-white/30 rounded"
-            >
-              <span>Schedule a Visit</span>
-            </Link>
+              {/* Right Side - CTA and Menu Button */}
+              <div className="col-end">
+                <div className="menu_side_area">
+                  <Link
+                    href="/contact"
+                    className="btn-main btn-line bg-blur fx-slide sm-hide"
+                    data-hover="Schedule a Visit"
+                    onClick={closeMobileMenu}
+                  >
+                    <span>Schedule a Visit</span>
+                  </Link>
+                  <span
+                    id="menu-btn"
+                    className={mobileMenuOpen ? "menu-open" : ""}
+                    onClick={toggleMobileMenu}
+                  ></span>
+                </div>
+              </div>
+            </div>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="lg:hidden text-white p-2"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {mobileMenuOpen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              )}
-            </svg>
-          </button>
         </div>
-
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <nav className="lg:hidden bg-[var(--bg-dark-1)] py-4">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block px-4 py-2 text-white hover:bg-white/10"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <Link
-              href="/contact"
-              className="block mx-4 mt-4 text-center px-6 py-2 text-white border border-white/30 rounded"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Schedule a Visit
-            </Link>
-          </nav>
-        )}
       </div>
     </header>
   );

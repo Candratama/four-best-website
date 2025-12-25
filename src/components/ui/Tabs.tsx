@@ -1,52 +1,44 @@
-'use client';
+"use client";
 
-import { useState, ReactNode } from 'react';
+import { useState, ReactNode } from "react";
 
-interface Tab {
-  id: string;
+export interface TabItem {
   label: string;
   content: ReactNode;
 }
 
-interface TabsProps {
-  tabs: Tab[];
-  defaultTab?: string;
-  className?: string;
+export interface TabsProps {
+  items: TabItem[];
+  defaultActive?: number;
 }
 
-export default function Tabs({ tabs, defaultTab, className = '' }: TabsProps) {
-  const [activeTab, setActiveTab] = useState(defaultTab || tabs[0]?.id);
+export default function Tabs({ items, defaultActive = 0 }: TabsProps) {
+  const [activeTab, setActiveTab] = useState(defaultActive);
 
   return (
-    <div className={className}>
-      {/* Tab buttons */}
-      <div className="flex gap-2 border-b border-gray-200 mb-6">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`px-6 py-3 font-semibold text-sm uppercase tracking-wider transition-all border-b-2 -mb-[2px] ${
-              activeTab === tab.id
-                ? 'border-[var(--primary-color)] text-[var(--primary-color)]'
-                : 'border-transparent text-gray-500 hover:text-gray-700'
-            }`}
+    <div className="de-tab plain">
+      <ul className="d-tab-nav mb-4 border-bottom pb-4 d-flex justify-content-between">
+        {items.map((item, index) => (
+          <li
+            key={index}
+            className={activeTab === index ? "active-tab" : ""}
+            onClick={() => setActiveTab(index)}
+            style={{ cursor: "pointer" }}
           >
-            {tab.label}
-          </button>
+            {item.label}
+          </li>
         ))}
-      </div>
-
-      {/* Tab content */}
-      <div>
-        {tabs.map((tab) => (
-          <div
-            key={tab.id}
-            className={activeTab === tab.id ? 'block' : 'hidden'}
+      </ul>
+      <ul className="d-tab-content pt-3">
+        {items.map((item, index) => (
+          <li
+            key={index}
+            style={{ display: activeTab === index ? "block" : "none" }}
           >
-            {tab.content}
-          </div>
+            {item.content}
+          </li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 }

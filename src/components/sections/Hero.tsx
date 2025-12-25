@@ -1,67 +1,227 @@
-import { ImageSlider } from '@/components/ui';
-import { Button } from '@/components/ui';
+"use client";
+
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
+
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/effect-fade";
+
+interface HeroSlide {
+  image: string;
+  overlay?: number;
+}
 
 interface HeroProps {
+  variant?:
+    | "slider"
+    | "parallax"
+    | "parallax-about"
+    | "parallax-contact"
+    | "static";
   title: string;
   subtitle?: string;
   address?: string;
-  slides?: { image: string; alt?: string }[];
-  ctaText?: string;
-  ctaHref?: string;
-  height?: string;
+  mapUrl?: string;
+  slides?: HeroSlide[];
+  backgroundImage?: string;
 }
 
 export default function Hero({
+  variant = "slider",
   title,
   subtitle,
   address,
-  slides,
-  ctaText = 'Schedule Visit',
-  ctaHref = '/contact',
-  height = 'h-screen',
+  mapUrl,
+  slides = [
+    { image: "/images/slider/apt-1.webp", overlay: 0.4 },
+    { image: "/images/slider/apt-2.webp", overlay: 0.4 },
+  ],
+  backgroundImage,
 }: HeroProps) {
-  const defaultSlides = [
-    { image: '/images/hero-1.jpg', alt: 'Hero 1' },
-    { image: '/images/hero-2.jpg', alt: 'Hero 2' },
-  ];
-
-  return (
-    <section className={`relative ${height} text-white`}>
-      {/* Background Slider */}
-      <ImageSlider
-        slides={slides || defaultSlides}
-        height="h-full"
-        className="absolute inset-0"
-      />
-
-      {/* Content Overlay */}
-      <div className="absolute inset-0 z-10 flex items-end pb-20">
-        <div className="container mx-auto px-4 lg:px-8">
-          <div className="max-w-2xl">
-            {subtitle && (
-              <p className="subtitle text-white/70 mb-2">{subtitle}</p>
-            )}
-            <h1 className="text-5xl lg:text-7xl font-light uppercase leading-tight mb-4">
-              {title}
-            </h1>
-            {address && (
-              <div className="flex items-center gap-4 mb-6">
-                <p className="text-lg">{address}</p>
-                <a
-                  href="#"
-                  className="btn-line fx-slide px-4 py-1 text-sm border border-white/30"
-                >
-                  <span>View on Map</span>
-                </a>
+  // Contact page parallax variant with bottom-positioned content and mh-600
+  if (variant === "parallax-contact") {
+    return (
+      <section
+        id="section-hero"
+        className="section-dark text-light no-top no-bottom relative overflow-hidden mh-600 jarallax"
+        style={{
+          minHeight: "600px",
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+        data-jarallax
+        data-speed="0.5"
+      >
+        <div className="gradient-edge-top op-6"></div>
+        <div className="abs bottom-10 z-2 w-100">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="relative overflow-hidden">
+                  <div className="wow fadeInUpBig" data-wow-duration="1.5s">
+                    <h1 className="fs-120 text-uppercase fs-sm-10vw mb-2 lh-1">
+                      {title}
+                    </h1>
+                    {subtitle && <h3>{subtitle}</h3>}
+                  </div>
+                </div>
               </div>
-            )}
-            {ctaText && (
-              <Button href={ctaHref} variant="primary">
-                {ctaText}
-              </Button>
-            )}
+            </div>
           </div>
         </div>
+        <div className="sw-overlay op-5"></div>
+      </section>
+    );
+  }
+
+  // About page parallax variant with bottom-positioned content
+  if (variant === "parallax-about") {
+    return (
+      <section
+        id="section-hero"
+        className="section-dark text-light no-top no-bottom relative overflow-hidden jarallax"
+        style={{
+          minHeight: "600px",
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+        data-jarallax
+        data-speed="0.5"
+      >
+        <div className="gradient-edge-top op-6"></div>
+        <div className="abs bottom-10 z-2 w-100">
+          <div className="container">
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="relative overflow-hidden">
+                  <div className="wow fadeInUpBig" data-wow-duration="1.5s">
+                    <h1 className="fs-120 text-uppercase fs-sm-10vw mb-2 lh-1">
+                      {title}
+                    </h1>
+                    {subtitle && <h3>{subtitle}</h3>}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="sw-overlay op-5"></div>
+      </section>
+    );
+  }
+
+  if (variant === "parallax") {
+    return (
+      <section
+        id="section-hero"
+        className="section-dark text-light no-top no-bottom relative overflow-hidden z-1000 jarallax"
+        data-jarallax
+        data-speed="0.5"
+      >
+        <div
+          className="jarallax-img"
+          style={{ backgroundImage: `url(${backgroundImage})` }}
+        />
+        <div className="gradient-edge-top abs w-100 h-40 top-0 z-2" />
+        <div className="container py-32">
+          <div className="row">
+            <div className="col-lg-6">
+              {subtitle && (
+                <div className="subtitle wow fadeInUp">{subtitle}</div>
+              )}
+              <h1 className="fs-120 text-uppercase fs-sm-10vw mb-4 lh-1">
+                {title}
+              </h1>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section
+      id="section-hero"
+      className="section-dark text-light no-top no-bottom relative overflow-hidden z-1000"
+    >
+      {/* Content Overlay - positioned at bottom */}
+      <div className="abs bottom-10 z-2 w-100">
+        <div className="container">
+          <div className="row">
+            <div className="col-lg-6">
+              <h1 className="fs-120 text-uppercase fs-sm-10vw mb-4 lh-1">
+                {title}
+              </h1>
+              {address && (
+                <div className="d-flex align-items-center">
+                  <h4 className="fw-500 mb-0 me-4">{address}</h4>
+                  {mapUrl && (
+                    <a
+                      className="btn-main btn-line fx-slide py-0 lh-1-6 fw-400 popup-gmaps"
+                      href={mapUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-hover="View on Map"
+                    >
+                      <span>View on Map</span>
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Swiper Slider */}
+      <div className="mh-800" style={{ height: "800px" }}>
+        <Swiper
+          modules={[Navigation, Pagination, Autoplay, EffectFade]}
+          effect="fade"
+          fadeEffect={{ crossFade: true }}
+          autoplay={{ delay: 4000, disableOnInteraction: false }}
+          loop={true}
+          navigation={{
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          }}
+          pagination={{
+            el: ".swiper-pagination",
+            clickable: true,
+          }}
+          style={{ height: "100%" }}
+        >
+          {slides.map((slide, index) => (
+            <SwiperSlide key={index} style={{ height: "100%" }}>
+              <div
+                className="swiper-inner"
+                style={{
+                  backgroundImage: `url(${slide.image})`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "center",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <div
+                  className={`sw-overlay op-${Math.round(
+                    (slide.overlay || 0.4) * 10
+                  )}`}
+                />
+              </div>
+            </SwiperSlide>
+          ))}
+
+          {/* Navigation - Swiper creates these automatically */}
+          <div className="swiper-pagination" />
+        </Swiper>
       </div>
     </section>
   );
