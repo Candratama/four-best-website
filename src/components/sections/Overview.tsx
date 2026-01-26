@@ -57,13 +57,13 @@ export default function Overview({
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={images[0]}
-                  className="img-fluid mb-4 w-70 ms-30 wow scaleIn"
+                  className="img-fluid mb-4 w-70 ms-30 wow scaleIn rounded-2xl"
                   alt="Overview 1"
                 />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={images[1]}
-                  className="img-fluid wow scaleIn"
+                  className="img-fluid wow scaleIn rounded-2xl"
                   alt="Overview 2"
                 />
               </div>
@@ -72,13 +72,13 @@ export default function Overview({
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={images[2]}
-                  className="img-fluid mb-4 wow scaleIn"
+                  className="img-fluid mb-4 wow scaleIn rounded-2xl"
                   alt="Overview 3"
                 />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={images[3]}
-                  className="img-fluid w-70 wow scaleIn"
+                  className="img-fluid w-70 wow scaleIn rounded-2xl"
                   alt="Overview 4"
                 />
               </div>

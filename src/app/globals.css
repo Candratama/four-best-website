@@ -2,17 +2,21 @@
 
 /* Custom effects */
 @import "../styles/effects.css";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
+  /* 4best brand colors */
   --background: #f8fafc;
   --foreground: #1e293b;
   --card: #ffffff;
   --card-foreground: #1e293b;
   --popover: #ffffff;
   --popover-foreground: #1e293b;
-  --primary: #0056d6;
+  --primary: #162d50;
   --primary-foreground: #ffffff;
-  --secondary: #e5e7eb;
+  --secondary: #0056d6;
   --secondary-foreground: #374151;
   --muted: #f3f4f6;
   --muted-foreground: #6b7280;
@@ -22,52 +26,50 @@
   --destructive-foreground: #ffffff;
   --border: #d1d5db;
   --input: #d1d5db;
-  --ring: #6366f1;
-  --chart-1: #6366f1;
-  --chart-2: #4f46e5;
-  --chart-3: #4338ca;
-  --chart-4: #3730a3;
-  --chart-5: #312e81;
+  --ring: #162d50;
+  --chart-1: #162d50;
+  --chart-2: #1a3054;
+  --chart-3: #1e3a5f;
+  --chart-4: #234569;
+  --chart-5: #2a5078;
   --sidebar: #f3f4f6;
   --sidebar-foreground: #1e293b;
-  --sidebar-primary: #6366f1;
+  --sidebar-primary: #162d50;
   --sidebar-primary-foreground: #ffffff;
   --sidebar-accent: #e0e7ff;
   --sidebar-accent-foreground: #374151;
   --sidebar-border: #d1d5db;
-  --sidebar-ring: #6366f1;
+  --sidebar-ring: #162d50;
   --font-sans: var(--font-geist-sans), Inter, sans-serif;
   --font-serif: Merriweather, serif;
   --font-mono: var(--font-geist-mono), JetBrains Mono, monospace;
-  --radius: 0.5rem;
-  --shadow-x: 0px;
-  --shadow-y: 4px;
-  --shadow-blur: 8px;
-  --shadow-spread: -1px;
-  --shadow-opacity: 0.1;
-  --shadow-color: hsl(0 0% 0%);
+  --radius: 0.625rem;
   --shadow-2xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
   --shadow-xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
-  --shadow-sm: 0px 4px 8px -1px hsl(0 0% 0% / 0.10), 0px 1px 2px -2px hsl(0 0% 0% / 0.10);
-  --shadow: 0px 4px 8px -1px hsl(0 0% 0% / 0.10), 0px 1px 2px -2px hsl(0 0% 0% / 0.10);
-  --shadow-md: 0px 4px 8px -1px hsl(0 0% 0% / 0.10), 0px 2px 4px -2px hsl(0 0% 0% / 0.10);
-  --shadow-lg: 0px 4px 8px -1px hsl(0 0% 0% / 0.10), 0px 4px 6px -2px hsl(0 0% 0% / 0.10);
-  --shadow-xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.10), 0px 8px 10px -2px hsl(0 0% 0% / 0.10);
+  --shadow-sm:
+    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 1px 2px -2px hsl(0 0% 0% / 0.1);
+  --shadow:
+    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 1px 2px -2px hsl(0 0% 0% / 0.1);
+  --shadow-md:
+    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 2px 4px -2px hsl(0 0% 0% / 0.1);
+  --shadow-lg:
+    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 4px 6px -2px hsl(0 0% 0% / 0.1);
+  --shadow-xl:
+    0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 8px 10px -2px hsl(0 0% 0% / 0.1);
   --shadow-2xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.25);
-  --tracking-normal: 0em;
   --spacing: 0.25rem;
 
   /* Legacy aliases for template compatibility */
   --primary-color: var(--primary);
-  --primary-color-rgb: 0, 86, 214;
+  --primary-color-rgb: 22, 45, 80;
   --secondary-color: var(--accent);
   --secondary-color-rgb: 224, 231, 255;
-  --bg-dark-1: #0056d6;
-  --bg-dark-2: #4f46e5;
-  --bg-dark-3: #312e81;
+  --bg-dark-1: #162d50;
+  --bg-dark-2: #1a3054;
+  --bg-dark-3: #0f1f38;
   --bg-light: #f8fafc;
   --bg-grey: #f3f4f6;
-  --btn-hover-bg: #4f46e5;
+  --btn-hover-bg: #2a4a7a;
   --heading-font: var(--font-sans);
   --body-font: var(--font-sans);
 }
@@ -114,6 +116,9 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
 
   --shadow-2xs: var(--shadow-2xs);
   --shadow-xs: var(--shadow-xs);
@@ -126,9 +131,16 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: var(--font-sans);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
 }
 
 /* Override Tailwind's hidden class that might conflict */
@@ -181,8 +193,45 @@ a.btn-main.btn-line:hover,
 header {
   position: fixed !important;
   top: 0;
-  transition: background 0.3s ease, padding 0.3s ease, backdrop-filter 0.3s ease;
-  will-change: background, padding;
+  left: 0;
+  right: 0;
+  z-index: 9999;
+  transition: padding 0.3s ease;
+  will-change: padding;
+}
+
+/* Navbar container for floating effect */
+.navbar-container {
+  background: transparent;
+  border-radius: 0;
+  margin: 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 9999;
+}
+
+/* Scrolled state - floating container */
+.navbar-scrolled {
+  background-color: #162d50 !important;
+  border-radius: 1rem;
+  margin: 1rem 2rem;
+  box-shadow: 0 10px 40px rgba(22, 45, 80, 0.3);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  isolation: isolate;
+}
+
+/* Remove all blur from header and its children when scrolled */
+header,
+header *,
+header.smaller,
+header.smaller *,
+header .navbar-container,
+header .navbar-scrolled {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  -moz-backdrop-filter: none !important;
+  -o-backdrop-filter: none !important;
 }
 
 header.transparent:not(.smaller) {
@@ -190,7 +239,24 @@ header.transparent:not(.smaller) {
 }
 
 header.smaller {
-  background: var(--bg-dark-1) !important;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: transparent !important;
+  padding-top: 0.5rem;
+}
+
+/* Value Proposition icon hover */
+.icon-box svg {
+  transition:
+    stroke 0.3s ease,
+    color 0.3s ease;
+}
+.group:hover .icon-box,
+.group:hover .icon-box svg {
+  color: #ffffff !important;
+}
+.group:hover .icon-box svg path,
+.group:hover .icon-box svg line,
+.group:hover .icon-box svg polyline,
+.group:hover .icon-box svg circle,
+.group:hover .icon-box svg rect {
+  stroke: #ffffff !important;
 }

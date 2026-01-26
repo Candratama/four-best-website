@@ -146,7 +146,8 @@ export default function Hero({
   return (
     <section
       id="section-hero"
-      className="section-dark text-light no-top no-bottom relative overflow-hidden z-1000"
+      className="section-dark text-light no-top no-bottom relative overflow-hidden"
+      style={{ zIndex: 1 }}
     >
       {/* Content Overlay - positioned at bottom */}
       <div className="abs bottom-10 z-2 w-100">

@@ -89,91 +89,93 @@ export default function Header() {
 
   return (
     <header className={headerClass} style={headerStyle}>
-      <div className="container-fluid px-lg-5 px-3">
-        <div className="row">
-          <div className="col-lg-12">
-            <div className="de-flex">
-              {/* Left Navigation */}
-              <div className="col-start">
-                <ul id="mainmenu">
-                  <li>
-                    <Link
-                      className={`menu-item ${isActive("/") ? "active" : ""}`}
-                      href="/"
-                      onClick={closeMobileMenu}
-                    >
-                      Home
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={`menu-item ${
-                        isActive("/partners") ? "active" : ""
-                      }`}
-                      href="/partners"
-                      onClick={closeMobileMenu}
-                    >
-                      Partners
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={`menu-item ${
-                        isActive("/about") ? "active" : ""
-                      }`}
-                      href="/about"
-                      onClick={closeMobileMenu}
-                    >
-                      About
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className={`menu-item ${
-                        isActive("/contact") ? "active" : ""
-                      }`}
-                      href="/contact"
-                      onClick={closeMobileMenu}
-                    >
-                      Contact
-                    </Link>
-                  </li>
-                </ul>
-              </div>
+      <div className={`navbar-container transition-all duration-500 ${isSmaller ? "navbar-scrolled" : ""}`}>
+        <div className="container-fluid px-lg-5 px-3">
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="de-flex">
+                {/* Left Navigation */}
+                <div className="col-start">
+                  <ul id="mainmenu">
+                    <li>
+                      <Link
+                        className={`menu-item ${isActive("/") ? "active" : ""}`}
+                        href="/"
+                        onClick={closeMobileMenu}
+                      >
+                        Home
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={`menu-item ${
+                          isActive("/partners") ? "active" : ""
+                        }`}
+                        href="/partners"
+                        onClick={closeMobileMenu}
+                      >
+                        Partners
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={`menu-item ${
+                          isActive("/about") ? "active" : ""
+                        }`}
+                        href="/about"
+                        onClick={closeMobileMenu}
+                      >
+                        About
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        className={`menu-item ${
+                          isActive("/contact") ? "active" : ""
+                        }`}
+                        href="/contact"
+                        onClick={closeMobileMenu}
+                      >
+                        Contact
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
 
-              {/* Center Logo */}
-              <div className="col-center">
-                <Link href="/" onClick={closeMobileMenu}>
-                  <Image
-                    src="/logo.svg"
-                    alt="4best Logo"
-                    width={150}
-                    height={50}
-                    priority
-                    className="logo-white"
-                  />
-                </Link>
-              </div>
-
-              {/* Right Side - CTA and Menu Button */}
-              <div className="col-end">
-                <div className="menu_side_area">
-                  <Link
-                    href="/contact"
-                    className="btn-main btn-line bg-blur fx-slide sm-hide"
-                    data-hover="Schedule a Visit"
-                    onClick={closeMobileMenu}
-                  >
-                    <span>Schedule a Visit</span>
+                {/* Center Logo */}
+                <div className="col-center">
+                  <Link href="/" onClick={closeMobileMenu}>
+                    <Image
+                      src="/logo.svg"
+                      alt="4best Logo"
+                      width={150}
+                      height={50}
+                      priority
+                      className="logo-white"
+                    />
                   </Link>
-                  <span
-                    id="menu-btn"
-                    className={mobileMenuOpen ? "menu-open" : ""}
-                    onClick={toggleMobileMenu}
-                    role="button"
-                    aria-label="Toggle mobile menu"
-                    aria-expanded={mobileMenuOpen}
-                  ></span>
+                </div>
+
+                {/* Right Side - CTA and Menu Button */}
+                <div className="col-end">
+                  <div className="menu_side_area">
+                    <Link
+                      href="/contact"
+                      className="btn-main btn-line fx-slide sm-hide"
+                      data-hover="Schedule a Visit"
+                      onClick={closeMobileMenu}
+                    >
+                      <span>Schedule a Visit</span>
+                    </Link>
+                    <span
+                      id="menu-btn"
+                      className={mobileMenuOpen ? "menu-open" : ""}
+                      onClick={toggleMobileMenu}
+                      role="button"
+                      aria-label="Toggle mobile menu"
+                      aria-expanded={mobileMenuOpen}
+                    ></span>
+                  </div>
                 </div>
               </div>
             </div>

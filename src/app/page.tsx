@@ -1,6 +1,7 @@
 import {
   Hero,
   Overview,
+  ValueProposition,
   Facilities,
   PartnersGrid,
   HalfFluid,
@@ -71,9 +72,9 @@ export default function Home() {
     <>
       {/* Hero Section with Swiper Slider */}
       <Hero
-        title="Sunvale Residences"
-        address="320 40th Street B4, New York, NY 10019"
-        mapUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2517.288901886818!2d-73.93141732484813!3d40.68555563923556!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25c739e350217%3A0x413f827e0e00fac3!2s712%20Jefferson%20Ave%2C%20Brooklyn%2C%20NY%2011221%2C%20USA!5e1!3m2!1sen!2sid!4v1746687511128!5m2!1sen!2sid"
+        title="Property Agency"
+        address="Perum Ungaran Asri, No C1, Ungaran"
+        mapUrl="https://maps.app.goo.gl/BSpMhDN2Z6Jgp9UL6"
         slides={[
           { image: "/images/slider/apt-1.webp", overlay: 0.4 },
           { image: "/images/slider/apt-2.webp", overlay: 0.4 },
@@ -82,9 +83,9 @@ export default function Home() {
 
       {/* Overview Section */}
       <Overview
-        subtitle="Home Overview"
-        title="Luxury living where comfort meets timeless style, effortlessly"
-        description="Eu eiusmod ut ut dolore nulla in incididunt nulla elit ea aute in adipisicing officia ullamco qui proident non est laboris commodo deserunt magna deserunt voluptate laborum irure cillum dolor mollit ea cupidatat occaecat."
+        subtitle="4Best"
+        title="Pilihan Tepat, Hasil Terbaik"
+        description="4Best Agent Property adalah perusahaan agen properti	profesional yang menyediakan layanan jual, beli, dan sewa	properti dengan pendekatan terpercaya dan berorientasi hasil.	Didukung oleh tim berpengalaman, pemahaman pasar yang	kuat, serta sistem kerja transparan, kami berkomitmen membantu klien mendapatkan solusi properti terbaik dan bernilai investasi jangka panjang."
         ctaText="Schedule Visit"
         ctaHref="/contact"
         images={[
@@ -95,26 +96,15 @@ export default function Home() {
         ]}
       />
 
-      {/* Facilities Section */}
-      <Facilities
-        subtitle="Facilities"
-        title="Amenities Designed for Your Lifestyle"
-        facilities={facilities}
-      />
-
-      {/* Hotspot Image Section */}
-      <HotspotImage
-        image="/images/background/1.webp"
-        hotspots={hotspots}
-        alt="Property overview with interactive hotspots"
-      />
-
       {/* Partners Grid Section */}
       <PartnersGrid
         subtitle="Our Partners"
         title="Trusted Partners"
         limit={4}
       />
+
+      {/* Value Proposition Section */}
+      <ValueProposition />
 
       {/* Half-Fluid Sections */}
       <HalfFluid
@@ -134,7 +124,7 @@ export default function Home() {
       />
 
       {/* Stats Section */}
-      <Stats stats={stats} />
+      {/* <Stats stats={stats} /> */}
 
       {/* Video Section */}
       <section
