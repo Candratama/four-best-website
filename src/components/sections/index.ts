@@ -10,3 +10,4 @@ export { default as AboutContent } from './AboutContent';
 export { default as Mission } from './Mission';
 export { default as Team } from './Team';
 export { default as CTABanner } from './CTABanner';
+export { default as PartnersGrid } from './PartnersGrid';

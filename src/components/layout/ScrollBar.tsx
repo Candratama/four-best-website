@@ -56,6 +56,7 @@ export default function ScrollBar() {
       <div
         className="scrollbar-v show-on-scroll hide"
         style={{ height: "0px" }}
+        suppressHydrationWarning
       />
     );
   }

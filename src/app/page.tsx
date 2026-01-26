@@ -1,54 +1,12 @@
-"use client";
-
 import {
   Hero,
   Overview,
   Facilities,
-  RoomGrid,
+  PartnersGrid,
   HalfFluid,
   Stats,
 } from "@/components/sections";
 import { HotspotImage } from "@/components/ui";
-
-// Room data for the homepage
-const rooms = [
-  {
-    name: "The Cozy Studio",
-    slug: "cozy-studio",
-    image: "/images/apartment/1.jpg",
-    size: "37 m²",
-  },
-  {
-    name: "The Nook Alcove",
-    slug: "nook-alcove",
-    image: "/images/apartment/2.jpg",
-    size: "46 m²",
-  },
-  {
-    name: "The Junior Suite",
-    slug: "junior-suite",
-    image: "/images/apartment/3.jpg",
-    size: "60 m²",
-  },
-  {
-    name: "The Urban Retreat",
-    slug: "urban-retreat",
-    image: "/images/apartment/4.jpg",
-    size: "93 m²",
-  },
-  {
-    name: "The Family Haven",
-    slug: "family-haven",
-    image: "/images/apartment/5.jpg",
-    size: "139 m²",
-  },
-  {
-    name: "The Penthouse Oasis",
-    slug: "penthouse-oasis",
-    image: "/images/apartment/6.jpg",
-    size: "186 m²",
-  },
-];
 
 // Facilities list
 const facilities = [
@@ -151,11 +109,11 @@ export default function Home() {
         alt="Property overview with interactive hotspots"
       />
 
-      {/* Room Grid Section */}
-      <RoomGrid
-        subtitle="Elevated Comfort"
-        title="Choose a Room"
-        rooms={rooms}
+      {/* Partners Grid Section */}
+      <PartnersGrid
+        subtitle="Our Partners"
+        title="Trusted Partners"
+        limit={4}
       />
 
       {/* Half-Fluid Sections */}

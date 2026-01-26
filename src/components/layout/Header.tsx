@@ -5,9 +5,13 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
+// Mobile breakpoint matching the template CSS (max-width: 992px)
+const MOBILE_BREAKPOINT = 992;
+
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSmaller, setIsSmaller] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
 
@@ -20,7 +24,7 @@ export default function Header() {
     return pathname.startsWith(href);
   };
 
-  // Handle scroll behavior for "smaller" class
+  // Handle scroll behavior for "smaller" class and viewport resize for mobile detection
   useEffect(() => {
     // Set mounted flag to prevent hydration mismatch
     setMounted(true);
@@ -34,29 +38,57 @@ export default function Header() {
       }
     };
 
+    const handleResize = () => {
+      const newIsMobile = window.innerWidth <= MOBILE_BREAKPOINT;
+      setIsMobile(newIsMobile);
+      // Close mobile menu when resizing to desktop
+      if (!newIsMobile) {
+        setMobileMenuOpen(false);
+        document.body.style.overflow = "";
+      }
+    };
+
+    // Initial check
+    handleResize();
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   // Handle mobile menu toggle
   const toggleMobileMenu = () => {
-    setMobileMenuOpen(!mobileMenuOpen);
+    const newState = !mobileMenuOpen;
+    setMobileMenuOpen(newState);
+    // Lock body scroll when menu is open (matching template behavior)
+    if (newState) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
   };
 
   // Close mobile menu when clicking a link
   const closeMobileMenu = () => {
     setMobileMenuOpen(false);
+    document.body.style.overflow = "";
   };
 
-  // Prevent hydration mismatch by not rendering dynamic classes until mounted
+  // Build header class with mobile state
   const headerClass = mounted
     ? `transparent logo-center ${isSmaller ? "smaller" : ""} ${
-        mobileMenuOpen ? "menu-open" : ""
-      }`
+        isMobile ? "header-mobile" : ""
+      } ${mobileMenuOpen ? "menu-open" : ""}`
     : "transparent logo-center";
 
+  // Header style - no dynamic height needed, CSS handles fullscreen
+  const headerStyle = { height: "auto" };
+
   return (
-    <header className={headerClass}>
+    <header className={headerClass} style={headerStyle}>
       <div className="container-fluid px-lg-5 px-3">
         <div className="row">
           <div className="col-lg-12">
@@ -113,11 +145,12 @@ export default function Header() {
               <div className="col-center">
                 <Link href="/" onClick={closeMobileMenu}>
                   <Image
-                    src="/images/logo.webp"
+                    src="/logo.svg"
                     alt="4best Logo"
                     width={150}
                     height={50}
                     priority
+                    className="logo-white"
                   />
                 </Link>
               </div>
@@ -137,6 +170,9 @@ export default function Header() {
                     id="menu-btn"
                     className={mobileMenuOpen ? "menu-open" : ""}
                     onClick={toggleMobileMenu}
+                    role="button"
+                    aria-label="Toggle mobile menu"
+                    aria-expanded={mobileMenuOpen}
                   ></span>
                 </div>
               </div>

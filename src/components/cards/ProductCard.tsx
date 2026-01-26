@@ -74,7 +74,7 @@ export default function ProductCard({
 
         {/* Card Info */}
         <div className="p-4 bg-white text-gray-900">
-          <h3 className="text-lg font-medium mb-1 group-hover:text-[var(--primary-color)] transition-colors">
+          <h3 className="text-lg font-medium mb-1 group-hover:text-primary transition-colors">
             {name}
           </h3>
           {location && <p className="text-sm text-gray-500 mb-2">{location}</p>}
@@ -90,7 +90,7 @@ export default function ProductCard({
 
           {/* Price */}
           {price && (
-            <div className="text-lg font-semibold text-[var(--primary-color)]">
+            <div className="text-lg font-semibold text-primary">
               {price}
             </div>
           )}

@@ -36,12 +36,12 @@ export default function PartnerCard({
         </Link>
       </div>
       <div className="abs bg-blur z-2 top-0 w-100 h-100 hover-op-1"></div>
-      {/* Dark background for text readability - using bg-dark-2 color */}
+      {/* Dark background for text readability - using primary color */}
       <div
         className="abs z-3 bottom-0 w-100 h-50"
         style={{
           background:
-            "linear-gradient(to top, var(--bg-dark-2) 0%, rgba(30, 70, 69, 0.6) 50%, transparent 100%)",
+            "linear-gradient(to top, var(--primary) 0%, rgba(0, 86, 214, 0.6) 50%, transparent 100%)",
         }}
       ></div>
       <div className="abs z-4 bottom-0 p-30 w-100 text-center hover-op-0">

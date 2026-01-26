@@ -25,9 +25,9 @@ export default function Button({
 
   const variantClasses = {
     primary:
-      "bg-[var(--primary-color)] text-white hover:bg-[var(--secondary-color)]",
+      "bg-primary text-primary-foreground hover:bg-primary/90",
     outline:
-      "border-2 border-[var(--primary-color)] text-[var(--primary-color)] hover:bg-[var(--primary-color)] hover:text-white",
+      "border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground",
     line: "btn-line fx-slide border border-white/30 text-white",
   };
 

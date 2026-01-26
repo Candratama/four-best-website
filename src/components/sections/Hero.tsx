@@ -178,7 +178,7 @@ export default function Hero({
       </div>
 
       {/* Swiper Slider */}
-      <div className="mh-800" style={{ height: "800px" }}>
+      <div className="h-screen" style={{ height: "100vh" }}>
         <Swiper
           modules={[Navigation, Pagination, Autoplay, EffectFade]}
           effect="fade"

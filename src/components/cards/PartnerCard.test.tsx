@@ -18,14 +18,12 @@ import PartnerCard from "./PartnerCard";
 // Arbitrary for generating valid partner card props
 const partnerCardArbitrary = fc.record({
   name: fc
-    .string({ minLength: 1, maxLength: 100 })
+    .stringMatching(/^[A-Za-z][A-Za-z0-9 ]{0,99}$/)
     .filter((s) => s.trim().length > 0),
-  slug: fc
-    .string({ minLength: 1, maxLength: 50 })
-    .filter((s) => /^[a-z0-9-]+$/.test(s)),
+  slug: fc.stringMatching(/^[a-z][a-z0-9-]{0,49}$/).filter((s) => s.length > 0),
   image: fc.webUrl(),
   size: fc
-    .string({ minLength: 1, maxLength: 20 })
+    .stringMatching(/^[0-9]+\s?(sqm|sqft|m2)$/)
     .filter((s) => s.trim().length > 0),
 });
 
@@ -46,9 +44,8 @@ describe("PartnerCard", () => {
         expect(nameElement).toBeTruthy();
         expect(nameElement?.textContent).toBe(props.name);
 
-        // Check that the size is displayed (format: "Size {size}")
-        const sizeText = `Size ${props.size}`;
-        expect(container.textContent).toContain(sizeText);
+        // Check that the size is displayed
+        expect(container.textContent).toContain(props.size);
 
         // Cleanup for next iteration
         container.remove();

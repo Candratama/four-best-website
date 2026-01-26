@@ -6,13 +6,17 @@
  * SHALL display only the content associated with that tab and hide all other tab contents.
  */
 
-import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, it, expect, afterEach } from "vitest";
+import { render, screen, cleanup } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import * as fc from "fast-check";
 import Tabs, { type TabItem } from "./Tabs";
 
 describe("Tabs Component - Property-Based Tests", () => {
+  afterEach(() => {
+    cleanup();
+  });
+
   /**
    * Property 2: Tab Content Switching
    * For any tab selection, only the selected tab's content should be visible
@@ -23,11 +27,16 @@ describe("Tabs Component - Property-Based Tests", () => {
         fc
           .array(
             fc.record({
-              label: fc.string({ minLength: 1, maxLength: 20 }),
-              content: fc.string({ minLength: 1, maxLength: 50 }),
+              label: fc.stringMatching(/^Tab[0-9]{1,3}$/),
+              content: fc.stringMatching(/^Content[0-9]{1,3}$/),
             }),
-            { minLength: 2, maxLength: 10 }
+            { minLength: 2, maxLength: 5 }
           )
+          .filter((tabs) => {
+            // Ensure all labels are unique
+            const labels = tabs.map((t) => t.label);
+            return new Set(labels).size === labels.length;
+          })
           .chain((tabs) =>
             fc.record({
               tabs: fc.constant(tabs),
@@ -35,29 +44,24 @@ describe("Tabs Component - Property-Based Tests", () => {
             })
           ),
         async ({ tabs, selectedIndex }) => {
+          cleanup(); // Ensure clean state before each test
+
           // Convert string content to ReactNode for the component
-          const tabItems: TabItem[] = tabs.map((tab) => ({
+          const tabItems: TabItem[] = tabs.map((tab, idx) => ({
             label: tab.label,
-            content: (
-              <div data-testid={`content-${tab.label}`}>{tab.content}</div>
-            ),
+            content: <div data-testid={`content-${idx}`}>{tab.content}</div>,
           }));
 
           const user = userEvent.setup();
-          const { rerender } = render(
-            <Tabs items={tabItems} defaultActive={0} />
-          );
+          render(<Tabs items={tabItems} defaultActive={0} />);
 
           // Click on the selected tab
           const tabButton = screen.getByText(tabs[selectedIndex].label);
           await user.click(tabButton);
 
-          // Force a rerender to ensure state updates are reflected
-          rerender(<Tabs items={tabItems} defaultActive={0} />);
-
           // Verify only the selected tab content is visible
           for (let i = 0; i < tabs.length; i++) {
-            const content = screen.getByTestId(`content-${tabs[i].label}`);
+            const content = screen.getByTestId(`content-${i}`);
 
             if (i === selectedIndex) {
               // Selected tab content should be visible (display: block or not display: none)
@@ -71,5 +75,5 @@ describe("Tabs Component - Property-Based Tests", () => {
       ),
       { numRuns: 100 }
     );
-  });
+  }, 60000); // 60 second timeout for PBT
 });

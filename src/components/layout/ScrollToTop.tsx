@@ -55,7 +55,7 @@ export default function ScrollToTop() {
   // Don't render until mounted to avoid hydration mismatch
   if (!mounted) {
     return (
-      <div className="float-text show-on-scroll hide">
+      <div className="float-text show-on-scroll hide" suppressHydrationWarning>
         <span>
           <a href="#">Scroll to top</a>
         </span>

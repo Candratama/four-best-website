@@ -34,7 +34,16 @@ const formDataArbitrary = fc.record({
     fc.string({ minLength: 1, maxLength: 50 }).filter((s) => !s.includes("@")), // Invalid format
     fc.emailAddress() // Valid
   ),
-  date: fc.oneof(fc.constant(""), fc.date({ min: new Date("2020-01-01"), max: new Date("2030-12-31") }).map((d) => d.toISOString().split("T")[0])),
+  date: fc.oneof(
+    fc.constant(""),
+    fc.integer({ min: 2020, max: 2030 }).chain((year) =>
+      fc.integer({ min: 1, max: 12 }).chain((month) =>
+        fc.integer({ min: 1, max: 28 }).map((day) =>
+          `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}`
+        )
+      )
+    )
+  ),
   time: fc.constantFrom(
     "10:00",
     "11:00",
