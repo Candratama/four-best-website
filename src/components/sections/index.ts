@@ -12,3 +12,4 @@ export { default as Team } from './Team';
 export { default as CTABanner } from './CTABanner';
 export { default as PartnersGrid } from './PartnersGrid';
 export { default as ValueProposition } from './ValueProposition';
+export { default as VideoSection } from './VideoSection';

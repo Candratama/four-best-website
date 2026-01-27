@@ -6,6 +6,7 @@ import {
   PartnersGrid,
   HalfFluid,
   Stats,
+  VideoSection,
 } from "@/components/sections";
 import { HotspotImage } from "@/components/ui";
 
@@ -127,50 +128,11 @@ export default function Home() {
       {/* <Stats stats={stats} /> */}
 
       {/* Video Section */}
-      <section
-        aria-label="section"
-        className="section-dark relative p-0 text-light"
-      >
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-lg-12">
-              <a
-                className="d-block hover popup-youtube"
-                href="https://www.youtube.com/watch?v=C6rf51uHWJg"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div className="relative overflow-hidden z-3">
-                  <div className="absolute start-0 w-100 abs-middle fs-36 text-white text-center z-2">
-                    <div className="player circle wow scaleIn">
-                      <span></span>
-                    </div>
-                  </div>
-                  <div className="absolute w-100 h-100 top-0 bg-dark hover-op-05"></div>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/images/background/3.webp"
-                    className="w-100 hover-scale-1-1"
-                    alt="Virtual Tour"
-                  />
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        <div className="abs bottom-10 z-2 w-100">
-          <div className="container">
-            <div className="row">
-              <div className="col-lg-6">
-                <h1 className="fs-120 text-uppercase fs-sm-10vw mb-4 lh-1">
-                  Virtual Tour
-                </h1>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <VideoSection
+        youtubeUrl="https://www.youtube.com/watch?v=C6rf51uHWJg"
+        thumbnailImage="/images/background/3.webp"
+        title="Virtual Tour"
+      />
 
       {/* Contact/Agents Section */}
       <section id="contact" className="relative">
