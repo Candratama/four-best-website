@@ -279,29 +279,79 @@ header.header-mobile #mainmenu {
   display: none;
 }
 
-/* When menu-open class is added, show fullscreen menu with DARK GREEN background */
+/* When menu-open class is added, show fullscreen menu with navy primary background */
+header.header-mobile.menu-open,
+header.header-mobile.menu-open .navbar-container,
+header.header-mobile.menu-open .container-fluid,
+header.header-mobile.menu-open .row,
+header.header-mobile.menu-open .col-lg-12,
+header.header-mobile.menu-open .de-flex,
+header.header-mobile.menu-open .col-start,
+header.header-mobile.menu-open .col-center,
+header.header-mobile.menu-open .col-end,
+header.header-mobile.menu-open #mainmenu {
+  background: #162d50 !important;
+}
+
+/* Exclude img from background override */
+header.header-mobile.menu-open img,
+header.header-mobile.menu-open .logo-white,
+header.header-mobile.menu-open .col-center img {
+  background: none !important;
+  background-color: transparent !important;
+  filter: brightness(0) invert(1) !important;
+}
+
 header.header-mobile.menu-open {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-height: 100vh !important;
+  max-height: 100vh !important;
   z-index: 9999;
-  overflow-y: auto;
-  background: #1a3d2e !important;
+  overflow: hidden !important;
+  overflow-y: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  padding-top: env(safe-area-inset-top, 20px) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  touch-action: none !important;
+  -webkit-overflow-scrolling: none !important;
+}
+
+/* Add padding to navbar container when menu is open */
+header.header-mobile.menu-open .navbar-container {
+  margin: 0 !important;
+  border-radius: 0 !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  padding-top: 50px !important;
+  overflow: hidden !important;
+}
+
+/* Fix logo display in mobile menu - exclude from background override */
+header.header-mobile.menu-open .col-center img,
+header.header-mobile.menu-open .logo-white {
+  background: transparent !important;
 }
 
 header.header-mobile.menu-open #mainmenu {
   display: block;
 }
 
-/* Style menu items in mobile view - LIGHT text on dark green bg */
+/* Style menu items in mobile view - LIGHT text on navy bg */
 header.header-mobile.menu-open #mainmenu li {
   display: block;
   width: 100%;
   border-bottom: solid 1px rgba(255, 255, 255, 0.15);
   margin: 0;
   float: none;
+  text-align: center;
 }
 
 header.header-mobile.menu-open #mainmenu li:last-child {
@@ -313,7 +363,7 @@ header.header-mobile.menu-open #mainmenu li a.menu-item {
   display: block;
   padding: 15px 0;
   color: #ffffff !important;
-  text-align: left;
+  text-align: center;
   font-size: var(--mainmenu-font-size, 16px);
   font-weight: var(--mainmenu-font-weight, 500);
 }
@@ -339,13 +389,33 @@ header.header-mobile #mainmenu .menu-item.active::after {
 
 /* Mobile header layout adjustments */
 @media only screen and (max-width: 992px) {
+  /* Logo on mobile */
+  header.header-mobile .col-center img {
+    width: 140px !important;
+    height: auto !important;
+    transition: all 0.3s ease !important;
+  }
+
+  /* Smaller logo when scrolled on mobile */
+  header.header-mobile.smaller .col-center img {
+    width: 90px !important;
+    height: auto !important;
+  }
+
+  /* Smooth transition for mobile header elements */
+  header.header-mobile .navbar-container,
+  header.header-mobile .de-flex,
+  header.header-mobile .col-center {
+    transition: all 0.3s ease !important;
+  }
+  
   /* Menu button - hamburger/close icon using CSS lines */
   /* Override template FontAwesome icons completely */
   header.header-mobile #menu-btn {
     display: block !important;
     cursor: pointer;
-    width: 24px;
-    height: 20px;
+    width: 18px;
+    height: 14px;
     position: relative;
     z-index: 1000;
     background: transparent !important;
@@ -361,7 +431,7 @@ header.header-mobile #mainmenu .menu-item.active::after {
     font-family: inherit !important;
     content: "" !important;
     display: block !important;
-    width: 24px;
+    width: 18px;
     height: 2px;
     background: #fff !important;
     position: absolute;
@@ -381,24 +451,24 @@ header.header-mobile #mainmenu .menu-item.active::after {
   
   /* Middle line using box-shadow on ::before */
   header.header-mobile #menu-btn::before {
-    box-shadow: 0 9px 0 #fff;
+    box-shadow: 0 6px 0 #fff;
   }
   
   /* X icon when menu is open */
   header.header-mobile #menu-btn.menu-open::before {
-    top: 9px;
+    top: 6px;
     transform: rotate(45deg);
     box-shadow: none;
   }
   
   header.header-mobile #menu-btn.menu-open::after {
-    bottom: 9px;
+    bottom: 6px;
     transform: rotate(-45deg);
   }
   
   /* Mobile header - top bar with logo centered and menu btn right */
   header.header-mobile .container-fluid {
-    padding: 0 20px !important;
+    padding: 0 12px !important;
     height: auto !important;
   }
   
@@ -413,7 +483,7 @@ header.header-mobile #mainmenu .menu-item.active::after {
     flex-wrap: nowrap;
     align-items: center;
     justify-content: center;
-    padding: 20px 0;
+    padding: 6px 0;
     position: relative;
     height: auto !important;
   }
@@ -454,14 +524,14 @@ header.header-mobile #mainmenu .menu-item.active::after {
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: 20px 0;
+    padding: 40px 0 20px 0;
     position: relative;
   }
   
   header.header-mobile.menu-open .col-end {
     position: absolute;
-    right: 20px;
-    top: 30px;
+    right: 12px;
+    top: 45px;
     transform: none;
     transition: none;
   }

@@ -158,8 +158,8 @@ export default function Hero({
                 {title}
               </h1>
               {address && (
-                <div className="d-flex align-items-center">
-                  <h4 className="fw-500 mb-0 me-4">{address}</h4>
+                <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center">
+                  <h4 className="fw-500 mb-2 mb-md-0 me-md-4">{address}</h4>
                   {mapUrl && (
                     <a
                       className="btn-main btn-line fx-slide py-0 lh-1-6 fw-400 popup-gmaps"

@@ -1,0 +1,361 @@
+{
+  "site_settings": {
+    "id": 1,
+    "name": "4best",
+    "tagline": "Property Agency",
+    "logo": "/logo.svg",
+    "favicon": "/favicon.ico",
+    "language": "id",
+    "primary_color": "#162d50",
+    "secondary_color": "#0056d6",
+    "updated_at": "2024-01-01T00:00:00Z"
+  },
+  "company_info": {
+    "id": 1,
+    "address": "Perum Ungaran Asri, No C1, Ungaran",
+    "address_line_2": "Semarang, Jawa Tengah",
+    "phone": "+62 812 3456 7890",
+    "whatsapp": "+62 812 3456 7890",
+    "email": "contact@4best.id",
+    "opening_hours": "Mon to Sat 08:00 - 20:00",
+    "map_url": "https://maps.app.goo.gl/BSpMhDN2Z6Jgp9UL6",
+    "updated_at": "2024-01-01T00:00:00Z"
+  },
+  "social_links": [
+    {
+      "id": 1,
+      "platform": "facebook",
+      "url": "https://facebook.com/4best",
+      "icon": "fa-brands fa-facebook-f",
+      "is_active": 1,
+      "display_order": 1
+    },
+    {
+      "id": 2,
+      "platform": "twitter",
+      "url": "https://twitter.com/4best",
+      "icon": "fa-brands fa-x-twitter",
+      "is_active": 1,
+      "display_order": 2
+    },
+    {
+      "id": 3,
+      "platform": "instagram",
+      "url": "https://instagram.com/4best",
+      "icon": "fa-brands fa-instagram",
+      "is_active": 1,
+      "display_order": 3
+    },
+    {
+      "id": 4,
+      "platform": "youtube",
+      "url": "https://youtube.com/4best",
+      "icon": "fa-brands fa-youtube",
+      "is_active": 1,
+      "display_order": 4
+    },
+    {
+      "id": 5,
+      "platform": "whatsapp",
+      "url": "https://wa.me/6281234567890",
+      "icon": "fa-brands fa-whatsapp",
+      "is_active": 1,
+      "display_order": 5
+    }
+  ],
+  "navigation_items": [
+    {
+      "id": 1,
+      "label": "Home",
+      "href": "/",
+      "display_order": 1,
+      "is_active": 1
+    },
+    {
+      "id": 2,
+      "label": "Partners",
+      "href": "/partners",
+      "display_order": 2,
+      "is_active": 1
+    },
+    {
+      "id": 3,
+      "label": "About",
+      "href": "/about",
+      "display_order": 3,
+      "is_active": 1
+    },
+    {
+      "id": 4,
+      "label": "Contact",
+      "href": "/contact",
+      "display_order": 4,
+      "is_active": 1
+    }
+  ],
+  "hero_slides": [
+    {
+      "id": 1,
+      "page_slug": "home",
+      "image": "/images/slider/apt-1.webp",
+      "title": null,
+      "subtitle": null,
+      "overlay_opacity": 0.4,
+      "display_order": 1,
+      "is_active": 1
+    },
+    {
+      "id": 2,
+      "page_slug": "home",
+      "image": "/images/slider/apt-2.webp",
+      "title": null,
+      "subtitle": null,
+      "overlay_opacity": 0.4,
+      "display_order": 2,
+      "is_active": 1
+    }
+  ],
+  "value_propositions": [
+    {
+      "id": 1,
+      "icon": "UserCheck",
+      "title": "Pendekatan Personal",
+      "description": "Setiap klien ditangani secara khusus sesuai kebutuhan dan tujuan.",
+      "grid_class": null,
+      "display_order": 1,
+      "is_active": 1
+    },
+    {
+      "id": 2,
+      "icon": "TrendingUp",
+      "title": "Market Insight Akurat",
+      "description": "Analisis pasar yang tepat untuk hasil optimal.",
+      "grid_class": null,
+      "display_order": 2,
+      "is_active": 1
+    },
+    {
+      "id": 3,
+      "icon": "Shield",
+      "title": "Proses Transparan & Aman",
+      "description": "Komunikasi jelas dari awal hingga transaksi selesai.",
+      "grid_class": null,
+      "display_order": 3,
+      "is_active": 1
+    },
+    {
+      "id": 4,
+      "icon": "Award",
+      "title": "Agen Profesional & Terpercaya",
+      "description": "Berpengalaman dan berorientasi pada kepuasan klien.",
+      "grid_class": "md:col-span-2",
+      "display_order": 4,
+      "is_active": 1
+    },
+    {
+      "id": 5,
+      "icon": "Target",
+      "title": "Fokus Nilai Investasi",
+      "description": "Membantu memaksimalkan potensi jangka pendek dan panjang.",
+      "grid_class": null,
+      "display_order": 5,
+      "is_active": 1
+    }
+  ],
+  "stats": [
+    {
+      "id": 1,
+      "value": 25000,
+      "label": "Square Areas",
+      "suffix": null,
+      "display_order": 1,
+      "is_active": 1
+    },
+    {
+      "id": 2,
+      "value": 150,
+      "label": "Luxurious Unit",
+      "suffix": null,
+      "display_order": 2,
+      "is_active": 1
+    },
+    {
+      "id": 3,
+      "value": 300,
+      "label": "Parking Spaces",
+      "suffix": null,
+      "display_order": 3,
+      "is_active": 1
+    },
+    {
+      "id": 4,
+      "value": 20,
+      "label": "Public Facilities",
+      "suffix": null,
+      "display_order": 4,
+      "is_active": 1
+    }
+  ],
+  "team_members": [
+    {
+      "id": 1,
+      "name": "Barbara Charline",
+      "role": "Property Manager",
+      "image": "/images/team/1.webp",
+      "bio": null,
+      "social_facebook": "#",
+      "social_twitter": "#",
+      "social_instagram": "#",
+      "social_linkedin": null,
+      "display_order": 1,
+      "is_active": 1
+    },
+    {
+      "id": 2,
+      "name": "Thomas Bennett",
+      "role": "Leasing Consultant",
+      "image": "/images/team/2.webp",
+      "bio": null,
+      "social_facebook": "#",
+      "social_twitter": "#",
+      "social_instagram": "#",
+      "social_linkedin": null,
+      "display_order": 2,
+      "is_active": 1
+    },
+    {
+      "id": 3,
+      "name": "Madison Jane",
+      "role": "Community Coordinator",
+      "image": "/images/team/3.webp",
+      "bio": null,
+      "social_facebook": "#",
+      "social_twitter": "#",
+      "social_instagram": "#",
+      "social_linkedin": null,
+      "display_order": 3,
+      "is_active": 1
+    },
+    {
+      "id": 4,
+      "name": "Joshua Henry",
+      "role": "Maintenance Supervisor",
+      "image": "/images/team/4.webp",
+      "bio": null,
+      "social_facebook": "#",
+      "social_twitter": "#",
+      "social_instagram": "#",
+      "social_linkedin": null,
+      "display_order": 4,
+      "is_active": 1
+    }
+  ],
+  "agents": [
+    {
+      "id": 1,
+      "name": "Emily Rodriguez",
+      "phone": "(555) 234-5678",
+      "email": null,
+      "image": "/images/agents/1.webp",
+      "display_order": 1,
+      "is_active": 1
+    },
+    {
+      "id": 2,
+      "name": "Michael Chen",
+      "phone": "(555) 345-6789",
+      "email": null,
+      "image": "/images/agents/2.webp",
+      "display_order": 2,
+      "is_active": 1
+    },
+    {
+      "id": 3,
+      "name": "Jessica Patel",
+      "phone": "(555) 567-8901",
+      "email": null,
+      "image": "/images/agents/3.webp",
+      "display_order": 3,
+      "is_active": 1
+    }
+  ],
+  "page_sections": {
+    "home": {
+      "hero": {
+        "title": "Property Agency",
+        "subtitle": null
+      },
+      "overview": {
+        "subtitle": "4Best",
+        "title": "Pilihan Tepat, Hasil Terbaik",
+        "description": "4Best Agent Property adalah perusahaan agen properti profesional yang menyediakan layanan jual, beli, dan sewa properti dengan pendekatan terpercaya dan berorientasi hasil. Didukung oleh tim berpengalaman, pemahaman pasar yang kuat, serta sistem kerja transparan, kami berkomitmen membantu klien mendapatkan solusi properti terbaik dan bernilai investasi jangka panjang.",
+        "cta_text": "Schedule Visit",
+        "cta_href": "/contact",
+        "images": [
+          "/images/misc/s2.webp",
+          "/images/misc/s3.webp",
+          "/images/misc/s4.webp",
+          "/images/misc/s5.webp"
+        ]
+      },
+      "partners": {
+        "subtitle": "Our Partners",
+        "title": "Trusted Partners"
+      },
+      "value_proposition": {
+        "subtitle": "Mengapa Memilih Kami",
+        "title": "Value Proposition"
+      },
+      "video": {
+        "title": "Virtual Tour",
+        "youtube_url": "https://www.youtube.com/watch?v=C6rf51uHWJg",
+        "background_image": "/images/background/3.webp"
+      },
+      "contact": {
+        "subtitle": "Contact Us",
+        "title": "Talk to a Sales Agent"
+      }
+    },
+    "about": {
+      "hero": {
+        "title": "About Us",
+        "subtitle": "Creating Spaces You Love to Live In",
+        "background_image": "/images/background/5.webp"
+      },
+      "content": {
+        "subtitle": "About Us",
+        "title": "Welcome to Residem, Where Comfort Meets Community",
+        "description": "At Residem, we believe that home is more than just a place — it's where your story unfolds. Located in the heart of New York, our apartments are designed to offer a perfect blend of modern living, convenience, and community.",
+        "image_left": "/images/misc/p1.webp",
+        "image_right": "/images/misc/p2.webp"
+      },
+      "mission": {
+        "subtitle": "Our Mission",
+        "title": "To create welcoming, well-maintained, and thoughtfully designed living spaces where residents feel proud to call home.",
+        "background_image": "/images/misc/l9.webp"
+      },
+      "team": {
+        "subtitle": "Our Team",
+        "title": "Meet the Team"
+      },
+      "cta": {
+        "title": "Ready to make your next move?",
+        "button_text": "Schedule a Visit",
+        "button_href": "/contact"
+      }
+    },
+    "contact": {
+      "hero": {
+        "title": "Schedule a Visit",
+        "subtitle": "We'll Be Happy to Show You Around!",
+        "background_image": "/images/background/8.webp"
+      }
+    },
+    "partners": {
+      "hero": {
+        "title": "Our Partners",
+        "subtitle": "Trusted Developers & Property Partners"
+      }
+    }
+  }
+}

@@ -19,11 +19,12 @@ export default function Footer() {
                 }}
               >
                 <Image
-                  src="/images/logo.webp"
+                  src="/logo.svg"
                   alt="4best Logo"
-                  width={200}
-                  height={67}
-                  style={{ width: "auto", height: "auto" }}
+                  width={150}
+                  height={50}
+                  style={{ width: "300px", height: "auto" }}
+                  className="logo-white"
                 />
               </div>
               <div className="spacer-single"></div>
@@ -43,7 +44,7 @@ export default function Footer() {
           {/* Phone */}
           <div className="col-lg-4 col-md-6 mb-sm-30">
             <div className="d-flex justify-content-center">
-              <i className="fs-60 id-color icon_phone"></i>
+              <i className="fs-60 text-white icon_phone"></i>
               <div className="ms-3">
                 <h4 className="mb-0">Call Us</h4>
                 <p>Call: +1 123 456 789</p>
@@ -54,7 +55,7 @@ export default function Footer() {
           {/* Opening Hours */}
           <div className="col-lg-4 col-md-6 mb-sm-30">
             <div className="d-flex justify-content-center">
-              <i className="fs-60 id-color icon_clock"></i>
+              <i className="fs-60 text-white icon_clock"></i>
               <div className="ms-3">
                 <h4 className="mb-0">Opening Hours</h4>
                 <p>Mon to Sat 08:00 - 20:00</p>
@@ -65,7 +66,7 @@ export default function Footer() {
           {/* Email */}
           <div className="col-lg-4 col-md-6 mb-sm-30">
             <div className="d-flex justify-content-center">
-              <i className="fs-60 id-color icon_mail"></i>
+              <i className="fs-60 text-white icon_mail"></i>
               <div className="ms-3">
                 <h4 className="mb-0">Email Us</h4>
                 <p>contact@4best.id</p>

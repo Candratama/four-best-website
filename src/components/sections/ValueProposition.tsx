@@ -5,13 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  UserCheck,
-  TrendingUp,
-  Shield,
-  Award,
-  Target,
-} from "lucide-react";
+import { UserCheck, TrendingUp, Shield, Award, Target } from "lucide-react";
 
 interface ValueItem {
   icon: React.ReactNode;
@@ -52,7 +46,7 @@ const values: ValueItem[] = [
 
 export default function ValueProposition() {
   return (
-    <section className="py-20 bg-muted/30">
+    <section className="py-20 ">
       <div className="container">
         <div className="text-center mb-12">
           <div className="subtitle s2 mb-3">Mengapa Memilih Kami</div>

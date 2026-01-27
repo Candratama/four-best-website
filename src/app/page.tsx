@@ -107,7 +107,7 @@ export default function Home() {
       <ValueProposition />
 
       {/* Half-Fluid Sections */}
-      <HalfFluid
+      {/* <HalfFluid
         subtitle="Facilities"
         title="Comfort. Style. Location"
         description="Discover modern, light-filled apartments that blend style, comfort, and convenience in every detail. Choose from cozy studios to spacious three-bedrooms, each designed to suit your lifestyle. Enjoy exclusive amenities like rooftop lounges and a fitness center, all in a vibrant city location. Welcome to a community where luxury living meets urban energy."
@@ -121,7 +121,7 @@ export default function Home() {
         description="Discover modern, light-filled apartments that blend style, comfort, and convenience in every detail. Choose from cozy studios to spacious three-bedrooms, each designed to suit your lifestyle. Enjoy exclusive amenities like rooftop lounges and a fitness center, all in a vibrant city location. Welcome to a community where luxury living meets urban energy."
         backgroundImage="/images/misc/l5.webp"
         imagePosition="left"
-      />
+      /> */}
 
       {/* Stats Section */}
       {/* <Stats stats={stats} /> */}

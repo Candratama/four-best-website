@@ -64,6 +64,159 @@ export interface ContactPage {
 }
 
 // =============================================
+// SITE CONFIGURATION TYPES
+// =============================================
+
+export interface SiteSettings {
+  id: number;
+  name: string;
+  tagline: string | null;
+  logo: string | null;
+  favicon: string | null;
+  language: string;
+  primary_color: string;
+  secondary_color: string;
+  updated_at: string;
+}
+
+export interface CompanyInfo {
+  id: number;
+  address: string | null;
+  address_line_2: string | null;
+  phone: string | null;
+  whatsapp: string | null;
+  email: string | null;
+  opening_hours: string | null;
+  map_url: string | null;
+  updated_at: string;
+}
+
+export interface SocialLink {
+  id: number;
+  platform: string;
+  url: string;
+  icon: string | null;
+  is_active: number;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface NavigationItem {
+  id: number;
+  label: string;
+  href: string;
+  parent_id: number | null;
+  is_active: number;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface HeroSlide {
+  id: number;
+  page_slug: string;
+  image: string;
+  title: string | null;
+  subtitle: string | null;
+  overlay_opacity: number;
+  is_active: number;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ValueProposition {
+  id: number;
+  icon: string;
+  title: string;
+  description: string | null;
+  grid_class: string | null;
+  is_active: number;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Stat {
+  id: number;
+  value: number;
+  label: string;
+  suffix: string | null;
+  is_active: number;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface TeamMember {
+  id: number;
+  name: string;
+  role: string | null;
+  image: string | null;
+  bio: string | null;
+  social_facebook: string | null;
+  social_twitter: string | null;
+  social_instagram: string | null;
+  social_linkedin: string | null;
+  is_active: number;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Agent {
+  id: number;
+  name: string;
+  phone: string | null;
+  email: string | null;
+  image: string | null;
+  is_active: number;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface PageSection {
+  id: number;
+  page_slug: string;
+  section_key: string;
+  content: string; // JSON string
+  is_active: number;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+// Parsed page section content types
+export interface HeroSectionContent {
+  title: string;
+  subtitle?: string | null;
+  background_image?: string | null;
+}
+
+export interface OverviewSectionContent {
+  subtitle: string;
+  title: string;
+  description: string;
+  cta_text: string;
+  cta_href: string;
+  images: string[];
+}
+
+export interface VideoSectionContent {
+  title: string;
+  youtube_url: string;
+  background_image: string;
+}
+
+export interface CTASectionContent {
+  title: string;
+  button_text: string;
+  button_href: string;
+}
+
+// =============================================
 // HOMEPAGE QUERIES
 // =============================================
 

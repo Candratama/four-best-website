@@ -81,9 +81,9 @@
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
+  --color-primary: #162d50;
+  --color-primary-foreground: #ffffff;
+  --color-secondary: #0056d6;
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
@@ -179,8 +179,33 @@ a.btn-main:hover,
 a.btn-main.btn-line:hover,
 .btn-line:hover {
   background: var(--btn-hover-bg) !important;
-  border-color: var(--btn-hover-bg) !important;
+  border-color: #ffffff !important;
   color: var(--primary-foreground) !important;
+}
+
+/* Outlined button default state - primary color border with white bg */
+.btn-line,
+a.btn-line {
+  background: #ffffff !important;
+  border: 2px solid #162d50 !important;
+  color: #162d50 !important;
+  transition: color 0.15s ease, background 0.3s ease, border-color 0.3s ease !important;
+}
+
+/* Header button - outlined white when at top (before scroll) */
+header:not(.smaller) .btn-line,
+header:not(.smaller) a.btn-line {
+  background: transparent !important;
+  border: 2px solid #ffffff !important;
+  color: #ffffff !important;
+}
+
+/* Header button hover when at top */
+header:not(.smaller) .btn-line:hover,
+header:not(.smaller) a.btn-line:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: #ffffff !important;
+  color: #ffffff !important;
 }
 
 /* Logo white filter when scrolled */
@@ -208,6 +233,24 @@ header {
   transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   z-index: 9999;
+}
+
+/* Mobile menu open state - full navy background */
+.navbar-container.mobile-menu-open {
+  background: #162d50 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+/* Override navbar-container when mobile menu is open */
+header.header-mobile.menu-open .navbar-container,
+header.header-mobile.menu-open .navbar-container.navbar-scrolled,
+header.menu-open .navbar-container {
+  background: #162d50 !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
 }
 
 /* Scrolled state - floating container */
@@ -238,9 +281,48 @@ header.transparent:not(.smaller) {
   background: transparent !important;
 }
 
+/* Override transparent background when mobile menu is open */
+header.header-mobile.menu-open,
+header.header-mobile.menu-open.transparent,
+header.header-mobile.menu-open.transparent:not(.smaller),
+header.menu-open,
+header.menu-open.transparent,
+header.menu-open.transparent:not(.smaller) {
+  background: #162d50 !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* Cover any gap at the top with pseudo-element */
+header.header-mobile.menu-open::before,
+header.menu-open::before {
+  content: "";
+  position: fixed;
+  top: -50px;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: #162d50 !important;
+  z-index: 9998;
+}
+
+/* Ensure body doesn't show through when mobile menu is open */
+body:has(header.menu-open) {
+  background: #162d50 !important;
+}
+
 header.smaller {
   background: transparent !important;
   padding-top: 0.5rem;
+}
+
+/* Override smaller padding when menu is open */
+header.smaller.menu-open {
+  padding-top: 0 !important;
 }
 
 /* Value Proposition icon hover */
