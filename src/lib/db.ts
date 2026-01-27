@@ -469,3 +469,513 @@ export async function deleteProduct(id: number): Promise<void> {
   const db = await getDB();
   await db.prepare("DELETE FROM products WHERE id = ?").bind(id).run();
 }
+
+// =============================================
+// SITE SETTINGS QUERIES
+// =============================================
+
+export async function getSiteSettings(): Promise<SiteSettings | null> {
+  const db = await getDB();
+  return db.prepare("SELECT * FROM site_settings WHERE id = 1").first<SiteSettings>();
+}
+
+export async function updateSiteSettings(data: Partial<SiteSettings>): Promise<void> {
+  const db = await getDB();
+  const fields = Object.keys(data)
+    .filter((k) => k !== "id")
+    .map((k) => `${k} = ?`)
+    .join(", ");
+  const values = Object.values(data).filter((_, i) => Object.keys(data)[i] !== "id");
+
+  await db
+    .prepare(`UPDATE site_settings SET ${fields}, updated_at = datetime('now') WHERE id = 1`)
+    .bind(...values)
+    .run();
+}
+
+// =============================================
+// COMPANY INFO QUERIES
+// =============================================
+
+export async function getCompanyInfo(): Promise<CompanyInfo | null> {
+  const db = await getDB();
+  return db.prepare("SELECT * FROM company_info WHERE id = 1").first<CompanyInfo>();
+}
+
+export async function updateCompanyInfo(data: Partial<CompanyInfo>): Promise<void> {
+  const db = await getDB();
+  const fields = Object.keys(data)
+    .filter((k) => k !== "id")
+    .map((k) => `${k} = ?`)
+    .join(", ");
+  const values = Object.values(data).filter((_, i) => Object.keys(data)[i] !== "id");
+
+  await db
+    .prepare(`UPDATE company_info SET ${fields}, updated_at = datetime('now') WHERE id = 1`)
+    .bind(...values)
+    .run();
+}
+
+// =============================================
+// SOCIAL LINKS QUERIES
+// =============================================
+
+export async function getSocialLinks(options?: { activeOnly?: boolean }): Promise<SocialLink[]> {
+  const db = await getDB();
+  let query = "SELECT * FROM social_links WHERE 1=1";
+  if (options?.activeOnly) query += " AND is_active = 1";
+  query += " ORDER BY display_order ASC";
+  const result = await db.prepare(query).all<SocialLink>();
+  return result.results;
+}
+
+export async function createSocialLink(
+  data: Omit<SocialLink, "id" | "created_at" | "updated_at">
+): Promise<number> {
+  const db = await getDB();
+  const result = await db
+    .prepare(
+      `INSERT INTO social_links (platform, url, icon, is_active, display_order)
+       VALUES (?, ?, ?, ?, ?)`
+    )
+    .bind(data.platform, data.url, data.icon, data.is_active, data.display_order)
+    .run();
+  return result.meta.last_row_id as number;
+}
+
+export async function updateSocialLink(id: number, data: Partial<SocialLink>): Promise<void> {
+  const db = await getDB();
+  const fields = Object.keys(data)
+    .filter((k) => !["id", "created_at"].includes(k))
+    .map((k) => `${k} = ?`)
+    .join(", ");
+  const values = Object.values(data).filter(
+    (_, i) => !["id", "created_at"].includes(Object.keys(data)[i])
+  );
+  await db
+    .prepare(`UPDATE social_links SET ${fields}, updated_at = datetime('now') WHERE id = ?`)
+    .bind(...values, id)
+    .run();
+}
+
+export async function deleteSocialLink(id: number): Promise<void> {
+  const db = await getDB();
+  await db.prepare("DELETE FROM social_links WHERE id = ?").bind(id).run();
+}
+
+// =============================================
+// NAVIGATION ITEMS QUERIES
+// =============================================
+
+export async function getNavigationItems(options?: { activeOnly?: boolean }): Promise<NavigationItem[]> {
+  const db = await getDB();
+  let query = "SELECT * FROM navigation_items WHERE 1=1";
+  if (options?.activeOnly) query += " AND is_active = 1";
+  query += " ORDER BY display_order ASC";
+  const result = await db.prepare(query).all<NavigationItem>();
+  return result.results;
+}
+
+export async function createNavigationItem(
+  data: Omit<NavigationItem, "id" | "created_at" | "updated_at">
+): Promise<number> {
+  const db = await getDB();
+  const result = await db
+    .prepare(
+      `INSERT INTO navigation_items (label, href, parent_id, is_active, display_order)
+       VALUES (?, ?, ?, ?, ?)`
+    )
+    .bind(data.label, data.href, data.parent_id, data.is_active, data.display_order)
+    .run();
+  return result.meta.last_row_id as number;
+}
+
+export async function updateNavigationItem(id: number, data: Partial<NavigationItem>): Promise<void> {
+  const db = await getDB();
+  const fields = Object.keys(data)
+    .filter((k) => !["id", "created_at"].includes(k))
+    .map((k) => `${k} = ?`)
+    .join(", ");
+  const values = Object.values(data).filter(
+    (_, i) => !["id", "created_at"].includes(Object.keys(data)[i])
+  );
+  await db
+    .prepare(`UPDATE navigation_items SET ${fields}, updated_at = datetime('now') WHERE id = ?`)
+    .bind(...values, id)
+    .run();
+}
+
+export async function deleteNavigationItem(id: number): Promise<void> {
+  const db = await getDB();
+  await db.prepare("DELETE FROM navigation_items WHERE id = ?").bind(id).run();
+}
+
+// =============================================
+// HERO SLIDES QUERIES
+// =============================================
+
+export async function getHeroSlides(options?: {
+  pageSlug?: string;
+  activeOnly?: boolean;
+}): Promise<HeroSlide[]> {
+  const db = await getDB();
+  let query = "SELECT * FROM hero_slides WHERE 1=1";
+  const bindings: string[] = [];
+
+  if (options?.pageSlug) {
+    query += " AND page_slug = ?";
+    bindings.push(options.pageSlug);
+  }
+  if (options?.activeOnly) query += " AND is_active = 1";
+  query += " ORDER BY display_order ASC";
+
+  const result = await db.prepare(query).bind(...bindings).all<HeroSlide>();
+  return result.results;
+}
+
+export async function createHeroSlide(
+  data: Omit<HeroSlide, "id" | "created_at" | "updated_at">
+): Promise<number> {
+  const db = await getDB();
+  const result = await db
+    .prepare(
+      `INSERT INTO hero_slides (page_slug, image, title, subtitle, overlay_opacity, is_active, display_order)
+       VALUES (?, ?, ?, ?, ?, ?, ?)`
+    )
+    .bind(
+      data.page_slug,
+      data.image,
+      data.title,
+      data.subtitle,
+      data.overlay_opacity,
+      data.is_active,
+      data.display_order
+    )
+    .run();
+  return result.meta.last_row_id as number;
+}
+
+export async function updateHeroSlide(id: number, data: Partial<HeroSlide>): Promise<void> {
+  const db = await getDB();
+  const fields = Object.keys(data)
+    .filter((k) => !["id", "created_at"].includes(k))
+    .map((k) => `${k} = ?`)
+    .join(", ");
+  const values = Object.values(data).filter(
+    (_, i) => !["id", "created_at"].includes(Object.keys(data)[i])
+  );
+  await db
+    .prepare(`UPDATE hero_slides SET ${fields}, updated_at = datetime('now') WHERE id = ?`)
+    .bind(...values, id)
+    .run();
+}
+
+export async function deleteHeroSlide(id: number): Promise<void> {
+  const db = await getDB();
+  await db.prepare("DELETE FROM hero_slides WHERE id = ?").bind(id).run();
+}
+
+// =============================================
+// VALUE PROPOSITIONS QUERIES
+// =============================================
+
+export async function getValuePropositions(options?: { activeOnly?: boolean }): Promise<ValueProposition[]> {
+  const db = await getDB();
+  let query = "SELECT * FROM value_propositions WHERE 1=1";
+  if (options?.activeOnly) query += " AND is_active = 1";
+  query += " ORDER BY display_order ASC";
+  const result = await db.prepare(query).all<ValueProposition>();
+  return result.results;
+}
+
+export async function createValueProposition(
+  data: Omit<ValueProposition, "id" | "created_at" | "updated_at">
+): Promise<number> {
+  const db = await getDB();
+  const result = await db
+    .prepare(
+      `INSERT INTO value_propositions (icon, title, description, grid_class, is_active, display_order)
+       VALUES (?, ?, ?, ?, ?, ?)`
+    )
+    .bind(data.icon, data.title, data.description, data.grid_class, data.is_active, data.display_order)
+    .run();
+  return result.meta.last_row_id as number;
+}
+
+export async function updateValueProposition(id: number, data: Partial<ValueProposition>): Promise<void> {
+  const db = await getDB();
+  const fields = Object.keys(data)
+    .filter((k) => !["id", "created_at"].includes(k))
+    .map((k) => `${k} = ?`)
+    .join(", ");
+  const values = Object.values(data).filter(
+    (_, i) => !["id", "created_at"].includes(Object.keys(data)[i])
+  );
+  await db
+    .prepare(`UPDATE value_propositions SET ${fields}, updated_at = datetime('now') WHERE id = ?`)
+    .bind(...values, id)
+    .run();
+}
+
+export async function deleteValueProposition(id: number): Promise<void> {
+  const db = await getDB();
+  await db.prepare("DELETE FROM value_propositions WHERE id = ?").bind(id).run();
+}
+
+// =============================================
+// STATS QUERIES
+// =============================================
+
+export async function getStats(options?: { activeOnly?: boolean }): Promise<Stat[]> {
+  const db = await getDB();
+  let query = "SELECT * FROM stats WHERE 1=1";
+  if (options?.activeOnly) query += " AND is_active = 1";
+  query += " ORDER BY display_order ASC";
+  const result = await db.prepare(query).all<Stat>();
+  return result.results;
+}
+
+export async function createStat(
+  data: Omit<Stat, "id" | "created_at" | "updated_at">
+): Promise<number> {
+  const db = await getDB();
+  const result = await db
+    .prepare(
+      `INSERT INTO stats (value, label, suffix, is_active, display_order)
+       VALUES (?, ?, ?, ?, ?)`
+    )
+    .bind(data.value, data.label, data.suffix, data.is_active, data.display_order)
+    .run();
+  return result.meta.last_row_id as number;
+}
+
+export async function updateStat(id: number, data: Partial<Stat>): Promise<void> {
+  const db = await getDB();
+  const fields = Object.keys(data)
+    .filter((k) => !["id", "created_at"].includes(k))
+    .map((k) => `${k} = ?`)
+    .join(", ");
+  const values = Object.values(data).filter(
+    (_, i) => !["id", "created_at"].includes(Object.keys(data)[i])
+  );
+  await db
+    .prepare(`UPDATE stats SET ${fields}, updated_at = datetime('now') WHERE id = ?`)
+    .bind(...values, id)
+    .run();
+}
+
+export async function deleteStat(id: number): Promise<void> {
+  const db = await getDB();
+  await db.prepare("DELETE FROM stats WHERE id = ?").bind(id).run();
+}
+
+// =============================================
+// TEAM MEMBERS QUERIES
+// =============================================
+
+export async function getTeamMembers(options?: { activeOnly?: boolean }): Promise<TeamMember[]> {
+  const db = await getDB();
+  let query = "SELECT * FROM team_members WHERE 1=1";
+  if (options?.activeOnly) query += " AND is_active = 1";
+  query += " ORDER BY display_order ASC";
+  const result = await db.prepare(query).all<TeamMember>();
+  return result.results;
+}
+
+export async function getTeamMemberById(id: number): Promise<TeamMember | null> {
+  const db = await getDB();
+  return db.prepare("SELECT * FROM team_members WHERE id = ?").bind(id).first<TeamMember>();
+}
+
+export async function createTeamMember(
+  data: Omit<TeamMember, "id" | "created_at" | "updated_at">
+): Promise<number> {
+  const db = await getDB();
+  const result = await db
+    .prepare(
+      `INSERT INTO team_members (name, role, image, bio, social_facebook, social_twitter, social_instagram, social_linkedin, is_active, display_order)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    )
+    .bind(
+      data.name,
+      data.role,
+      data.image,
+      data.bio,
+      data.social_facebook,
+      data.social_twitter,
+      data.social_instagram,
+      data.social_linkedin,
+      data.is_active,
+      data.display_order
+    )
+    .run();
+  return result.meta.last_row_id as number;
+}
+
+export async function updateTeamMember(id: number, data: Partial<TeamMember>): Promise<void> {
+  const db = await getDB();
+  const fields = Object.keys(data)
+    .filter((k) => !["id", "created_at"].includes(k))
+    .map((k) => `${k} = ?`)
+    .join(", ");
+  const values = Object.values(data).filter(
+    (_, i) => !["id", "created_at"].includes(Object.keys(data)[i])
+  );
+  await db
+    .prepare(`UPDATE team_members SET ${fields}, updated_at = datetime('now') WHERE id = ?`)
+    .bind(...values, id)
+    .run();
+}
+
+export async function deleteTeamMember(id: number): Promise<void> {
+  const db = await getDB();
+  await db.prepare("DELETE FROM team_members WHERE id = ?").bind(id).run();
+}
+
+// =============================================
+// AGENTS QUERIES
+// =============================================
+
+export async function getAgents(options?: { activeOnly?: boolean }): Promise<Agent[]> {
+  const db = await getDB();
+  let query = "SELECT * FROM agents WHERE 1=1";
+  if (options?.activeOnly) query += " AND is_active = 1";
+  query += " ORDER BY display_order ASC";
+  const result = await db.prepare(query).all<Agent>();
+  return result.results;
+}
+
+export async function getAgentById(id: number): Promise<Agent | null> {
+  const db = await getDB();
+  return db.prepare("SELECT * FROM agents WHERE id = ?").bind(id).first<Agent>();
+}
+
+export async function createAgent(
+  data: Omit<Agent, "id" | "created_at" | "updated_at">
+): Promise<number> {
+  const db = await getDB();
+  const result = await db
+    .prepare(
+      `INSERT INTO agents (name, phone, email, image, is_active, display_order)
+       VALUES (?, ?, ?, ?, ?, ?)`
+    )
+    .bind(data.name, data.phone, data.email, data.image, data.is_active, data.display_order)
+    .run();
+  return result.meta.last_row_id as number;
+}
+
+export async function updateAgent(id: number, data: Partial<Agent>): Promise<void> {
+  const db = await getDB();
+  const fields = Object.keys(data)
+    .filter((k) => !["id", "created_at"].includes(k))
+    .map((k) => `${k} = ?`)
+    .join(", ");
+  const values = Object.values(data).filter(
+    (_, i) => !["id", "created_at"].includes(Object.keys(data)[i])
+  );
+  await db
+    .prepare(`UPDATE agents SET ${fields}, updated_at = datetime('now') WHERE id = ?`)
+    .bind(...values, id)
+    .run();
+}
+
+export async function deleteAgent(id: number): Promise<void> {
+  const db = await getDB();
+  await db.prepare("DELETE FROM agents WHERE id = ?").bind(id).run();
+}
+
+// =============================================
+// PAGE SECTIONS QUERIES
+// =============================================
+
+export async function getPageSections(options?: {
+  pageSlug?: string;
+  activeOnly?: boolean;
+}): Promise<PageSection[]> {
+  const db = await getDB();
+  let query = "SELECT * FROM page_sections WHERE 1=1";
+  const bindings: string[] = [];
+
+  if (options?.pageSlug) {
+    query += " AND page_slug = ?";
+    bindings.push(options.pageSlug);
+  }
+  if (options?.activeOnly) query += " AND is_active = 1";
+  query += " ORDER BY display_order ASC";
+
+  const result = await db.prepare(query).bind(...bindings).all<PageSection>();
+  return result.results;
+}
+
+export async function getPageSection(
+  pageSlug: string,
+  sectionKey: string
+): Promise<PageSection | null> {
+  const db = await getDB();
+  return db
+    .prepare("SELECT * FROM page_sections WHERE page_slug = ? AND section_key = ?")
+    .bind(pageSlug, sectionKey)
+    .first<PageSection>();
+}
+
+export async function getPageSectionContent<T>(
+  pageSlug: string,
+  sectionKey: string
+): Promise<T | null> {
+  const section = await getPageSection(pageSlug, sectionKey);
+  if (!section) return null;
+  try {
+    return JSON.parse(section.content) as T;
+  } catch {
+    return null;
+  }
+}
+
+export async function createPageSection(
+  data: Omit<PageSection, "id" | "created_at" | "updated_at">
+): Promise<number> {
+  const db = await getDB();
+  const result = await db
+    .prepare(
+      `INSERT INTO page_sections (page_slug, section_key, content, is_active, display_order)
+       VALUES (?, ?, ?, ?, ?)`
+    )
+    .bind(data.page_slug, data.section_key, data.content, data.is_active, data.display_order)
+    .run();
+  return result.meta.last_row_id as number;
+}
+
+export async function updatePageSection(id: number, data: Partial<PageSection>): Promise<void> {
+  const db = await getDB();
+  const fields = Object.keys(data)
+    .filter((k) => !["id", "created_at"].includes(k))
+    .map((k) => `${k} = ?`)
+    .join(", ");
+  const values = Object.values(data).filter(
+    (_, i) => !["id", "created_at"].includes(Object.keys(data)[i])
+  );
+  await db
+    .prepare(`UPDATE page_sections SET ${fields}, updated_at = datetime('now') WHERE id = ?`)
+    .bind(...values, id)
+    .run();
+}
+
+export async function updatePageSectionContent<T>(
+  pageSlug: string,
+  sectionKey: string,
+  content: T
+): Promise<void> {
+  const db = await getDB();
+  await db
+    .prepare(
+      `UPDATE page_sections SET content = ?, updated_at = datetime('now') 
+       WHERE page_slug = ? AND section_key = ?`
+    )
+    .bind(JSON.stringify(content), pageSlug, sectionKey)
+    .run();
+}
+
+export async function deletePageSection(id: number): Promise<void> {
+  const db = await getDB();
+  await db.prepare("DELETE FROM page_sections WHERE id = ?").bind(id).run();
+}
