@@ -58,6 +58,7 @@ CREATE TABLE IF NOT EXISTS partners (
     short_description TEXT,
     full_profile TEXT,
     logo TEXT,
+    hero_image TEXT,
     contact_phone TEXT,
     contact_email TEXT,
     is_featured INTEGER DEFAULT 0,

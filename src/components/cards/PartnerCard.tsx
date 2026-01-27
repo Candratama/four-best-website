@@ -4,7 +4,7 @@ export interface PartnerCardProps {
   name: string;
   slug: string;
   image: string;
-  size: string;
+  productCount: number;
   href?: string;
 }
 
@@ -12,24 +12,24 @@ export default function PartnerCard({
   name,
   slug,
   image,
-  size,
+  productCount,
   href,
 }: PartnerCardProps) {
   const linkHref = href || `/partners/${slug}`;
 
   return (
     <div
-      className="hover overflow-hidden relative text-light text-center wow zoomIn rounded-2xl transition-all duration-300 hover:shadow-[0_10px_40px_rgba(0,86,214,0.3)]"
+      className="hover overflow-hidden relative text-light text-center wow zoomIn rounded-2xl transition-all duration-300"
       data-wow-delay=".0s"
     >
       <div className="wow scaleIn overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={image} className="hover-scale-1-1 w-100" alt={name} />
       </div>
-      <div className="abs w-100 px-4 hover-op-1 z-4 hover-mt-40 abs-centered">
+      <div className="abs w-100 h-100 px-4 hover-op-1 z-4 top-0 left-0 d-flex justify-content-center align-items-center">
         <Link
           href={linkHref}
-          className="btn-main btn-line fx-slide"
+          className="btn-main btn-line btn-line-light fx-slide"
           data-hover="View Details"
         >
           <span>View Details</span>
@@ -47,7 +47,9 @@ export default function PartnerCard({
       <div className="abs z-4 bottom-0 p-30 w-100 text-center hover-op-0">
         <div className="partner-card-info">
           <h3 className="partner-card-name">{name}</h3>
-          <div className="partner-card-size">{size}</div>
+          <div className="partner-card-size">
+            {productCount > 0 ? `${productCount} Proyek` : "Belum ada proyek"}
+          </div>
         </div>
       </div>
       <div className="gradient-edge-bottom abs w-100 h-40 bottom-0 z-1"></div>

@@ -55,16 +55,16 @@ export default function PartnersClient({
         <div className="sw-overlay op-5"></div>
       </section>
 
-      {/* Partners Grid Section - Exact match to template with no-top for seamless connection */}
-      <section className="relative p-1 section-dark no-top">
-        <div className="container-fluid relative z-2">
-          <div className="row g-1">
+      {/* Partners Grid Section */}
+      <section className="relative bg-gray no-top" style={{ backgroundColor: "#f5f5f5", padding: "60px 0" }}>
+        <div className="container">
+          <div className="row g-4">
             {error ? (
-              <div className="col-12 text-center py-5 text-light">
+              <div className="col-12 text-center py-5">
                 <p className="text-danger">{error}</p>
               </div>
             ) : partnerCards.length === 0 ? (
-              <div className="col-12 text-center py-5 text-light">
+              <div className="col-12 text-center py-5">
                 <p>No partners available.</p>
               </div>
             ) : (

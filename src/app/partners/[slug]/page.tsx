@@ -1,4 +1,4 @@
-import { getPartnerBySlug } from "@/lib/db";
+import { getPartnerBySlug, getProducts } from "@/lib/db";
 import { notFound } from "next/navigation";
 import PartnerDetailsClient from "./PartnerDetailsClient";
 
@@ -18,5 +18,11 @@ export default async function PartnerDetailsPage({
     notFound();
   }
 
-  return <PartnerDetailsClient partner={partner} />;
+  // Fetch products for this partner
+  const products = await getProducts({
+    partnerId: partner.id,
+    activeOnly: true,
+  });
+
+  return <PartnerDetailsClient partner={partner} products={products} />;
 }

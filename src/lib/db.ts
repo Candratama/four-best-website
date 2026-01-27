@@ -11,6 +11,7 @@ export interface Partner {
   short_description: string | null;
   full_profile: string | null;
   logo: string | null;
+  hero_image: string | null;
   contact_phone: string | null;
   contact_email: string | null;
   is_featured: number;

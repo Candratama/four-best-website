@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getPartners } from "@/lib/db";
+import { getPartners, getProducts } from "@/lib/db";
 import { PartnerCard } from "@/components/cards";
 
 interface PartnersGridProps {
@@ -17,26 +17,31 @@ export default async function PartnersGrid({
     name: string;
     slug: string;
     image: string;
-    size: string;
+    productCount: number;
     href: string;
   }> = [];
 
   try {
     const dbPartners = await getPartners({ activeOnly: true });
-    const partnerSizes = [
-      "50+ Projects",
-      "30+ Projects",
-      "75+ Projects",
-      "40+ Projects",
-    ];
 
-    partners = dbPartners.slice(0, limit).map((partner, index) => ({
-      name: partner.name,
-      slug: partner.slug,
-      image: partner.logo || `/images/apartment/${(index % 6) + 1}.jpg`,
-      size: partnerSizes[index % partnerSizes.length],
-      href: `/partners/${partner.slug}`,
-    }));
+    // Get product counts for each partner
+    const partnersWithCounts = await Promise.all(
+      dbPartners.slice(0, limit).map(async (partner) => {
+        const products = await getProducts({
+          partnerId: partner.id,
+          activeOnly: true,
+        });
+        return {
+          name: partner.name,
+          slug: partner.slug,
+          image: partner.logo || "/images/misc/company-placeholder.webp",
+          productCount: products.length,
+          href: `/partners/${partner.slug}`,
+        };
+      })
+    );
+
+    partners = partnersWithCounts;
   } catch (error) {
     console.error("Failed to fetch partners:", error);
   }
