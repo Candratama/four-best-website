@@ -154,15 +154,17 @@ export default function Hero({
         <div className="container">
           <div className="row">
             <div className="col-lg-6">
-              <h1 className="fs-120 text-uppercase fs-sm-10vw mb-4 lh-1">
+              <h1 className="fs-120 text-uppercase fs-sm-10vw mb-4 lh-1 hero-title">
                 {title}
               </h1>
               {address && (
                 <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center">
-                  <h4 className="fw-500 mb-2 mb-md-0 me-md-4">{address}</h4>
+                  <h4 className="fw-500 mb-2 mb-md-0 me-md-4 hero-address">
+                    {address}
+                  </h4>
                   {mapUrl && (
                     <a
-                      className="btn-main btn-line fx-slide py-0 lh-1-6 fw-400 popup-gmaps"
+                      className="btn-main btn-line btn-line-light fx-slide py-0 lh-1-6 fw-400 popup-gmaps"
                       href={mapUrl}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -213,7 +215,7 @@ export default function Hero({
               >
                 <div
                   className={`sw-overlay op-${Math.round(
-                    (slide.overlay || 0.4) * 10
+                    (slide.overlay || 0.4) * 10,
                   )}`}
                 />
               </div>

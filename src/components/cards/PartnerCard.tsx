@@ -45,9 +45,9 @@ export default function PartnerCard({
         }}
       ></div>
       <div className="abs z-4 bottom-0 p-30 w-100 text-center hover-op-0">
-        <div className="d-flex justify-content-between align-items-center">
-          <h3 className="mb-0">{name}</h3>
-          <div>{size}</div>
+        <div className="partner-card-info">
+          <h3 className="partner-card-name">{name}</h3>
+          <div className="partner-card-size">{size}</div>
         </div>
       </div>
       <div className="gradient-edge-bottom abs w-100 h-40 bottom-0 z-1"></div>

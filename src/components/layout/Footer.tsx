@@ -1,108 +1,69 @@
 import Link from "next/link";
 import Image from "next/image";
+import { getCompanyInfo, getSocialLinks } from "@/lib/db";
 
-export default function Footer() {
+export default async function Footer() {
   const currentYear = new Date().getFullYear();
 
+  // Fetch company info and social links from database
+  const [companyInfo, socialLinks] = await Promise.all([
+    getCompanyInfo(),
+    getSocialLinks({ activeOnly: true }),
+  ]);
+
+  const address = companyInfo?.address || "Perum Ungaran Asri, No C1, Ungaran";
+  const phone =
+    companyInfo?.whatsapp || companyInfo?.phone || "+62 812 3456 7890";
+  const openingHours = companyInfo?.opening_hours || "Sen - Sab 08:00 - 17:00";
+  const email = companyInfo?.email || "contact@4best.id";
+  const instagram = "@4best.id";
+
   return (
-    <footer className="section-dark">
-      <div className="container">
+    <footer className="section-dark footer-compact">
+      <div className="container h-100 d-flex flex-column justify-content-center align-items-center">
         {/* Logo and Address Section */}
-        <div className="row gx-5 justify-content-center">
-          <div className="col-lg-8">
-            <div className="text-center">
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginBottom: "20px",
-                }}
-              >
-                <Image
-                  src="/logo.svg"
-                  alt="4best Logo"
-                  width={150}
-                  height={50}
-                  style={{ width: "300px", height: "auto" }}
-                  className="logo-white"
-                />
-              </div>
-              <div className="spacer-single"></div>
-              <div className="fs-16">
-                712 Jefferson Ave, Brooklyn
-                <br />
-                New York 11221
-              </div>
-            </div>
+        <div className="text-center">
+          <div className="footer-logo-wrapper">
+            <Image
+              src="/logo.svg"
+              alt="4best Logo"
+              width={150}
+              height={50}
+              className="logo-white footer-logo"
+            />
+          </div>
+          <div className="footer-address mt-3">
+            <i className="fa-solid fa-location-dot footer-inline-icon"></i>
+            {address}
           </div>
         </div>
 
-        <div className="spacer-double"></div>
-
-        {/* Contact Info Grid */}
-        <div className="row g-4">
-          {/* Phone */}
-          <div className="col-lg-4 col-md-6 mb-sm-30">
-            <div className="d-flex justify-content-center">
-              <i className="fs-60 text-white icon_phone"></i>
-              <div className="ms-3">
-                <h4 className="mb-0">Call Us</h4>
-                <p>Call: +1 123 456 789</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Opening Hours */}
-          <div className="col-lg-4 col-md-6 mb-sm-30">
-            <div className="d-flex justify-content-center">
-              <i className="fs-60 text-white icon_clock"></i>
-              <div className="ms-3">
-                <h4 className="mb-0">Opening Hours</h4>
-                <p>Mon to Sat 08:00 - 20:00</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Email */}
-          <div className="col-lg-4 col-md-6 mb-sm-30">
-            <div className="d-flex justify-content-center">
-              <i className="fs-60 text-white icon_mail"></i>
-              <div className="ms-3">
-                <h4 className="mb-0">Email Us</h4>
-                <p>contact@4best.id</p>
-              </div>
-            </div>
-          </div>
+        {/* Contact Info with small icons */}
+        <div className="d-flex flex-wrap justify-content-center gap-3 footer-contact-row mt-4">
+          <span className="footer-contact-item">
+            <i className="fa-brands fa-whatsapp footer-inline-icon"></i>
+            {phone}
+          </span>
+          <span className="footer-contact-divider">|</span>
+          <span className="footer-contact-item">
+            <i className="fa-solid fa-clock footer-inline-icon"></i>
+            {openingHours}
+          </span>
+          <span className="footer-contact-divider">|</span>
+          <span className="footer-contact-item">
+            <i className="fa-solid fa-envelope footer-inline-icon"></i>
+            {email}
+          </span>
+          <span className="footer-contact-divider">|</span>
+          <span className="footer-contact-item">
+            <i className="fa-brands fa-instagram footer-inline-icon"></i>
+            {instagram}
+          </span>
         </div>
-      </div>
 
-      {/* Subfooter */}
-      <div className="subfooter">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-6">
-              Copyright {currentYear} - 4best by Designesia
-            </div>
-            <div className="col-md-6 text-md-end">
-              <div className="social-icons mb-sm-30 text-center">
-                <Link href="#" aria-label="Facebook">
-                  <i className="fa-brands fa-facebook-f"></i>
-                </Link>
-                <Link href="#" aria-label="Twitter">
-                  <i className="fa-brands fa-x-twitter"></i>
-                </Link>
-                <Link href="#" aria-label="Instagram">
-                  <i className="fa-brands fa-instagram"></i>
-                </Link>
-                <Link href="#" aria-label="YouTube">
-                  <i className="fa-brands fa-youtube"></i>
-                </Link>
-                <Link href="#" aria-label="WhatsApp">
-                  <i className="fa-brands fa-whatsapp"></i>
-                </Link>
-              </div>
-            </div>
-          </div>
+        {/* Copyright */}
+        <div className="text-center footer-copyright mt-4">
+          Copyright {currentYear} - 4best by Designesia
         </div>
       </div>
     </footer>

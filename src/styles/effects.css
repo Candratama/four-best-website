@@ -267,6 +267,39 @@ select.form-control {
 }
 
 
+/* Mobile Menu Overlay */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #162d50;
+  z-index: 9998;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.mobile-menu-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+/* Hide overlay on desktop */
+@media (min-width: 993px) {
+  .mobile-menu-overlay {
+    display: none !important;
+  }
+}
+
 /* Mobile Menu Toggle Styles */
 /* Mobile header base - matches template behavior */
 header.header-mobile {
@@ -274,9 +307,41 @@ header.header-mobile {
   position: relative;
 }
 
-/* Hide mainmenu by default on mobile */
-header.header-mobile #mainmenu {
-  display: none;
+/* Desktop: show menu normally, ignore header-mobile class */
+@media (min-width: 993px) {
+  header.header-mobile #mainmenu {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: none !important;
+    pointer-events: auto !important;
+    transition: none !important;
+  }
+  
+  /* Hide mobile-specific elements on desktop */
+  header.header-mobile .col-start {
+    display: block !important;
+  }
+}
+
+/* Mobile only: Hide mainmenu by default, animate on open */
+@media (max-width: 992px) {
+  header.header-mobile #mainmenu {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px) translateZ(0);
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* When menu-open class is added, show menu with animation */
+  header.header-mobile.menu-open #mainmenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) translateZ(0);
+    pointer-events: auto;
+  }
 }
 
 /* When menu-open class is added, show fullscreen menu with navy primary background */
@@ -288,8 +353,7 @@ header.header-mobile.menu-open .col-lg-12,
 header.header-mobile.menu-open .de-flex,
 header.header-mobile.menu-open .col-start,
 header.header-mobile.menu-open .col-center,
-header.header-mobile.menu-open .col-end,
-header.header-mobile.menu-open #mainmenu {
+header.header-mobile.menu-open .col-end {
   background: #162d50 !important;
 }
 
@@ -338,10 +402,6 @@ header.header-mobile.menu-open .navbar-container {
 header.header-mobile.menu-open .col-center img,
 header.header-mobile.menu-open .logo-white {
   background: transparent !important;
-}
-
-header.header-mobile.menu-open #mainmenu {
-  display: block;
 }
 
 /* Style menu items in mobile view - LIGHT text on navy bg */
