@@ -65,7 +65,7 @@ export default function Header() {
       />
       <header className={headerClass}>
         <div className={`navbar-container ${isSmaller ? "navbar-scrolled" : ""} ${mobileMenuOpen ? "mobile-menu-open" : ""}`}>
-          <div className="container-fluid px-lg-5 px-3">
+          <div className="container-fluid px-lg-5 px-4">
             <div className="row">
               <div className="col-lg-12">
                 <div className="de-flex">
