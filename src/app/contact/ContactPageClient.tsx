@@ -1,7 +1,9 @@
 "use client";
 
+import { useState } from "react";
 import { useWow } from "@/hooks";
 import { ContactForm, ContactInfo, GoogleMap } from "@/components/sections";
+import { submitContactForm, ContactFormResult } from "./actions";
 
 interface ContactData {
   address: string;
@@ -18,6 +20,7 @@ interface ContactPageClientProps {
 
 export default function ContactPageClient({ contactData }: ContactPageClientProps) {
   useWow();
+  const [submitStatus, setSubmitStatus] = useState<ContactFormResult | null>(null);
 
   const handleFormSubmit = async (data: {
     name: string;
@@ -26,9 +29,9 @@ export default function ContactPageClient({ contactData }: ContactPageClientProp
     time: string;
     message: string;
   }) => {
-    // TODO: Implement actual form submission logic
-    console.log("Form submitted:", data);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setSubmitStatus(null);
+    const result = await submitContactForm(data);
+    setSubmitStatus(result);
   };
 
   return (
@@ -48,6 +51,14 @@ export default function ContactPageClient({ contactData }: ContactPageClientProp
             <div className="col-lg-8">
               <div className="contact-form-wrapper">
                 <h3 className="contact-info-title mb-4">Jadwalkan Kunjungan</h3>
+                {submitStatus && (
+                  <div
+                    className={`alert mb-4 ${submitStatus.success ? "alert-success" : "alert-danger"}`}
+                    role="alert"
+                  >
+                    {submitStatus.message}
+                  </div>
+                )}
                 <ContactForm variant="inline" onSubmit={handleFormSubmit} />
               </div>
             </div>
