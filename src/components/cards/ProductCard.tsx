@@ -52,8 +52,8 @@ export default function ProductCard({
             <div
               className={`absolute top-4 left-4 px-3 py-1 text-xs font-semibold uppercase rounded ${
                 category === "subsidi"
-                  ? "bg-green-600 text-white"
-                  : "bg-blue-600 text-white"
+                  ? "bg-secondary text-white"
+                  : "bg-primary text-white"
               }`}
             >
               {category}

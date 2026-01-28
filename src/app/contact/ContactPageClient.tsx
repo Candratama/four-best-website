@@ -53,7 +53,7 @@ export default function ContactPageClient({ contactData }: ContactPageClientProp
                 <h3 className="contact-info-title mb-4">Jadwalkan Kunjungan</h3>
                 {submitStatus && (
                   <div
-                    className={`alert mb-4 ${submitStatus.success ? "alert-success" : "alert-danger"}`}
+                    className={`alert mb-4 ${submitStatus.success ? "alert-info" : "alert-danger"}`}
                     role="alert"
                   >
                     {submitStatus.message}

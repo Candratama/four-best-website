@@ -241,7 +241,7 @@ export default function PartnerDetailsClient({
                           />
                         </div>
                         <div className="d-info p-4">
-                          <span className="badge bg-success mb-2">Subsidi</span>
+                          <span className="badge bg-secondary mb-2">Subsidi</span>
                           <h4 className="mb-2">{product.name}</h4>
                           {product.location && (
                             <p className="text-muted mb-2">
