@@ -31,7 +31,7 @@ export default async function Home() {
       <Overview
         subtitle="4Best"
         title="Pilihan Tepat, Hasil Terbaik"
-        description="4Best Agent Property adalah perusahaan agen properti	profesional yang menyediakan layanan jual, beli, dan sewa	properti dengan pendekatan terpercaya dan berorientasi hasil.	Didukung oleh tim berpengalaman, pemahaman pasar yang	kuat, serta sistem kerja transparan, kami berkomitmen membantu klien mendapatkan solusi properti terbaik dan bernilai investasi jangka panjang."
+        description="4Best Agent Property adalah perusahaan agen properti profesional. Kami menyediakan layanan jual, beli, dan sewa properti dengan pendekatan terpercaya dan berorientasi hasil."
         ctaText="Jadwalkan Kunjungan"
         ctaHref="/contact"
         images={[
