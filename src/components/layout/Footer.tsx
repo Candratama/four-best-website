@@ -1,15 +1,11 @@
-import Link from "next/link";
 import Image from "next/image";
-import { getCompanyInfo, getSocialLinks } from "@/lib/db";
+import { getCompanyInfo } from "@/lib/db";
 
 export default async function Footer() {
   const currentYear = new Date().getFullYear();
 
-  // Fetch company info and social links from database
-  const [companyInfo, socialLinks] = await Promise.all([
-    getCompanyInfo(),
-    getSocialLinks({ activeOnly: true }),
-  ]);
+  // Fetch company info from database (removed unused socialLinks)
+  const companyInfo = await getCompanyInfo();
 
   const address = companyInfo?.address || "Perum Ungaran Asri, No C1, Ungaran";
   const phone =
