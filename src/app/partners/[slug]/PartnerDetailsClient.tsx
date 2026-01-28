@@ -10,6 +10,18 @@ interface PartnerDetailsClientProps {
   products: Product[];
 }
 
+// Generate acronym from partner name (skip common prefixes like PT, CV)
+function getAcronym(name: string): string {
+  const skipWords = ["pt", "cv", "tbk", "ltd", "inc", "co"];
+  const words = name
+    .split(/\s+/)
+    .filter((word) => !skipWords.includes(word.toLowerCase()));
+  return words
+    .map((word) => word.charAt(0).toUpperCase())
+    .join("")
+    .slice(0, 3); // Max 3 characters
+}
+
 export default function PartnerDetailsClient({
   partner,
   products,
@@ -29,18 +41,41 @@ export default function PartnerDetailsClient({
   );
   const subsidiProducts = products.filter((p) => p.category === "subsidi");
 
+  const hasHeroImage = partner.hero_image && !partner.hero_image.includes("placeholder");
+  const hasLogo = partner.logo && !partner.logo.includes("placeholder");
+  const acronym = getAcronym(partner.name);
+
   return (
     <>
       {/* Hero Section with background image and dark overlay */}
       <section
         className="section-dark text-light no-top no-bottom relative overflow-hidden"
         style={{
-          backgroundImage: `url(${partner.hero_image || "/images/misc/company-placeholder.webp"})`,
+          backgroundImage: hasHeroImage ? `url(${partner.hero_image})` : undefined,
+          backgroundColor: hasHeroImage ? undefined : "#162d50",
           backgroundSize: "cover",
           backgroundPosition: "center",
           minHeight: "70vh",
         }}
       >
+        {/* Acronym overlay when no hero image */}
+        {!hasHeroImage && (
+          <div
+            className="abs w-100 h-100 d-flex align-items-center justify-content-center"
+            style={{ zIndex: 1 }}
+          >
+            <span
+              style={{
+                fontSize: "20rem",
+                fontWeight: "700",
+                color: "rgba(255, 255, 255, 0.05)",
+                letterSpacing: "0.2em",
+              }}
+            >
+              {acronym}
+            </span>
+          </div>
+        )}
         <div className="gradient-edge-top op-6"></div>
         <div className="abs z-2 w-100" style={{ bottom: "120px" }}>
           <div className="container">
@@ -86,16 +121,29 @@ export default function PartnerDetailsClient({
                 padding: "40px",
               }}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={partner.logo || "/images/misc/company-placeholder.webp"}
-                alt={partner.name}
-                style={{
-                  maxWidth: "100%",
-                  maxHeight: "100%",
-                  objectFit: "contain",
-                }}
-              />
+              {hasLogo ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={partner.logo!}
+                  alt={partner.name}
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "100%",
+                    objectFit: "contain",
+                  }}
+                />
+              ) : (
+                <span
+                  style={{
+                    fontSize: "5rem",
+                    fontWeight: "700",
+                    color: "#162d50",
+                    letterSpacing: "0.1em",
+                  }}
+                >
+                  {acronym}
+                </span>
+              )}
             </div>
           </div>
         </div>

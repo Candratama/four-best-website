@@ -34,7 +34,7 @@ export default async function PartnersGrid({
         return {
           name: partner.name,
           slug: partner.slug,
-          image: partner.logo || "/images/misc/company-placeholder.webp",
+          image: partner.logo || "",
           productCount: products.length,
           href: `/partners/${partner.slug}`,
         };

@@ -8,6 +8,18 @@ export interface PartnerCardProps {
   href?: string;
 }
 
+// Generate acronym from partner name (skip common prefixes like PT, CV)
+function getAcronym(name: string): string {
+  const skipWords = ["pt", "cv", "tbk", "ltd", "inc", "co"];
+  const words = name
+    .split(/\s+/)
+    .filter((word) => !skipWords.includes(word.toLowerCase()));
+  return words
+    .map((word) => word.charAt(0).toUpperCase())
+    .join("")
+    .slice(0, 3); // Max 3 characters
+}
+
 export default function PartnerCard({
   name,
   slug,
@@ -16,6 +28,8 @@ export default function PartnerCard({
   href,
 }: PartnerCardProps) {
   const linkHref = href || `/partners/${slug}`;
+  const hasValidImage = image && !image.includes("placeholder");
+  const acronym = getAcronym(name);
 
   return (
     <Link href={linkHref} className="partner-card-link">
@@ -24,8 +38,29 @@ export default function PartnerCard({
         data-wow-delay=".0s"
       >
         <div className="wow scaleIn overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={image} className="hover-scale-1-1 w-100" alt={name} />
+          {hasValidImage ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={image} className="hover-scale-1-1 w-100" alt={name} />
+          ) : (
+            <div
+              className="hover-scale-1-1 w-100 d-flex align-items-center justify-content-center"
+              style={{
+                height: "280px",
+                background: "linear-gradient(135deg, #162d50 0%, #1e3a5f 100%)",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "4rem",
+                  fontWeight: "700",
+                  color: "rgba(255, 255, 255, 0.3)",
+                  letterSpacing: "0.1em",
+                }}
+              >
+                {acronym}
+              </span>
+            </div>
+          )}
         </div>
         <div className="abs w-100 h-100 px-4 hover-op-1 z-4 top-0 left-0 d-flex justify-content-center align-items-center partner-card-cta">
           <span

@@ -12,7 +12,7 @@ export default async function PartnersPage() {
     partnerCards = partners.map((partner) => ({
       name: partner.name,
       slug: partner.slug,
-      image: partner.hero_image || "/images/misc/company-placeholder.webp",
+      image: partner.hero_image || "",
       productCount: partner.product_count,
       href: `/partners/${partner.slug}`,
     }));
