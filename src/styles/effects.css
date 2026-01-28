@@ -483,6 +483,7 @@ header.header-mobile #mainmenu .menu-item.active::after {
     font-size: 0 !important;
     color: transparent !important;
     transition: none !important;
+    margin-right: 8px;
   }
   
   /* Hide any FontAwesome content */
