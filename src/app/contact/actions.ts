@@ -1,5 +1,12 @@
 "use server";
 
+import {
+  sendAdminNotification,
+  addToContactList,
+  sendVisitorConfirmation,
+  ContactFormPayload,
+} from "@/lib/brevo";
+
 export interface ContactFormData {
   name: string;
   email: string;
@@ -26,23 +33,40 @@ export async function submitContactForm(data: ContactFormData): Promise<ContactF
       return { success: false, message: "Format email tidak valid." };
     }
 
-    // TODO: Implement actual email sending or database storage
-    // For now, log the submission
-    console.log("Contact form submission:", {
+    const payload: ContactFormPayload = {
       name: data.name,
       email: data.email,
       date: data.date,
       time: data.time,
       message: data.message,
-      submittedAt: new Date().toISOString(),
+    };
+
+    // Execute all Brevo operations in parallel
+    const [adminResult, contactResult, confirmationResult] = await Promise.all([
+      sendAdminNotification(payload),
+      addToContactList(payload),
+      sendVisitorConfirmation(payload),
+    ]);
+
+    // Log results for debugging
+    console.log("Brevo results:", {
+      adminNotification: adminResult,
+      contactList: contactResult,
+      visitorConfirmation: confirmationResult,
     });
 
-    // Simulate processing time
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    // Check if admin notification was sent (most critical)
+    if (!adminResult.success) {
+      console.error("Failed to send admin notification:", adminResult.error);
+      return {
+        success: false,
+        message: "Terjadi kesalahan saat mengirim pesan. Silakan coba lagi atau hubungi kami via WhatsApp.",
+      };
+    }
 
     return {
       success: true,
-      message: "Terima kasih! Pesan Anda telah terkirim. Kami akan menghubungi Anda segera."
+      message: "Terima kasih! Pesan Anda telah terkirim. Kami akan menghubungi Anda segera.",
     };
   } catch (error) {
     console.error("Contact form error:", error);
