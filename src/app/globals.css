@@ -437,6 +437,12 @@ header.smaller.menu-open {
   color: inherit;
 }
 
+/* Partners Grid Section */
+.partners-grid-section {
+  background-color: #f5f5f5;
+  padding: 60px 0;
+}
+
 /* Show CTA on touch devices */
 @media (hover: none) and (pointer: coarse) {
   .partner-card-cta {

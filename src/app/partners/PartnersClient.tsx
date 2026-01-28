@@ -56,7 +56,7 @@ export default function PartnersClient({
       </section>
 
       {/* Partners Grid Section */}
-      <section className="relative bg-gray no-top" style={{ backgroundColor: "#f5f5f5", padding: "60px 0" }}>
+      <section className="relative partners-grid-section">
         <div className="container">
           <div className="row g-4">
             {error ? (
