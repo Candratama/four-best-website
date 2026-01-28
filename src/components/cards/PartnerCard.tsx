@@ -30,9 +30,9 @@ export default function PartnerCard({
         <Link
           href={linkHref}
           className="btn-main btn-line btn-line-light fx-slide"
-          data-hover="View Details"
+          data-hover="Lihat Detail"
         >
-          <span>View Details</span>
+          <span>Lihat Detail</span>
         </Link>
       </div>
       <div className="abs bg-blur z-2 top-0 w-100 h-100 hover-op-1"></div>

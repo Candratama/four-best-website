@@ -78,7 +78,7 @@ export default function Header() {
                           href="/"
                           onClick={closeMobileMenu}
                         >
-                          Home
+                          Beranda
                         </Link>
                       </li>
                       <li>
@@ -87,7 +87,7 @@ export default function Header() {
                           href="/partners"
                           onClick={closeMobileMenu}
                         >
-                          Partners
+                          Partner
                         </Link>
                       </li>
                       <li>
@@ -96,7 +96,7 @@ export default function Header() {
                           href="/about"
                           onClick={closeMobileMenu}
                         >
-                          About
+                          Tentang
                         </Link>
                       </li>
                       <li>
@@ -105,7 +105,7 @@ export default function Header() {
                           href="/contact"
                           onClick={closeMobileMenu}
                         >
-                          Contact
+                          Kontak
                         </Link>
                       </li>
                     </ul>
@@ -131,10 +131,10 @@ export default function Header() {
                       <Link
                         href="/contact"
                         className="btn-main btn-line fx-slide sm-hide"
-                        data-hover="Schedule a Visit"
+                        data-hover="Jadwalkan Kunjungan"
                         onClick={closeMobileMenu}
                       >
-                        <span>Schedule a Visit</span>
+                        <span>Jadwalkan Kunjungan</span>
                       </Link>
                       <span
                         id="menu-btn"
