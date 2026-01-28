@@ -3,7 +3,7 @@ import {
   Overview,
   ValueProposition,
   PartnersGrid,
-  VideoSection,
+  Team,
 } from "@/components/sections";
 import { getTeamMembers } from "@/lib/db";
 
@@ -61,49 +61,11 @@ export default async function Home() {
 
       {/* Team Section */}
       {teamMembers.length > 0 && (
-        <section id="contact" className="relative overlay-dark-1">
-          <div className="container relative z-2">
-            <div className="row g-4 justify-content-center">
-              <div className="col-lg-6 text-center">
-                <div
-                  className="subtitle s2 mb-3 wow fadeInUp"
-                  data-wow-delay=".0s"
-                >
-                  Tim Kami
-                </div>
-                <h2 className="wow fadeInUp" data-wow-delay=".2s">
-                  Kenali Tim 4BEST
-                </h2>
-              </div>
-            </div>
-
-            <div className="row g-4 gx-5 justify-content-center">
-              {teamMembers.map((member) => (
-                <div key={member.id} className="col-md-3">
-                  <div
-                    style={{
-                      textAlign: "center",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
-                  >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={member.image || "/images/team/placeholder.webp"}
-                      className="w-100"
-                      alt={member.name}
-                    />
-                    <div className="mt-3" style={{ textAlign: "center" }}>
-                      <h4 className="mb-0">{member.name}</h4>
-                      <div className="fw-500 id-color">{member.role}</div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
+        <Team
+          subtitle="Tim Kami"
+          title="Kenali Tim 4BEST"
+          members={teamMembers}
+        />
       )}
     </>
   );
