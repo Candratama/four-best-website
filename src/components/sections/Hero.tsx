@@ -155,13 +155,7 @@ export default function Hero({
           <div className="row">
             <div className="col-lg-12">
               <h1 
-                className="text-uppercase mb-4 lh-1 hero-title"
-                style={{ 
-                  fontSize: "clamp(2.5rem, 5.5vw, 6rem)",
-                  maxWidth: "70vw",
-                  wordBreak: "normal",
-                  overflowWrap: "normal"
-                }}
+                className="fs-120 text-uppercase fs-sm-10vw mb-2 lh-1 hero-title"
               >
                 {title}
               </h1>
