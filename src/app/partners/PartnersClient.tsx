@@ -43,9 +43,9 @@ export default function PartnersClient({
                 <div className="relative overflow-hidden">
                   <div className="wow fadeInUpBig" data-wow-duration="1.5s">
                     <h1 className="fs-120 text-uppercase fs-sm-10vw mb-2 lh-1">
-                      Partners
+                      Partner
                     </h1>
-                    <h3>Where Excellence Meets Partnership</h3>
+                    <h3>Kolaborasi untuk Hasil Terbaik</h3>
                   </div>
                 </div>
               </div>
@@ -65,7 +65,7 @@ export default function PartnersClient({
               </div>
             ) : partnerCards.length === 0 ? (
               <div className="col-12 text-center py-5">
-                <p>No partners available.</p>
+                <p>Belum ada partner.</p>
               </div>
             ) : (
               partnerCards.map((partner) => (

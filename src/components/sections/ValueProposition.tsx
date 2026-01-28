@@ -50,7 +50,7 @@ export default function ValueProposition() {
       <div className="container">
         <div className="text-center mb-12">
           <div className="subtitle s2 mb-3">Mengapa Memilih Kami</div>
-          <h2 className="text-3xl md:text-4xl font-bold">Value Proposition</h2>
+          <h2 className="text-3xl md:text-4xl font-bold">Keunggulan Kami</h2>
         </div>
 
         {/* Bento Grid */}

@@ -153,8 +153,16 @@ export default function Hero({
       <div className="abs bottom-10 z-2 w-100">
         <div className="container">
           <div className="row">
-            <div className="col-lg-6">
-              <h1 className="fs-120 text-uppercase fs-sm-10vw mb-4 lh-1 hero-title">
+            <div className="col-lg-12">
+              <h1 
+                className="text-uppercase mb-4 lh-1 hero-title"
+                style={{ 
+                  fontSize: "clamp(2.5rem, 5.5vw, 6rem)",
+                  maxWidth: "70vw",
+                  wordBreak: "normal",
+                  overflowWrap: "normal"
+                }}
+              >
                 {title}
               </h1>
               {address && (
@@ -168,9 +176,9 @@ export default function Hero({
                       href={mapUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      data-hover="View on Map"
+                      data-hover="Lihat di Peta"
                     >
-                      <span>View on Map</span>
+                      <span>Lihat di Peta</span>
                     </a>
                   )}
                 </div>
