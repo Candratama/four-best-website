@@ -20,7 +20,7 @@ export default async function Home() {
       <Hero
         title="Property Agency"
         address="Perum Ungaran Asri, No C1, Ungaran"
-        mapUrl="https://maps.app.goo.gl/BSpMhDN2Z6Jgp9UL6"
+        mapUrl="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.8!2d110.4!3d-7.15!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e708b5d4e4b0001%3A0x1234567890abcdef!2sPerum%20Ungaran%20Asri!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid"
         slides={[
           { image: "/images/slider/apt-1.webp", overlay: 0.4 },
           { image: "/images/slider/apt-2.webp", overlay: 0.4 },
