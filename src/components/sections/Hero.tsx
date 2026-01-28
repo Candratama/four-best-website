@@ -167,20 +167,31 @@ export default function Hero({
               </h1>
               {address && (
                 <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center">
-                  <h4 className="fw-500 mb-2 mb-md-0 me-md-4 hero-address">
+                  <h4 className="fw-500 mb-3 mb-md-0 me-md-4 hero-address">
                     {address}
                   </h4>
-                  {mapUrl && (
+                  <div className="d-flex flex-wrap gap-2">
+                    {/* Primary CTA */}
                     <a
-                      className="btn-main btn-line btn-line-light fx-slide py-0 lh-1-6 fw-400 popup-gmaps"
-                      href={mapUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      data-hover="Lihat di Peta"
+                      className="btn-main fx-slide"
+                      href="/contact"
+                      data-hover="Jadwalkan Kunjungan"
                     >
-                      <span>Lihat di Peta</span>
+                      <span>Jadwalkan Kunjungan</span>
                     </a>
-                  )}
+                    {/* Secondary CTA - Map */}
+                    {mapUrl && (
+                      <a
+                        className="btn-main btn-line btn-line-light fx-slide"
+                        href={mapUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-hover="Lihat di Peta"
+                      >
+                        <span>Lihat di Peta</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
