@@ -1,0 +1,7 @@
+:root {
+  /* Primary: Navy blue (4Best brand), Secondary: Light blue accent */
+  --primary-color: #162d50;
+  --primary-color-rgb: 22, 45, 80;
+  --secondary-color: #0056d6;
+  --secondary-color-rgb: 0, 86, 214;
+}
