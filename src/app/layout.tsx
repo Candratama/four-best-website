@@ -34,6 +34,13 @@ export const metadata: Metadata = {
   title: "4best - Property Agent",
   description:
     "Your trusted property agent partner for finding the perfect home",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.png", type: "image/png" },
+    ],
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
@@ -44,7 +51,6 @@ export default function RootLayout({
   return (
     <html lang="id" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         {/* eslint-disable-next-line @next/next/no-css-tags -- Font icon CSS files loaded via link tags since server-relative imports don't work in CSS */}
         <link
           rel="stylesheet"

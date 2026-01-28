@@ -4,10 +4,13 @@ import * as Brevo from "@getbrevo/brevo";
 
 // Initialize Brevo API clients
 function getTransactionalEmailApi() {
+  const apiKey = process.env.BREVO_API_KEY;
+  console.log("BREVO_API_KEY loaded:", apiKey ? `${apiKey.substring(0, 10)}...` : "NOT FOUND");
+  
   const apiInstance = new Brevo.TransactionalEmailsApi();
   apiInstance.setApiKey(
     Brevo.TransactionalEmailsApiApiKeys.apiKey,
-    process.env.BREVO_API_KEY || ""
+    apiKey || "",
   );
   return apiInstance;
 }
@@ -16,14 +19,14 @@ function getContactsApi() {
   const apiInstance = new Brevo.ContactsApi();
   apiInstance.setApiKey(
     Brevo.ContactsApiApiKeys.apiKey,
-    process.env.BREVO_API_KEY || ""
+    process.env.BREVO_API_KEY || "",
   );
   return apiInstance;
 }
 
 // Configuration
-const ADMIN_EMAIL = "contact@4best.id"; // Email admin yang menerima notifikasi
-const SENDER_EMAIL = "noreply@4best.id"; // Email pengirim (harus verified di Brevo)
+const ADMIN_EMAIL = "developer4best@gmail.com"; // Email admin yang menerima notifikasi
+const SENDER_EMAIL = "admin@4best.id"; // Email pengirim (harus verified di Brevo)
 const SENDER_NAME = "4Best Property";
 const CONTACT_LIST_ID = 2; // ID list di Brevo (buat list dulu di dashboard Brevo)
 
@@ -38,7 +41,9 @@ export interface ContactFormPayload {
 /**
  * Send notification email to admin when someone submits contact form
  */
-export async function sendAdminNotification(data: ContactFormPayload): Promise<{ success: boolean; error?: string }> {
+export async function sendAdminNotification(
+  data: ContactFormPayload,
+): Promise<{ success: boolean; error?: string }> {
   try {
     const apiInstance = getTransactionalEmailApi();
 
@@ -100,7 +105,9 @@ export async function sendAdminNotification(data: ContactFormPayload): Promise<{
 /**
  * Add contact to Brevo contact list for follow-up
  */
-export async function addToContactList(data: ContactFormPayload): Promise<{ success: boolean; error?: string }> {
+export async function addToContactList(
+  data: ContactFormPayload,
+): Promise<{ success: boolean; error?: string }> {
   try {
     const apiInstance = getContactsApi();
 
@@ -134,7 +141,9 @@ export async function addToContactList(data: ContactFormPayload): Promise<{ succ
 /**
  * Send confirmation email to the visitor
  */
-export async function sendVisitorConfirmation(data: ContactFormPayload): Promise<{ success: boolean; error?: string }> {
+export async function sendVisitorConfirmation(
+  data: ContactFormPayload,
+): Promise<{ success: boolean; error?: string }> {
   try {
     const apiInstance = getTransactionalEmailApi();
 

@@ -8,7 +8,7 @@ export default async function ContactPage() {
 
   // Find Instagram from social links
   const instagramLink = socialLinks.find(
-    (link) => link.platform.toLowerCase() === "instagram"
+    (link) => link.platform.toLowerCase() === "instagram",
   );
   const instagramHandle = instagramLink?.url
     ? `@${instagramLink.url.replace(/^https?:\/\/(www\.)?instagram\.com\//, "").replace(/\/$/, "")}`
@@ -24,14 +24,14 @@ export default async function ContactPage() {
     instagram: instagramHandle,
     mapUrl:
       companyInfo?.map_url ||
-      "https://www.google.com/maps?q=Perum+Ungaran+Asri&output=embed",
+      "https://www.google.com/maps?q=Perum+Ungaran+Asri+Jalan+Serasi&output=embed",
   };
 
   return (
     <>
       <Hero
         variant="parallax-contact"
-        title="Jadwalkan Kunjungan"
+        title="Hubungi Kami"
         subtitle="Kami Siap Membantu Anda!"
         backgroundImage="/images/background/8.webp"
       />

@@ -154,9 +154,7 @@ export default function Hero({
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <h1 
-                className="fs-120 text-uppercase fs-sm-10vw mb-2 lh-1 hero-title"
-              >
+              <h1 className="fs-120 text-uppercase fs-sm-10vw mb-2 lh-1 hero-title">
                 {title}
               </h1>
               {address && (
@@ -165,14 +163,6 @@ export default function Hero({
                     {address}
                   </h4>
                   <div className="d-flex flex-wrap gap-2">
-                    {/* Primary CTA */}
-                    <a
-                      className="btn-main fx-slide"
-                      href="/contact"
-                      data-hover="Jadwalkan Kunjungan"
-                    >
-                      <span>Jadwalkan Kunjungan</span>
-                    </a>
                     {/* Secondary CTA - Map */}
                     {mapUrl && (
                       <a

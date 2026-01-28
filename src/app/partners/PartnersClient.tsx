@@ -34,7 +34,7 @@ export default function PartnersClient({
         data-speed="0.5"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/images/background/3.webp" className="jarallax-img" alt="" />
+        <img src="/images/gallery/l15.webp" className="jarallax-img" alt="" />
         <div className="gradient-edge-top op-6"></div>
         <div className="abs bottom-10 z-2 w-100">
           <div className="container">

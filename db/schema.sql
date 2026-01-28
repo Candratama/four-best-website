@@ -28,11 +28,40 @@ CREATE TABLE IF NOT EXISTS homepage (
 -- =============================================
 CREATE TABLE IF NOT EXISTS about_page (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    profile TEXT,
-    vision TEXT,
-    mission TEXT,
-    advantages TEXT,
-    image TEXT,
+    -- Hero Section
+    hero_title TEXT,
+    hero_subtitle TEXT,
+    hero_background_image TEXT,
+    -- Company Intro Section
+    intro_subtitle TEXT,
+    intro_title TEXT,
+    intro_description TEXT,
+    intro_image_left TEXT,
+    intro_image_right TEXT,
+    -- Vision Section
+    vision_subtitle TEXT,
+    vision_title TEXT,
+    vision_text TEXT,
+    -- Mission Section
+    mission_subtitle TEXT,
+    mission_title TEXT,
+    -- CTA Section
+    cta_title TEXT,
+    cta_button_text TEXT,
+    cta_button_href TEXT,
+    updated_at TEXT DEFAULT (datetime('now'))
+);
+
+-- =============================================
+-- MISSIONS (for About page)
+-- =============================================
+CREATE TABLE IF NOT EXISTS missions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    icon TEXT,
+    text TEXT NOT NULL,
+    is_active INTEGER DEFAULT 1,
+    display_order INTEGER DEFAULT 0,
+    created_at TEXT DEFAULT (datetime('now')),
     updated_at TEXT DEFAULT (datetime('now'))
 );
 
@@ -143,16 +172,54 @@ CREATE INDEX IF NOT EXISTS idx_sessions_expires ON sessions(expires_at);
 
 -- Insert default homepage content
 INSERT OR IGNORE INTO homepage (id, headline, subheadline, description)
-VALUES (1, '4Best', 'Mitra Properti Terpercaya', 'Temukan hunian impian Anda bersama 4Best dan mitra-mitra kami yang terpercaya.');
+VALUES (1, '4Best', 'Pilihan Tepat, Hasil Terbaik', 'Temukan hunian impian Anda bersama 4Best dan mitra-mitra kami yang terpercaya.');
 
--- Insert default about page
-INSERT OR IGNORE INTO about_page (id, profile, vision, mission, advantages)
-VALUES (1,
-    'Tentang 4Best akan ditampilkan di sini.',
-    'Visi 4Best',
-    'Misi 4Best',
-    'Keunggulan 4Best'
+-- Insert default about page with 4BEST data
+INSERT OR IGNORE INTO about_page (
+    id,
+    hero_title,
+    hero_subtitle,
+    hero_background_image,
+    intro_subtitle,
+    intro_title,
+    intro_description,
+    intro_image_left,
+    intro_image_right,
+    vision_subtitle,
+    vision_title,
+    vision_text,
+    mission_subtitle,
+    mission_title,
+    cta_title,
+    cta_button_text,
+    cta_button_href
+)
+VALUES (
+    1,
+    'Tentang 4BEST',
+    'Pilihan Tepat, Hasil Terbaik',
+    '/images/background/5.webp',
+    'Tentang Kami',
+    '4Best Agent Property',
+    '4Best Agent Property adalah perusahaan agen properti profesional yang menyediakan layanan jual, beli, dan sewa properti dengan pendekatan terpercaya dan berorientasi hasil. Didukung oleh tim berpengalaman, pemahaman pasar yang kuat, serta sistem kerja transparan, kami berkomitmen membantu klien mendapatkan solusi properti terbaik dan bernilai investasi jangka panjang.',
+    '/images/misc/p1.webp',
+    '/images/misc/p2.webp',
+    'Visi Kami',
+    'Menjadi yang Terdepan',
+    'Menjadi agen pemasaran properti terpercaya, profesional, dan berorientasi hasil yang memberikan solusi terbaik bagi klien serta berkontribusi dalam pertumbuhan sektor properti di Indonesia.',
+    'Misi Kami',
+    'Komitmen untuk Hasil Terbaik',
+    'Siap menemukan properti impian Anda?',
+    'Konsultasi Gratis',
+    '/contact'
 );
+
+-- Insert missions
+INSERT OR IGNORE INTO missions (id, icon, text, display_order) VALUES
+(1, 'Handshake', 'Memberikan layanan pemasaran properti yang jujur, transparan, dan bertanggung jawab kepada setiap klien. Mengutamakan kepuasan klien melalui strategi pemasaran yang efektif dan tepat sasaran.', 1),
+(2, 'Users', 'Mengembangkan tim yang kompeten, berintegritas, dan berdaya saing tinggi di bidang properti.', 2),
+(3, 'Laptop', 'Memanfaatkan teknologi dan media digital secara optimal untuk meningkatkan jangkauan dan kecepatan pemasaran.', 3),
+(4, 'Heart', 'Membangun hubungan jangka panjang dengan klien, mitra, dan developer berdasarkan kepercayaan dan profesionalisme.', 4);
 
 -- Insert default contact
 INSERT OR IGNORE INTO contact_page (id, phone, whatsapp, email, address)
