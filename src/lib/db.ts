@@ -47,11 +47,37 @@ export interface Homepage {
 
 export interface AboutPage {
   id: number;
-  profile: string | null;
-  vision: string | null;
-  mission: string | null;
-  advantages: string | null;
-  image: string | null;
+  // Hero Section
+  hero_title: string | null;
+  hero_subtitle: string | null;
+  hero_background_image: string | null;
+  // Company Intro Section
+  intro_subtitle: string | null;
+  intro_title: string | null;
+  intro_description: string | null;
+  intro_image_left: string | null;
+  intro_image_right: string | null;
+  // Vision Section
+  vision_subtitle: string | null;
+  vision_title: string | null;
+  vision_text: string | null;
+  // Mission Section
+  mission_subtitle: string | null;
+  mission_title: string | null;
+  // CTA Section
+  cta_title: string | null;
+  cta_button_text: string | null;
+  cta_button_href: string | null;
+  updated_at: string;
+}
+
+export interface Mission {
+  id: number;
+  icon: string | null;
+  text: string;
+  is_active: number;
+  display_order: number;
+  created_at: string;
   updated_at: string;
 }
 
@@ -248,8 +274,13 @@ export async function updateHomepage(data: Partial<Homepage>): Promise<void> {
 // =============================================
 
 export async function getAboutPage(): Promise<AboutPage | null> {
-  const db = await getDB();
-  return db.prepare("SELECT * FROM about_page WHERE id = 1").first<AboutPage>();
+  try {
+    const db = await getDB();
+    return db.prepare("SELECT * FROM about_page WHERE id = 1").first<AboutPage>();
+  } catch (error) {
+    console.error("Error fetching about page:", error);
+    return null;
+  }
 }
 
 export async function updateAboutPage(data: Partial<AboutPage>): Promise<void> {
@@ -264,6 +295,63 @@ export async function updateAboutPage(data: Partial<AboutPage>): Promise<void> {
     .prepare(`UPDATE about_page SET ${fields}, updated_at = datetime('now') WHERE id = 1`)
     .bind(...values)
     .run();
+}
+
+// =============================================
+// MISSIONS QUERIES
+// =============================================
+
+export async function getMissions(options?: { activeOnly?: boolean }): Promise<Mission[]> {
+  try {
+    const db = await getDB();
+    let query = "SELECT * FROM missions WHERE 1=1";
+    if (options?.activeOnly) query += " AND is_active = 1";
+    query += " ORDER BY display_order ASC";
+    const result = await db.prepare(query).all<Mission>();
+    return result.results;
+  } catch (error) {
+    console.error("Error fetching missions:", error);
+    return [];
+  }
+}
+
+export async function getMissionById(id: number): Promise<Mission | null> {
+  const db = await getDB();
+  return db.prepare("SELECT * FROM missions WHERE id = ?").bind(id).first<Mission>();
+}
+
+export async function createMission(
+  data: Omit<Mission, "id" | "created_at" | "updated_at">
+): Promise<number> {
+  const db = await getDB();
+  const result = await db
+    .prepare(
+      `INSERT INTO missions (icon, text, is_active, display_order)
+       VALUES (?, ?, ?, ?)`
+    )
+    .bind(data.icon, data.text, data.is_active, data.display_order)
+    .run();
+  return result.meta.last_row_id as number;
+}
+
+export async function updateMission(id: number, data: Partial<Mission>): Promise<void> {
+  const db = await getDB();
+  const fields = Object.keys(data)
+    .filter((k) => !["id", "created_at"].includes(k))
+    .map((k) => `${k} = ?`)
+    .join(", ");
+  const values = Object.values(data).filter(
+    (_, i) => !["id", "created_at"].includes(Object.keys(data)[i])
+  );
+  await db
+    .prepare(`UPDATE missions SET ${fields}, updated_at = datetime('now') WHERE id = ?`)
+    .bind(...values, id)
+    .run();
+}
+
+export async function deleteMission(id: number): Promise<void> {
+  const db = await getDB();
+  await db.prepare("DELETE FROM missions WHERE id = ?").bind(id).run();
 }
 
 // =============================================
@@ -306,6 +394,31 @@ export async function getPartners(options?: {
   query += " ORDER BY display_order ASC, name ASC";
 
   const result = await db.prepare(query).all<Partner>();
+  return result.results;
+}
+
+export interface PartnerWithProductCount extends Partner {
+  product_count: number;
+}
+
+export async function getPartnersWithProductCount(options?: {
+  activeOnly?: boolean;
+  featuredOnly?: boolean;
+}): Promise<PartnerWithProductCount[]> {
+  const db = await getDB();
+  let query = `
+    SELECT p.*, COUNT(pr.id) as product_count
+    FROM partners p
+    LEFT JOIN products pr ON p.id = pr.partner_id AND pr.is_active = 1
+    WHERE 1=1
+  `;
+
+  if (options?.activeOnly) query += " AND p.is_active = 1";
+  if (options?.featuredOnly) query += " AND p.is_featured = 1";
+
+  query += " GROUP BY p.id ORDER BY p.display_order ASC, p.name ASC";
+
+  const result = await db.prepare(query).all<PartnerWithProductCount>();
   return result.results;
 }
 
@@ -728,12 +841,17 @@ export async function deleteValueProposition(id: number): Promise<void> {
 // =============================================
 
 export async function getStats(options?: { activeOnly?: boolean }): Promise<Stat[]> {
-  const db = await getDB();
-  let query = "SELECT * FROM stats WHERE 1=1";
-  if (options?.activeOnly) query += " AND is_active = 1";
-  query += " ORDER BY display_order ASC";
-  const result = await db.prepare(query).all<Stat>();
-  return result.results;
+  try {
+    const db = await getDB();
+    let query = "SELECT * FROM stats WHERE 1=1";
+    if (options?.activeOnly) query += " AND is_active = 1";
+    query += " ORDER BY display_order ASC";
+    const result = await db.prepare(query).all<Stat>();
+    return result.results;
+  } catch (error) {
+    console.error("Error fetching stats:", error);
+    return [];
+  }
 }
 
 export async function createStat(
@@ -775,12 +893,17 @@ export async function deleteStat(id: number): Promise<void> {
 // =============================================
 
 export async function getTeamMembers(options?: { activeOnly?: boolean }): Promise<TeamMember[]> {
-  const db = await getDB();
-  let query = "SELECT * FROM team_members WHERE 1=1";
-  if (options?.activeOnly) query += " AND is_active = 1";
-  query += " ORDER BY display_order ASC";
-  const result = await db.prepare(query).all<TeamMember>();
-  return result.results;
+  try {
+    const db = await getDB();
+    let query = "SELECT * FROM team_members WHERE 1=1";
+    if (options?.activeOnly) query += " AND is_active = 1";
+    query += " ORDER BY display_order ASC";
+    const result = await db.prepare(query).all<TeamMember>();
+    return result.results;
+  } catch (error) {
+    console.error("Error fetching team members:", error);
+    return [];
+  }
 }
 
 export async function getTeamMemberById(id: number): Promise<TeamMember | null> {
