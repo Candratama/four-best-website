@@ -143,10 +143,12 @@ body {
   }
 }
 
-/* Override Tailwind's hidden class that might conflict */
-section {
-  display: block !important;
-  visibility: visible !important;
+/* Ensure main content sections are visible (not hidden by template CSS) */
+#section-contact,
+#section-about,
+#section-partners {
+  display: block;
+  visibility: visible;
 }
 
 /* Override WOW.js hidden state - we handle animations differently */
