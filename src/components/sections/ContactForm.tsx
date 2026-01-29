@@ -234,7 +234,8 @@ export default function ContactForm({
                               ? "Sending..."
                               : "Send Message"
                           }
-                          className="btn-main"
+                          className="btn-main fx-slide"
+                          data-hover={status === "submitting" ? "Sending..." : "Send Message"}
                           disabled={status === "submitting"}
                         />
                       </div>
@@ -351,10 +352,11 @@ export default function ContactForm({
               <div className="text-start">
                 <button
                   type="submit"
-                  className="btn-main"
+                  className="btn-main fx-slide"
+                  data-hover={status === "submitting" ? "Sending..." : "Send Message"}
                   disabled={status === "submitting"}
                 >
-                  {status === "submitting" ? "Sending..." : "Send Message"}
+                  <span>{status === "submitting" ? "Sending..." : "Send Message"}</span>
                 </button>
               </div>
             </div>
