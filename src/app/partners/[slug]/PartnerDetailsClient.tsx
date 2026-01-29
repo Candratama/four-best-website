@@ -1,9 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import type { Partner, Product } from "@/lib/db";
 import { ContactForm } from "@/components/sections";
+import { fadeInUp, staggerContainer, zoomIn } from "@/lib/animations";
 
 interface PartnerDetailsClientProps {
   partner: Partner;
@@ -29,15 +31,6 @@ export default function PartnerDetailsClient({
   products,
 }: PartnerDetailsClientProps) {
   const [activeFilter, setActiveFilter] = useState<FilterType>('all');
-
-  useEffect(() => {
-    // Initialize WOW animations
-    if (typeof window !== "undefined") {
-      import("wowjs").then((WOW) => {
-        new WOW.WOW({ live: false }).init();
-      });
-    }
-  }, []);
 
   // Group products by category
   const commercialProducts = products.filter(
@@ -94,22 +87,24 @@ export default function PartnerDetailsClient({
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
-                <div className="relative overflow-hidden">
-                  <div className="wow fadeInUpBig" data-wow-duration="1.5s">
-                    <div
-                      className="subtitle text-light wow fadeInUp"
-                      data-wow-delay=".2s"
-                    >
+                <motion.div
+                  className="relative overflow-hidden"
+                  variants={staggerContainer(0.2)}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                >
+                  <motion.div variants={fadeInUp}>
+                    <div className="subtitle text-light">
                       Developer Partner
                     </div>
-                    <h1
-                      className="fs-120 text-uppercase fs-sm-10vw mb-2 lh-1 wow fadeInUp"
-                      data-wow-delay=".4s"
-                    >
+                  </motion.div>
+                  <motion.div variants={fadeInUp}>
+                    <h1 className="fs-120 text-uppercase fs-sm-10vw mb-2 lh-1">
                       {partner.name}
                     </h1>
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               </div>
             </div>
           </div>
@@ -124,8 +119,12 @@ export default function PartnerDetailsClient({
       >
         <div className="container">
           <div className="d-flex justify-content-center">
-            <div
-              className="rounded-2xl bg-white d-flex justify-content-center align-items-center wow zoomIn"
+            <motion.div
+              className="rounded-2xl bg-white d-flex justify-content-center align-items-center"
+              variants={zoomIn}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
               style={{
                 width: "300px",
                 height: "300px",
@@ -157,7 +156,7 @@ export default function PartnerDetailsClient({
                   {acronym}
                 </span>
               )}
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
@@ -168,16 +167,27 @@ export default function PartnerDetailsClient({
           <div className="row g-4 justify-content-center">
             <div className="spacer-double"></div>
             <div className="col-lg-8">
-              <div className="text-center">
-                <div className="subtitle wow fadeInUp" data-wow-delay=".2s">
-                  Tentang Kami
-                </div>
-                <h2 className="wow fadeInUp" data-wow-delay=".4s">
-                  Profil Perusahaan
-                </h2>
-              </div>
+              <motion.div
+                className="text-center"
+                variants={staggerContainer(0.2)}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                <motion.div variants={fadeInUp}>
+                  <div className="subtitle">Tentang Kami</div>
+                </motion.div>
+                <motion.div variants={fadeInUp}>
+                  <h2>Profil Perusahaan</h2>
+                </motion.div>
+              </motion.div>
               <div className="spacer-single"></div>
-              <div className="wow fadeInUp" data-wow-delay=".6s">
+              <motion.div
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
                 {partner.full_profile ? (
                   <div
                     className="text-content"
@@ -192,7 +202,7 @@ export default function PartnerDetailsClient({
                     Informasi profil belum tersedia.
                   </p>
                 )}
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
@@ -203,20 +213,23 @@ export default function PartnerDetailsClient({
         <section id="section-products" className="bg-color-op-1">
           <div className="container">
             <div className="row g-4 gx-5 justify-content-center">
-              <div className="col-lg-6 text-center">
-                <div
-                  className="subtitle s2 mb-3 wow fadeInUp"
-                  data-wow-delay=".0s"
-                >
-                  Proyek Kami
-                </div>
-                <h2 className="wow fadeInUp" data-wow-delay=".2s">
-                  Daftar Produk
-                </h2>
-                <p className="wow fadeInUp" data-wow-delay=".4s">
-                  {filteredProducts.length} proyek tersedia dari {partner.name}
-                </p>
-              </div>
+              <motion.div
+                className="col-lg-6 text-center"
+                variants={staggerContainer(0.2)}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
+                <motion.div variants={fadeInUp}>
+                  <div className="subtitle s2 mb-3">Proyek Kami</div>
+                </motion.div>
+                <motion.div variants={fadeInUp}>
+                  <h2>Daftar Produk</h2>
+                </motion.div>
+                <motion.div variants={fadeInUp}>
+                  <p>{filteredProducts.length} proyek tersedia dari {partner.name}</p>
+                </motion.div>
+              </motion.div>
             </div>
 
             {/* Filter Buttons */}
@@ -269,17 +282,18 @@ export default function PartnerDetailsClient({
             {/* Unified Product Grid */}
             <div className="spacer-single"></div>
             {filteredProducts.length > 0 ? (
-              <div 
+              <motion.div 
                 className="row g-4"
-                style={{
-                  transition: 'opacity 0.3s ease',
-                }}
+                variants={staggerContainer(0.1)}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
               >
-                {filteredProducts.map((product, index) => (
-                  <div
+                {filteredProducts.map((product) => (
+                  <motion.div
                     key={product.id}
-                    className="col-lg-4 col-md-6 wow fadeInUp"
-                    data-wow-delay={`${index * 0.1}s`}
+                    className="col-lg-4 col-md-6"
+                    variants={fadeInUp}
                   >
                     <div className="de-item hover-shadow rounded-1 overflow-hidden">
                       <div className="d-img position-relative">
@@ -332,9 +346,9 @@ export default function PartnerDetailsClient({
                         </Link>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 ))}
-              </div>
+              </motion.div>
             ) : (
               <div className="row justify-content-center">
                 <div className="col-lg-6 text-center">
@@ -369,17 +383,20 @@ export default function PartnerDetailsClient({
       <section id="section-contact">
         <div className="container">
           <div className="row g-4 justify-content-center">
-            <div className="col-lg-6 text-center">
-              <div
-                className="subtitle s2 mb-3 wow fadeInUp"
-                data-wow-delay=".0s"
-              >
-                Hubungi Kami
-              </div>
-              <h2 className="wow fadeInUp" data-wow-delay=".2s">
-                Tertarik dengan Proyek Kami?
-              </h2>
-            </div>
+            <motion.div
+              className="col-lg-6 text-center"
+              variants={staggerContainer(0.2)}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              <motion.div variants={fadeInUp}>
+                <div className="subtitle s2 mb-3">Hubungi Kami</div>
+              </motion.div>
+              <motion.div variants={fadeInUp}>
+                <h2>Tertarik dengan Proyek Kami?</h2>
+              </motion.div>
+            </motion.div>
           </div>
 
           <div className="row g-4 justify-content-center">
