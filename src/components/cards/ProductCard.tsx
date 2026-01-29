@@ -33,7 +33,7 @@ export default function ProductCard({
     >
       <div className="hover overflow-hidden relative text-white">
         {/* Card Image */}
-        <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
+        <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
           {image ? (
             <Image
               src={image}

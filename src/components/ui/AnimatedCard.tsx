@@ -29,7 +29,7 @@ export default function AnimatedCard({
 
   return (
     <motion.div
-      className={`rounded-xl overflow-hidden ${className}`}
+      className={`rounded-2xl overflow-hidden ${className}`}
       whileHover={hoverAnimations[hoverEffect]}
       transition={{
         duration: timing.fast,

@@ -8,17 +8,20 @@ import { timing, easing, hoverScale, tapScale, shadows } from '@/lib/animation-c
 interface AnimatedButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
   children: ReactNode;
   href?: string;
-  variant?: 'primary' | 'outline' | 'ghost';
+  variant?: 'primary' | 'outline' | 'ghost' | 'outline-light' | 'light';
   size?: 'sm' | 'md' | 'lg';
   pulse?: boolean;
   loading?: boolean;
   disabled?: boolean;
+  external?: boolean;
 }
 
 const variants = {
   primary: 'bg-[#162d50] text-white hover:bg-[#1e3a5f]',
   outline: 'border-2 border-[#162d50] text-[#162d50] hover:bg-[#162d50] hover:text-white',
   ghost: 'text-[#162d50] hover:bg-[#162d50]/10',
+  'outline-light': 'border-2 border-white text-white hover:bg-white hover:text-[#162d50]',
+  light: 'bg-white text-[#162d50] hover:bg-white/90',
 };
 
 const sizes = {
@@ -36,12 +39,13 @@ const AnimatedButton = forwardRef<HTMLButtonElement, AnimatedButtonProps>(
     pulse = false,
     loading = false,
     disabled = false,
+    external = false,
     className = '',
     ...props
   }, ref) => {
     const baseClasses = `
       inline-flex items-center justify-center gap-2
-      font-semibold rounded-lg
+      font-semibold rounded-2xl
       transition-colors duration-300
       disabled:opacity-50 disabled:cursor-not-allowed
       ${variants[variant]}
@@ -77,6 +81,19 @@ const AnimatedButton = forwardRef<HTMLButtonElement, AnimatedButtonProps>(
     };
 
     if (href && !disabled) {
+      if (external) {
+        return (
+          <motion.a
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={baseClasses}
+            {...motionProps}
+          >
+            {loading ? <LoadingSpinner /> : children}
+          </motion.a>
+        );
+      }
       return (
         <motion.div {...motionProps}>
           <Link href={href} className={baseClasses}>

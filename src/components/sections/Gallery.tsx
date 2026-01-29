@@ -92,7 +92,7 @@ export default function Gallery({ items, filters }: GalleryProps) {
                   handleImageClick(idx);
                 }}
               >
-                <div className="relative overflow-hidden rounded-1">
+                <div className="relative overflow-hidden rounded-2xl">
                   <div className="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-2 text-center text-white z-3">
                     View
                   </div>

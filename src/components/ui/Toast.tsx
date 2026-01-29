@@ -68,7 +68,7 @@ export default function Toast({
           className={`
             fixed bottom-4 right-4 z-50
             flex items-center gap-3
-            px-4 py-3 rounded-lg border
+            px-4 py-3 rounded-2xl border
             shadow-lg max-w-sm
             ${colors[type]}
           `}

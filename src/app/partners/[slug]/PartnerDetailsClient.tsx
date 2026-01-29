@@ -295,7 +295,7 @@ export default function PartnerDetailsClient({
                     className="col-lg-4 col-md-6"
                     variants={fadeInUp}
                   >
-                    <div className="de-item hover-shadow rounded-1 overflow-hidden">
+                    <div className="de-item hover-shadow rounded-2xl overflow-hidden">
                       <div className="d-img position-relative">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
@@ -402,7 +402,7 @@ export default function PartnerDetailsClient({
           <div className="row g-4 justify-content-center">
             {/* Partner Contact Info */}
             <div className="col-md-4">
-              <div className="bg-color-op-1 p-4 rounded-1 h-100">
+              <div className="bg-color-op-1 p-4 rounded-2xl h-100">
                 <h4 className="mb-4">Kontak {partner.name}</h4>
 
                 {partner.contact_phone && (

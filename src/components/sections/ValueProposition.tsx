@@ -63,7 +63,7 @@ export default function ValueProposition() {
               }`}
             >
               <CardHeader className="pb-2">
-                <div className="icon-box w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-4 transition-all duration-300 text-[#162d50]">
+                <div className="icon-box w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 transition-all duration-300 text-[#162d50]">
                   {item.icon}
                 </div>
                 <CardTitle className="text-xl">{item.title}</CardTitle>
