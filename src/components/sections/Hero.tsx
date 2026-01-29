@@ -35,8 +35,8 @@ export default function Hero({
   address,
   mapUrl,
   slides = [
-    { image: "/images/slider/apt-1.webp", overlay: 0.4 },
-    { image: "/images/slider/apt-2.webp", overlay: 0.4 },
+    { image: "https://cdn.4best.id/slider/apt-1.webp", overlay: 0.4 },
+    { image: "https://cdn.4best.id/slider/apt-2.webp", overlay: 0.4 },
   ],
   backgroundImage,
 }: HeroProps) {

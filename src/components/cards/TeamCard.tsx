@@ -32,7 +32,7 @@ export default function TeamCard({ member }: TeamCardProps) {
   return (
     <div className="col-lg-3">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={image || "/images/team/placeholder.webp"} className="w-100" alt={name} />
+      <img src={image || "https://cdn.4best.id/team/placeholder.webp"} className="w-100" alt={name} />
       <div className="p-3 text-center">
         <h4 className="mb-0">{name}</h4>
         <p className="mb-2">{role}</p>

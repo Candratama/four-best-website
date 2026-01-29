@@ -44,13 +44,13 @@ interface AboutPageClientProps {
 const defaultAboutData = {
   hero_title: "Tentang 4BEST",
   hero_subtitle: "Pilihan Tepat, Hasil Terbaik",
-  hero_background_image: "/images/background/5.webp",
+  hero_background_image: "https://cdn.4best.id/backgrounds/5.webp",
   intro_subtitle: "Tentang Kami",
   intro_title: "4Best Agent Property",
   intro_description:
     "4Best Agent Property adalah perusahaan agen properti profesional yang menyediakan layanan jual, beli, dan sewa properti dengan pendekatan terpercaya dan berorientasi hasil.",
-  intro_image_left: "/images/misc/p1.webp",
-  intro_image_right: "/images/misc/p2.webp",
+  intro_image_left: "https://cdn.4best.id/misc/p1.webp",
+  intro_image_right: "https://cdn.4best.id/misc/p2.webp",
   vision_subtitle: "Visi Kami",
   vision_title: "Menjadi yang Terdepan",
   vision_text:

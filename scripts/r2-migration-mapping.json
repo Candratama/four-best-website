@@ -1,0 +1,517 @@
+{
+  "/images/agents/1.webp": {
+    "url": "https://cdn.4best.id/team/agents/1.webp",
+    "thumbnail": "https://cdn.4best.id/team/agents/thumbs/1.webp"
+  },
+  "/images/agents/2.webp": {
+    "url": "https://cdn.4best.id/team/agents/2.webp",
+    "thumbnail": "https://cdn.4best.id/team/agents/thumbs/2.webp"
+  },
+  "/images/agents/3.webp": {
+    "url": "https://cdn.4best.id/team/agents/3.webp",
+    "thumbnail": "https://cdn.4best.id/team/agents/thumbs/3.webp"
+  },
+  "/images/apartment/1.jpg": {
+    "url": "https://cdn.4best.id/properties/apartment/1.webp",
+    "thumbnail": "https://cdn.4best.id/properties/apartment/thumbs/1.webp"
+  },
+  "/images/apartment/2.jpg": {
+    "url": "https://cdn.4best.id/properties/apartment/2.webp",
+    "thumbnail": "https://cdn.4best.id/properties/apartment/thumbs/2.webp"
+  },
+  "/images/apartment/3.jpg": {
+    "url": "https://cdn.4best.id/properties/apartment/3.webp",
+    "thumbnail": "https://cdn.4best.id/properties/apartment/thumbs/3.webp"
+  },
+  "/images/apartment/4.jpg": {
+    "url": "https://cdn.4best.id/properties/apartment/4.webp",
+    "thumbnail": "https://cdn.4best.id/properties/apartment/thumbs/4.webp"
+  },
+  "/images/apartment/5.jpg": {
+    "url": "https://cdn.4best.id/properties/apartment/5.webp",
+    "thumbnail": "https://cdn.4best.id/properties/apartment/thumbs/5.webp"
+  },
+  "/images/apartment/6.jpg": {
+    "url": "https://cdn.4best.id/properties/apartment/6.webp",
+    "thumbnail": "https://cdn.4best.id/properties/apartment/thumbs/6.webp"
+  },
+  "/images/background/1.webp": {
+    "url": "https://cdn.4best.id/backgrounds/1.webp"
+  },
+  "/images/background/2.webp": {
+    "url": "https://cdn.4best.id/backgrounds/2.webp"
+  },
+  "/images/background/3.webp": {
+    "url": "https://cdn.4best.id/backgrounds/3.webp"
+  },
+  "/images/background/4.webp": {
+    "url": "https://cdn.4best.id/backgrounds/4.webp"
+  },
+  "/images/background/5.webp": {
+    "url": "https://cdn.4best.id/backgrounds/5.webp"
+  },
+  "/images/background/6.webp": {
+    "url": "https://cdn.4best.id/backgrounds/6.webp"
+  },
+  "/images/background/7.webp": {
+    "url": "https://cdn.4best.id/backgrounds/7.webp"
+  },
+  "/images/background/8.webp": {
+    "url": "https://cdn.4best.id/backgrounds/8.webp"
+  },
+  "/images/demo/homepage-1.webp": {
+    "url": "https://cdn.4best.id/misc/demo/homepage-1.webp",
+    "thumbnail": "https://cdn.4best.id/misc/demo/thumbs/homepage-1.webp"
+  },
+  "/images/demo/homepage-2.webp": {
+    "url": "https://cdn.4best.id/misc/demo/homepage-2.webp",
+    "thumbnail": "https://cdn.4best.id/misc/demo/thumbs/homepage-2.webp"
+  },
+  "/images/demo/homepage-3.webp": {
+    "url": "https://cdn.4best.id/misc/demo/homepage-3.webp",
+    "thumbnail": "https://cdn.4best.id/misc/demo/thumbs/homepage-3.webp"
+  },
+  "/images/demo/homepage-4.webp": {
+    "url": "https://cdn.4best.id/misc/demo/homepage-4.webp",
+    "thumbnail": "https://cdn.4best.id/misc/demo/thumbs/homepage-4.webp"
+  },
+  "/images/demo/homepage-5.webp": {
+    "url": "https://cdn.4best.id/misc/demo/homepage-5.webp",
+    "thumbnail": "https://cdn.4best.id/misc/demo/thumbs/homepage-5.webp"
+  },
+  "/images/demo/homepage-6.webp": {
+    "url": "https://cdn.4best.id/misc/demo/homepage-6.webp",
+    "thumbnail": "https://cdn.4best.id/misc/demo/thumbs/homepage-6.webp"
+  },
+  "/images/discover-rooms/l1.webp": {
+    "url": "https://cdn.4best.id/properties/discover-rooms/l1.webp",
+    "thumbnail": "https://cdn.4best.id/properties/discover-rooms/thumbs/l1.webp"
+  },
+  "/images/discover-rooms/l2.webp": {
+    "url": "https://cdn.4best.id/properties/discover-rooms/l2.webp",
+    "thumbnail": "https://cdn.4best.id/properties/discover-rooms/thumbs/l2.webp"
+  },
+  "/images/discover-rooms/l3.webp": {
+    "url": "https://cdn.4best.id/properties/discover-rooms/l3.webp",
+    "thumbnail": "https://cdn.4best.id/properties/discover-rooms/thumbs/l3.webp"
+  },
+  "/images/discover-rooms/l4.webp": {
+    "url": "https://cdn.4best.id/properties/discover-rooms/l4.webp",
+    "thumbnail": "https://cdn.4best.id/properties/discover-rooms/thumbs/l4.webp"
+  },
+  "/images/discover-rooms/l5.webp": {
+    "url": "https://cdn.4best.id/properties/discover-rooms/l5.webp",
+    "thumbnail": "https://cdn.4best.id/properties/discover-rooms/thumbs/l5.webp"
+  },
+  "/images/facilities-nearby/1.webp": {
+    "url": "https://cdn.4best.id/misc/facilities-nearby/1.webp",
+    "thumbnail": "https://cdn.4best.id/misc/facilities-nearby/thumbs/1.webp"
+  },
+  "/images/facilities-nearby/2.webp": {
+    "url": "https://cdn.4best.id/misc/facilities-nearby/2.webp",
+    "thumbnail": "https://cdn.4best.id/misc/facilities-nearby/thumbs/2.webp"
+  },
+  "/images/facilities-nearby/3.webp": {
+    "url": "https://cdn.4best.id/misc/facilities-nearby/3.webp",
+    "thumbnail": "https://cdn.4best.id/misc/facilities-nearby/thumbs/3.webp"
+  },
+  "/images/facilities-nearby/4.webp": {
+    "url": "https://cdn.4best.id/misc/facilities-nearby/4.webp",
+    "thumbnail": "https://cdn.4best.id/misc/facilities-nearby/thumbs/4.webp"
+  },
+  "/images/gallery/l1.webp": {
+    "url": "https://cdn.4best.id/misc/gallery/l1.webp",
+    "thumbnail": "https://cdn.4best.id/misc/gallery/thumbs/l1.webp"
+  },
+  "/images/gallery/l10.webp": {
+    "url": "https://cdn.4best.id/misc/gallery/l10.webp",
+    "thumbnail": "https://cdn.4best.id/misc/gallery/thumbs/l10.webp"
+  },
+  "/images/gallery/l11.webp": {
+    "url": "https://cdn.4best.id/misc/gallery/l11.webp",
+    "thumbnail": "https://cdn.4best.id/misc/gallery/thumbs/l11.webp"
+  },
+  "/images/gallery/l12.webp": {
+    "url": "https://cdn.4best.id/misc/gallery/l12.webp",
+    "thumbnail": "https://cdn.4best.id/misc/gallery/thumbs/l12.webp"
+  },
+  "/images/gallery/l13.webp": {
+    "url": "https://cdn.4best.id/misc/gallery/l13.webp",
+    "thumbnail": "https://cdn.4best.id/misc/gallery/thumbs/l13.webp"
+  },
+  "/images/gallery/l14.webp": {
+    "url": "https://cdn.4best.id/misc/gallery/l14.webp",
+    "thumbnail": "https://cdn.4best.id/misc/gallery/thumbs/l14.webp"
+  },
+  "/images/gallery/l15.webp": {
+    "url": "https://cdn.4best.id/misc/gallery/l15.webp",
+    "thumbnail": "https://cdn.4best.id/misc/gallery/thumbs/l15.webp"
+  },
+  "/images/gallery/l2.webp": {
+    "url": "https://cdn.4best.id/misc/gallery/l2.webp",
+    "thumbnail": "https://cdn.4best.id/misc/gallery/thumbs/l2.webp"
+  },
+  "/images/gallery/l3.webp": {
+    "url": "https://cdn.4best.id/misc/gallery/l3.webp",
+    "thumbnail": "https://cdn.4best.id/misc/gallery/thumbs/l3.webp"
+  },
+  "/images/gallery/l4.webp": {
+    "url": "https://cdn.4best.id/misc/gallery/l4.webp",
+    "thumbnail": "https://cdn.4best.id/misc/gallery/thumbs/l4.webp"
+  },
+  "/images/gallery/l5.webp": {
+    "url": "https://cdn.4best.id/misc/gallery/l5.webp",
+    "thumbnail": "https://cdn.4best.id/misc/gallery/thumbs/l5.webp"
+  },
+  "/images/gallery/l6.webp": {
+    "url": "https://cdn.4best.id/misc/gallery/l6.webp",
+    "thumbnail": "https://cdn.4best.id/misc/gallery/thumbs/l6.webp"
+  },
+  "/images/gallery/l7.webp": {
+    "url": "https://cdn.4best.id/misc/gallery/l7.webp",
+    "thumbnail": "https://cdn.4best.id/misc/gallery/thumbs/l7.webp"
+  },
+  "/images/gallery/l8.webp": {
+    "url": "https://cdn.4best.id/misc/gallery/l8.webp",
+    "thumbnail": "https://cdn.4best.id/misc/gallery/thumbs/l8.webp"
+  },
+  "/images/gallery/l9.webp": {
+    "url": "https://cdn.4best.id/misc/gallery/l9.webp",
+    "thumbnail": "https://cdn.4best.id/misc/gallery/thumbs/l9.webp"
+  },
+  "/images/icon.webp": {
+    "url": "https://cdn.4best.id/branding/icon.webp"
+  },
+  "/images/icons-color/1.png": {
+    "url": "https://cdn.4best.id/misc/icons-color/1.webp",
+    "thumbnail": "https://cdn.4best.id/misc/icons-color/thumbs/1.webp"
+  },
+  "/images/icons-color/2.png": {
+    "url": "https://cdn.4best.id/misc/icons-color/2.webp",
+    "thumbnail": "https://cdn.4best.id/misc/icons-color/thumbs/2.webp"
+  },
+  "/images/icons-color/3.png": {
+    "url": "https://cdn.4best.id/misc/icons-color/3.webp",
+    "thumbnail": "https://cdn.4best.id/misc/icons-color/thumbs/3.webp"
+  },
+  "/images/icons-color/4.png": {
+    "url": "https://cdn.4best.id/misc/icons-color/4.webp",
+    "thumbnail": "https://cdn.4best.id/misc/icons-color/thumbs/4.webp"
+  },
+  "/images/icons-color/bed.png": {
+    "url": "https://cdn.4best.id/misc/icons-color/bed.webp",
+    "thumbnail": "https://cdn.4best.id/misc/icons-color/thumbs/bed.webp"
+  },
+  "/images/icons-color/building.png": {
+    "url": "https://cdn.4best.id/misc/icons-color/building.webp",
+    "thumbnail": "https://cdn.4best.id/misc/icons-color/thumbs/building.webp"
+  },
+  "/images/icons-color/coin.png": {
+    "url": "https://cdn.4best.id/misc/icons-color/coin.webp",
+    "thumbnail": "https://cdn.4best.id/misc/icons-color/thumbs/coin.webp"
+  },
+  "/images/icons-color/size.png": {
+    "url": "https://cdn.4best.id/misc/icons-color/size.webp",
+    "thumbnail": "https://cdn.4best.id/misc/icons-color/thumbs/size.webp"
+  },
+  "/images/icons-color/tile.png": {
+    "url": "https://cdn.4best.id/misc/icons-color/tile.webp",
+    "thumbnail": "https://cdn.4best.id/misc/icons-color/thumbs/tile.webp"
+  },
+  "/images/logo-black.webp": {
+    "url": "https://cdn.4best.id/branding/logo-black.webp"
+  },
+  "/images/logo-icon.webp": {
+    "url": "https://cdn.4best.id/branding/logo-icon.webp"
+  },
+  "/images/logo.webp": {
+    "url": "https://cdn.4best.id/branding/logo.webp"
+  },
+  "/images/misc/floorplan-2-color.webp": {
+    "url": "https://cdn.4best.id/misc/floorplan-2-color.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/floorplan-2-color.webp"
+  },
+  "/images/misc/floorplan-2.webp": {
+    "url": "https://cdn.4best.id/misc/floorplan-2.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/floorplan-2.webp"
+  },
+  "/images/misc/floorplan.webp": {
+    "url": "https://cdn.4best.id/misc/floorplan.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/floorplan.webp"
+  },
+  "/images/misc/l1.webp": {
+    "url": "https://cdn.4best.id/misc/l1.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/l1.webp"
+  },
+  "/images/misc/l2.webp": {
+    "url": "https://cdn.4best.id/misc/l2.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/l2.webp"
+  },
+  "/images/misc/l3.webp": {
+    "url": "https://cdn.4best.id/misc/l3.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/l3.webp"
+  },
+  "/images/misc/l4.webp": {
+    "url": "https://cdn.4best.id/misc/l4.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/l4.webp"
+  },
+  "/images/misc/l5.webp": {
+    "url": "https://cdn.4best.id/misc/l5.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/l5.webp"
+  },
+  "/images/misc/l6.webp": {
+    "url": "https://cdn.4best.id/misc/l6.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/l6.webp"
+  },
+  "/images/misc/l7.webp": {
+    "url": "https://cdn.4best.id/misc/l7.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/l7.webp"
+  },
+  "/images/misc/l8.webp": {
+    "url": "https://cdn.4best.id/misc/l8.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/l8.webp"
+  },
+  "/images/misc/l9.webp": {
+    "url": "https://cdn.4best.id/misc/l9.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/l9.webp"
+  },
+  "/images/misc/p1.webp": {
+    "url": "https://cdn.4best.id/misc/p1.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/p1.webp"
+  },
+  "/images/misc/p2.webp": {
+    "url": "https://cdn.4best.id/misc/p2.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/p2.webp"
+  },
+  "/images/misc/s1.webp": {
+    "url": "https://cdn.4best.id/misc/s1.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/s1.webp"
+  },
+  "/images/misc/s2.webp": {
+    "url": "https://cdn.4best.id/misc/s2.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/s2.webp"
+  },
+  "/images/misc/s3.webp": {
+    "url": "https://cdn.4best.id/misc/s3.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/s3.webp"
+  },
+  "/images/misc/s4.webp": {
+    "url": "https://cdn.4best.id/misc/s4.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/s4.webp"
+  },
+  "/images/misc/s5.webp": {
+    "url": "https://cdn.4best.id/misc/s5.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/s5.webp"
+  },
+  "/images/misc/s6.webp": {
+    "url": "https://cdn.4best.id/misc/s6.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/s6.webp"
+  },
+  "/images/misc/w1.webp": {
+    "url": "https://cdn.4best.id/misc/w1.webp",
+    "thumbnail": "https://cdn.4best.id/misc/thumbs/w1.webp"
+  },
+  "/images/news/s1.webp": {
+    "url": "https://cdn.4best.id/misc/news/s1.webp",
+    "thumbnail": "https://cdn.4best.id/misc/news/thumbs/s1.webp"
+  },
+  "/images/news/s2.webp": {
+    "url": "https://cdn.4best.id/misc/news/s2.webp",
+    "thumbnail": "https://cdn.4best.id/misc/news/thumbs/s2.webp"
+  },
+  "/images/news/s3.webp": {
+    "url": "https://cdn.4best.id/misc/news/s3.webp",
+    "thumbnail": "https://cdn.4best.id/misc/news/thumbs/s3.webp"
+  },
+  "/images/news/s4.webp": {
+    "url": "https://cdn.4best.id/misc/news/s4.webp",
+    "thumbnail": "https://cdn.4best.id/misc/news/thumbs/s4.webp"
+  },
+  "/images/news/s5.webp": {
+    "url": "https://cdn.4best.id/misc/news/s5.webp",
+    "thumbnail": "https://cdn.4best.id/misc/news/thumbs/s5.webp"
+  },
+  "/images/news/s6.webp": {
+    "url": "https://cdn.4best.id/misc/news/s6.webp",
+    "thumbnail": "https://cdn.4best.id/misc/news/thumbs/s6.webp"
+  },
+  "/images/news/s7.webp": {
+    "url": "https://cdn.4best.id/misc/news/s7.webp",
+    "thumbnail": "https://cdn.4best.id/misc/news/thumbs/s7.webp"
+  },
+  "/images/news-thumbnail/1.webp": {
+    "url": "https://cdn.4best.id/misc/news-thumbnail/1.webp",
+    "thumbnail": "https://cdn.4best.id/misc/news-thumbnail/thumbs/1.webp"
+  },
+  "/images/news-thumbnail/2.webp": {
+    "url": "https://cdn.4best.id/misc/news-thumbnail/2.webp",
+    "thumbnail": "https://cdn.4best.id/misc/news-thumbnail/thumbs/2.webp"
+  },
+  "/images/news-thumbnail/3.webp": {
+    "url": "https://cdn.4best.id/misc/news-thumbnail/3.webp",
+    "thumbnail": "https://cdn.4best.id/misc/news-thumbnail/thumbs/3.webp"
+  },
+  "/images/news-thumbnail/4.webp": {
+    "url": "https://cdn.4best.id/misc/news-thumbnail/4.webp",
+    "thumbnail": "https://cdn.4best.id/misc/news-thumbnail/thumbs/4.webp"
+  },
+  "/images/news-thumbnail/5.webp": {
+    "url": "https://cdn.4best.id/misc/news-thumbnail/5.webp",
+    "thumbnail": "https://cdn.4best.id/misc/news-thumbnail/thumbs/5.webp"
+  },
+  "/images/news-thumbnail/6.webp": {
+    "url": "https://cdn.4best.id/misc/news-thumbnail/6.webp",
+    "thumbnail": "https://cdn.4best.id/misc/news-thumbnail/thumbs/6.webp"
+  },
+  "/images/news-thumbnail/7.webp": {
+    "url": "https://cdn.4best.id/misc/news-thumbnail/7.webp",
+    "thumbnail": "https://cdn.4best.id/misc/news-thumbnail/thumbs/7.webp"
+  },
+  "/images/news-thumbnail/8.webp": {
+    "url": "https://cdn.4best.id/misc/news-thumbnail/8.webp",
+    "thumbnail": "https://cdn.4best.id/misc/news-thumbnail/thumbs/8.webp"
+  },
+  "/images/partners/logo-graha-komersial.svg": {
+    "url": "https://cdn.4best.id/partners/logo-graha-komersial.svg"
+  },
+  "/images/partners/logo-hunian-masa-depan.svg": {
+    "url": "https://cdn.4best.id/partners/logo-hunian-masa-depan.svg"
+  },
+  "/images/partners/logo-investasi-cerdas.svg": {
+    "url": "https://cdn.4best.id/partners/logo-investasi-cerdas.svg"
+  },
+  "/images/partners/logo-mitra-properti.svg": {
+    "url": "https://cdn.4best.id/partners/logo-mitra-properti.svg"
+  },
+  "/images/partners/logo-properti-rakyat.svg": {
+    "url": "https://cdn.4best.id/partners/logo-properti-rakyat.svg"
+  },
+  "/images/partners/logo-sejahtera-indonesia.svg": {
+    "url": "https://cdn.4best.id/partners/logo-sejahtera-indonesia.svg"
+  },
+  "/images/room-single/1.webp": {
+    "url": "https://cdn.4best.id/properties/room-single/1.webp",
+    "thumbnail": "https://cdn.4best.id/properties/room-single/thumbs/1.webp"
+  },
+  "/images/room-single/2.webp": {
+    "url": "https://cdn.4best.id/properties/room-single/2.webp",
+    "thumbnail": "https://cdn.4best.id/properties/room-single/thumbs/2.webp"
+  },
+  "/images/room-single/3.webp": {
+    "url": "https://cdn.4best.id/properties/room-single/3.webp",
+    "thumbnail": "https://cdn.4best.id/properties/room-single/thumbs/3.webp"
+  },
+  "/images/room-single/4.webp": {
+    "url": "https://cdn.4best.id/properties/room-single/4.webp",
+    "thumbnail": "https://cdn.4best.id/properties/room-single/thumbs/4.webp"
+  },
+  "/images/slider/1.webp": {
+    "url": "https://cdn.4best.id/slider/1.webp",
+    "thumbnail": "https://cdn.4best.id/slider/thumbs/1.webp"
+  },
+  "/images/slider/2.webp": {
+    "url": "https://cdn.4best.id/slider/2.webp",
+    "thumbnail": "https://cdn.4best.id/slider/thumbs/2.webp"
+  },
+  "/images/slider/3.webp": {
+    "url": "https://cdn.4best.id/slider/3.webp",
+    "thumbnail": "https://cdn.4best.id/slider/thumbs/3.webp"
+  },
+  "/images/slider/4.webp": {
+    "url": "https://cdn.4best.id/slider/4.webp",
+    "thumbnail": "https://cdn.4best.id/slider/thumbs/4.webp"
+  },
+  "/images/slider/apt-1.webp": {
+    "url": "https://cdn.4best.id/slider/apt-1.webp",
+    "thumbnail": "https://cdn.4best.id/slider/thumbs/apt-1.webp"
+  },
+  "/images/slider/apt-2.webp": {
+    "url": "https://cdn.4best.id/slider/apt-2.webp",
+    "thumbnail": "https://cdn.4best.id/slider/thumbs/apt-2.webp"
+  },
+  "/images/slider/apt-3.webp": {
+    "url": "https://cdn.4best.id/slider/apt-3.webp",
+    "thumbnail": "https://cdn.4best.id/slider/thumbs/apt-3.webp"
+  },
+  "/images/slider/apt-4.webp": {
+    "url": "https://cdn.4best.id/slider/apt-4.webp",
+    "thumbnail": "https://cdn.4best.id/slider/thumbs/apt-4.webp"
+  },
+  "/images/svg/air-conditioner-svgrepo-com.svg": {
+    "url": "https://cdn.4best.id/misc/svg/air-conditioner-svgrepo-com.svg"
+  },
+  "/images/svg/arrow-right-white.svg": {
+    "url": "https://cdn.4best.id/misc/svg/arrow-right-white.svg"
+  },
+  "/images/svg/arrow-right.svg": {
+    "url": "https://cdn.4best.id/misc/svg/arrow-right.svg"
+  },
+  "/images/svg/bath.svg": {
+    "url": "https://cdn.4best.id/misc/svg/bath.svg"
+  },
+  "/images/svg/bed.svg": {
+    "url": "https://cdn.4best.id/misc/svg/bed.svg"
+  },
+  "/images/svg/car.svg": {
+    "url": "https://cdn.4best.id/misc/svg/car.svg"
+  },
+  "/images/svg/completed-order-svgrepo-com.svg": {
+    "url": "https://cdn.4best.id/misc/svg/completed-order-svgrepo-com.svg"
+  },
+  "/images/svg/home'.svg": {
+    "url": "https://cdn.4best.id/misc/svg/home'.svg"
+  },
+  "/images/svg/phone-calling-svgrepo-com.svg": {
+    "url": "https://cdn.4best.id/misc/svg/phone-calling-svgrepo-com.svg"
+  },
+  "/images/svg/size.svg": {
+    "url": "https://cdn.4best.id/misc/svg/size.svg"
+  },
+  "/images/svg/wrench-line-svgrepo-com.svg": {
+    "url": "https://cdn.4best.id/misc/svg/wrench-line-svgrepo-com.svg"
+  },
+  "/images/team/1.webp": {
+    "url": "https://cdn.4best.id/team/1.webp",
+    "thumbnail": "https://cdn.4best.id/team/thumbs/1.webp"
+  },
+  "/images/team/2.webp": {
+    "url": "https://cdn.4best.id/team/2.webp",
+    "thumbnail": "https://cdn.4best.id/team/thumbs/2.webp"
+  },
+  "/images/team/3.webp": {
+    "url": "https://cdn.4best.id/team/3.webp",
+    "thumbnail": "https://cdn.4best.id/team/thumbs/3.webp"
+  },
+  "/images/team/4.webp": {
+    "url": "https://cdn.4best.id/team/4.webp",
+    "thumbnail": "https://cdn.4best.id/team/thumbs/4.webp"
+  },
+  "/images/ui/arrow-down-light.png": {
+    "url": "https://cdn.4best.id/misc/ui/arrow-down-light.webp",
+    "thumbnail": "https://cdn.4best.id/misc/ui/thumbs/arrow-down-light.webp"
+  },
+  "/images/ui/arrow-down.png": {
+    "url": "https://cdn.4best.id/misc/ui/arrow-down.webp",
+    "thumbnail": "https://cdn.4best.id/misc/ui/thumbs/arrow-down.webp"
+  },
+  "/images/ui/arrow-right-white.svg": {
+    "url": "https://cdn.4best.id/misc/ui/arrow-right-white.svg"
+  },
+  "/images/ui/arrow-top-right-white.svg": {
+    "url": "https://cdn.4best.id/misc/ui/arrow-top-right-white.svg"
+  },
+  "/images/ui/arrow-up-light.png": {
+    "url": "https://cdn.4best.id/misc/ui/arrow-up-light.webp",
+    "thumbnail": "https://cdn.4best.id/misc/ui/thumbs/arrow-up-light.webp"
+  },
+  "/images/ui/arrow-up.png": {
+    "url": "https://cdn.4best.id/misc/ui/arrow-up.webp",
+    "thumbnail": "https://cdn.4best.id/misc/ui/thumbs/arrow-up.webp"
+  },
+  "/images/ui/dots.svg": {
+    "url": "https://cdn.4best.id/misc/ui/dots.svg"
+  },
+  "/logo.svg": {
+    "url": "https://cdn.4best.id/branding/logo.svg"
+  }
+}

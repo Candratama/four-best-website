@@ -28,7 +28,7 @@ export default async function AboutPage() {
     id: t.id,
     name: t.name,
     role: t.role,
-    image: t.image || "/images/team/placeholder.webp",
+    image: t.image || "https://cdn.4best.id/team/placeholder.webp",
     social_facebook: t.social_facebook,
     social_twitter: t.social_twitter,
     social_instagram: t.social_instagram,

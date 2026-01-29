@@ -14,6 +14,8 @@
 		"cf-typegen": "wrangler types --env-interface CloudflareEnv ./cloudflare-env.d.ts"
 	},
 	"dependencies": {
+		"@aws-sdk/client-s3": "^3.978.0",
+		"@aws-sdk/s3-request-presigner": "^3.978.0",
 		"@getbrevo/brevo": "^3.0.1",
 		"@opennextjs/cloudflare": "^1.14.4",
 		"class-variance-authority": "^0.7.1",
@@ -21,7 +23,7 @@
 		"framer-motion": "^12.23.26",
 		"jarallax": "^2.2.1",
 		"lucide-react": "^0.563.0",
-		"next": "15.5.9",
+		"next": "^15.5.10",
 		"react": "19.1.4",
 		"react-dom": "19.1.4",
 		"swiper": "^12.0.3",
@@ -39,6 +41,7 @@
 		"@types/react": "^19",
 		"@types/react-dom": "^19",
 		"@vitejs/plugin-react": "^5.1.2",
+		"dotenv": "^17.2.3",
 		"eslint": "^9",
 		"eslint-config-next": "15.4.6",
 		"fast-check": "^4.5.2",

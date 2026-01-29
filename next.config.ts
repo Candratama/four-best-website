@@ -6,7 +6,15 @@ import { initOpenNextCloudflareForDev } from "@opennextjs/cloudflare";
 initOpenNextCloudflareForDev();
 
 const nextConfig: NextConfig = {
-	/* config options here */
+	images: {
+		remotePatterns: [
+			{
+				protocol: "https",
+				hostname: "cdn.4best.id",
+				pathname: "/**",
+			},
+		],
+	},
 };
 
 export default nextConfig;

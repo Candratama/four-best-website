@@ -21,7 +21,7 @@ export default async function Footer() {
         <div className="text-center">
           <div className="footer-logo-wrapper">
             <Image
-              src="/logo.svg"
+              src="https://cdn.4best.id/branding/logo.svg"
               alt="4best Logo"
               width={150}
               height={50}

@@ -33,7 +33,7 @@ export default async function ContactPage() {
         variant="parallax-contact"
         title="Hubungi Kami"
         subtitle="Kami Siap Membantu Anda!"
-        backgroundImage="/images/background/8.webp"
+        backgroundImage="https://cdn.4best.id/backgrounds/8.webp"
       />
       <ContactPageClient contactData={contactData} />
     </>

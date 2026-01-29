@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Partner, Product } from "@/lib/db";
 import { ContactForm } from "@/components/sections";
@@ -9,6 +9,8 @@ interface PartnerDetailsClientProps {
   partner: Partner;
   products: Product[];
 }
+
+type FilterType = 'all' | 'commercial' | 'subsidi';
 
 // Generate acronym from partner name (skip common prefixes like PT, CV)
 function getAcronym(name: string): string {
@@ -26,6 +28,8 @@ export default function PartnerDetailsClient({
   partner,
   products,
 }: PartnerDetailsClientProps) {
+  const [activeFilter, setActiveFilter] = useState<FilterType>('all');
+
   useEffect(() => {
     // Initialize WOW animations
     if (typeof window !== "undefined") {
@@ -40,6 +44,15 @@ export default function PartnerDetailsClient({
     (p) => p.category === "commercial",
   );
   const subsidiProducts = products.filter((p) => p.category === "subsidi");
+
+  // Get filtered products based on active filter
+  const getFilteredProducts = () => {
+    if (activeFilter === 'all') return products;
+    if (activeFilter === 'commercial') return commercialProducts;
+    return subsidiProducts;
+  };
+
+  const filteredProducts = getFilteredProducts();
 
   const hasHeroImage = partner.hero_image && !partner.hero_image.includes("placeholder");
   const hasLogo = partner.logo && !partner.logo.includes("placeholder");
@@ -201,120 +214,137 @@ export default function PartnerDetailsClient({
                   Daftar Produk
                 </h2>
                 <p className="wow fadeInUp" data-wow-delay=".4s">
-                  {products.length} proyek tersedia dari {partner.name}
+                  {filteredProducts.length} proyek tersedia dari {partner.name}
                 </p>
               </div>
             </div>
 
-            {/* Commercial Products */}
-            {commercialProducts.length > 0 && (
-              <>
-                <div className="spacer-single"></div>
-                <h4 className="text-center mb-4 wow fadeInUp">
-                  Properti Komersial ({commercialProducts.length})
-                </h4>
-                <div className="row g-4">
-                  {commercialProducts.map((product, index) => (
-                    <div
-                      key={product.id}
-                      className="col-lg-4 col-md-6 wow fadeInUp"
-                      data-wow-delay={`${index * 0.1}s`}
-                    >
-                      <div className="de-item hover-shadow rounded-1 overflow-hidden">
-                        <div className="d-img">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={
-                              product.main_image ||
-                              "/images/misc/property-placeholder.webp"
-                            }
-                            className="w-100"
-                            alt={product.name}
-                            style={{ height: "220px", objectFit: "cover" }}
-                          />
-                        </div>
-                        <div className="d-info p-4">
-                          <h4 className="mb-2">{product.name}</h4>
-                          {product.location && (
-                            <p className="text-muted mb-2">
-                              <i className="fa fa-map-marker me-2"></i>
-                              {product.location}
-                            </p>
-                          )}
-                          {product.description && (
-                            <p className="mb-3 text-truncate-2">
-                              {product.description}
-                            </p>
-                          )}
-                          <Link
-                            href={`/products/${product.slug}`}
-                            className="btn-main btn-sm fx-slide"
-                            data-hover="Lihat Detail"
-                          >
-                            <span>Lihat Detail</span>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
+            {/* Filter Buttons */}
+            <div className="row justify-content-center mt-4">
+              <div className="col-auto">
+                <div className="d-flex gap-3 flex-wrap justify-content-center">
+                  <button
+                    onClick={() => setActiveFilter('all')}
+                    className={`btn rounded-pill px-4 py-2`}
+                    style={{
+                      backgroundColor: activeFilter === 'all' ? '#162d50' : 'transparent',
+                      color: activeFilter === 'all' ? '#ffffff' : '#162d50',
+                      border: '2px solid #162d50',
+                      transition: 'all 0.3s ease',
+                      fontWeight: '500',
+                    }}
+                  >
+                    Semua
+                  </button>
+                  <button
+                    onClick={() => setActiveFilter('commercial')}
+                    className={`btn rounded-pill px-4 py-2`}
+                    style={{
+                      backgroundColor: activeFilter === 'commercial' ? '#162d50' : 'transparent',
+                      color: activeFilter === 'commercial' ? '#ffffff' : '#162d50',
+                      border: '2px solid #162d50',
+                      transition: 'all 0.3s ease',
+                      fontWeight: '500',
+                    }}
+                  >
+                    Komersial
+                  </button>
+                  <button
+                    onClick={() => setActiveFilter('subsidi')}
+                    className={`btn rounded-pill px-4 py-2`}
+                    style={{
+                      backgroundColor: activeFilter === 'subsidi' ? '#162d50' : 'transparent',
+                      color: activeFilter === 'subsidi' ? '#ffffff' : '#162d50',
+                      border: '2px solid #162d50',
+                      transition: 'all 0.3s ease',
+                      fontWeight: '500',
+                    }}
+                  >
+                    Subsidi
+                  </button>
                 </div>
-              </>
-            )}
+              </div>
+            </div>
 
-            {/* Subsidi Products */}
-            {subsidiProducts.length > 0 && (
-              <>
-                <div className="spacer-double"></div>
-                <h4 className="text-center mb-4 wow fadeInUp">
-                  Rumah Subsidi ({subsidiProducts.length})
-                </h4>
-                <div className="row g-4">
-                  {subsidiProducts.map((product, index) => (
-                    <div
-                      key={product.id}
-                      className="col-lg-4 col-md-6 wow fadeInUp"
-                      data-wow-delay={`${index * 0.1}s`}
-                    >
-                      <div className="de-item hover-shadow rounded-1 overflow-hidden">
-                        <div className="d-img">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={
-                              product.main_image ||
-                              "/images/misc/property-placeholder.webp"
-                            }
-                            className="w-100"
-                            alt={product.name}
-                            style={{ height: "220px", objectFit: "cover" }}
-                          />
-                        </div>
-                        <div className="d-info p-4">
-                          <span className="badge bg-secondary mb-2">Subsidi</span>
-                          <h4 className="mb-2">{product.name}</h4>
-                          {product.location && (
-                            <p className="text-muted mb-2">
-                              <i className="fa fa-map-marker me-2"></i>
-                              {product.location}
-                            </p>
-                          )}
-                          {product.description && (
-                            <p className="mb-3 text-truncate-2">
-                              {product.description}
-                            </p>
-                          )}
-                          <Link
-                            href={`/products/${product.slug}`}
-                            className="btn-main btn-sm fx-slide"
-                            data-hover="Lihat Detail"
-                          >
-                            <span>Lihat Detail</span>
-                          </Link>
-                        </div>
+            {/* Unified Product Grid */}
+            <div className="spacer-single"></div>
+            {filteredProducts.length > 0 ? (
+              <div 
+                className="row g-4"
+                style={{
+                  transition: 'opacity 0.3s ease',
+                }}
+              >
+                {filteredProducts.map((product, index) => (
+                  <div
+                    key={product.id}
+                    className="col-lg-4 col-md-6 wow fadeInUp"
+                    data-wow-delay={`${index * 0.1}s`}
+                  >
+                    <div className="de-item hover-shadow rounded-1 overflow-hidden">
+                      <div className="d-img position-relative">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={
+                            product.main_image ||
+                            "https://cdn.4best.id/misc/property-placeholder.webp"
+                          }
+                          className="w-100"
+                          alt={product.name}
+                          style={{ height: "220px", objectFit: "cover" }}
+                        />
+                        {/* Category Badge */}
+                        <span
+                          className="badge position-absolute"
+                          style={{
+                            top: '12px',
+                            right: '12px',
+                            backgroundColor: product.category === 'commercial' ? '#162d50' : '#f97316',
+                            color: '#ffffff',
+                            padding: '6px 12px',
+                            fontSize: '0.75rem',
+                            fontWeight: '600',
+                            zIndex: 2,
+                          }}
+                        >
+                          {product.category === 'commercial' ? 'Komersial' : 'Subsidi'}
+                        </span>
+                      </div>
+                      <div className="d-info p-4">
+                        <h4 className="mb-2">{product.name}</h4>
+                        {product.location && (
+                          <p className="text-muted mb-2">
+                            <i className="fa fa-map-marker me-2"></i>
+                            {product.location}
+                          </p>
+                        )}
+                        {product.description && (
+                          <p className="mb-3 text-truncate-2">
+                            {product.description}
+                          </p>
+                        )}
+                        <Link
+                          href={`/products/${product.slug}`}
+                          className="btn-main btn-sm fx-slide"
+                          data-hover="Lihat Detail"
+                        >
+                          <span>Lihat Detail</span>
+                        </Link>
                       </div>
                     </div>
-                  ))}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="row justify-content-center">
+                <div className="col-lg-6 text-center">
+                  <p className="text-muted" style={{ transition: 'opacity 0.3s ease' }}>
+                    {activeFilter === 'commercial' 
+                      ? 'Belum ada properti komersial tersedia.'
+                      : 'Belum ada rumah subsidi tersedia.'}
+                  </p>
                 </div>
-              </>
+              </div>
             )}
           </div>
         </section>

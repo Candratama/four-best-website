@@ -11,12 +11,15 @@ export default function Header() {
   const pathname = usePathname();
 
   // Check if a menu item is active
-  const isActive = useCallback((href: string) => {
-    if (href === "/") {
-      return pathname === "/";
-    }
-    return pathname.startsWith(href);
-  }, [pathname]);
+  const isActive = useCallback(
+    (href: string) => {
+      if (href === "/") {
+        return pathname === "/";
+      }
+      return pathname.startsWith(href);
+    },
+    [pathname],
+  );
 
   // Handle scroll behavior for "smaller" class
   useEffect(() => {
@@ -33,7 +36,7 @@ export default function Header() {
 
   // Handle mobile menu toggle
   const toggleMobileMenu = useCallback(() => {
-    setMobileMenuOpen(prev => {
+    setMobileMenuOpen((prev) => {
       const newState = !prev;
       if (newState) {
         document.body.style.overflow = "hidden";
@@ -59,13 +62,15 @@ export default function Header() {
   return (
     <>
       {/* Full screen overlay */}
-      <div 
-        className={`mobile-menu-overlay ${mobileMenuOpen ? 'active' : ''}`}
+      <div
+        className={`mobile-menu-overlay ${mobileMenuOpen ? "active" : ""}`}
         aria-hidden="true"
       />
       <header className={headerClass}>
-        <div className={`navbar-container ${isSmaller ? "navbar-scrolled" : ""} ${mobileMenuOpen ? "mobile-menu-open" : ""}`}>
-          <div className="container-fluid px-lg-5 px-4">
+        <div
+          className={`navbar-container ${isSmaller ? "navbar-scrolled" : ""} ${mobileMenuOpen ? "mobile-menu-open" : ""}`}
+        >
+          <div className="container-fluid px-lg-5 px-8">
             <div className="row">
               <div className="col-lg-12">
                 <div className="de-flex">
@@ -115,7 +120,7 @@ export default function Header() {
                   <div className="col-center">
                     <Link href="/" onClick={closeMobileMenu}>
                       <Image
-                        src="/logo.svg"
+                        src="https://cdn.4best.id/branding/logo.svg"
                         alt="4best Logo"
                         width={150}
                         height={50}

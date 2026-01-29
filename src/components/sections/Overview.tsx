@@ -18,10 +18,10 @@ export default function Overview({
   ctaText = "Schedule Visit",
   ctaHref = "/contact",
   images = [
-    "/images/misc/s2.webp",
-    "/images/misc/s3.webp",
-    "/images/misc/s4.webp",
-    "/images/misc/s5.webp",
+    "https://cdn.4best.id/misc/s2.webp",
+    "https://cdn.4best.id/misc/s3.webp",
+    "https://cdn.4best.id/misc/s4.webp",
+    "https://cdn.4best.id/misc/s5.webp",
   ],
 }: OverviewProps) {
   return (
