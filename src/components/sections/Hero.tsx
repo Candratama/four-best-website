@@ -2,7 +2,6 @@
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
-import { AnimatedButton } from "@/components/ui";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -166,9 +165,15 @@ export default function Hero({
                   <div className="d-flex flex-wrap gap-2">
                     {/* Secondary CTA - Map */}
                     {mapUrl && (
-                      <AnimatedButton href={mapUrl} variant="outline-light" external>
-                        Lihat di Peta
-                      </AnimatedButton>
+                      <a
+                        className="btn-main btn-line btn-line-light fx-slide"
+                        href={mapUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-hover="Lihat di Peta"
+                      >
+                        <span>Lihat di Peta</span>
+                      </a>
                     )}
                   </div>
                 </div>

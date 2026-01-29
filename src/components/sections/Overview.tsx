@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatedButton } from "@/components/ui";
+import Link from "next/link";
 
 interface OverviewProps {
   subtitle?: string;
@@ -40,9 +40,13 @@ export default function Overview({
               <p className="wow fadeInUp" data-wow-delay=".6s">
                 {description}
               </p>
-              <AnimatedButton href={ctaHref}>
-                {ctaText}
-              </AnimatedButton>
+              <Link
+                href={ctaHref}
+                className="btn-main fx-slide"
+                data-hover={ctaText}
+              >
+                <span>{ctaText}</span>
+              </Link>
             </div>
           </div>
 

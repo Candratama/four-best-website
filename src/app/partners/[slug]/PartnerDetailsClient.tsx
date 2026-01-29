@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Partner, Product } from "@/lib/db";
 import { ContactForm } from "@/components/sections";
-import { AnimatedButton } from "@/components/ui";
 import { fadeInUp, staggerContainer, zoomIn } from "@/lib/animations";
 
 interface PartnerDetailsClientProps {
@@ -337,12 +337,13 @@ export default function PartnerDetailsClient({
                             {product.description}
                           </p>
                         )}
-                        <AnimatedButton
+                        <Link
                           href={`/products/${product.slug}`}
-                          size="sm"
+                          className="btn-main btn-sm fx-slide"
+                          data-hover="Lihat Detail"
                         >
-                          Lihat Detail
-                        </AnimatedButton>
+                          <span>Lihat Detail</span>
+                        </Link>
                       </div>
                     </div>
                   </motion.div>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
-import { AnimatedSection, AnimatedButton } from "@/components/ui";
+import { AnimatedSection, Button } from "@/components/ui";
 import {
   validateContactForm,
   hasValidationErrors,
@@ -226,13 +226,17 @@ export default function ContactForm({
                   <div className="col-md-12">
                     <div className="text-center">
                       <div id="submit">
-                        <AnimatedButton
+                        <input
                           type="submit"
+                          id="send_message"
+                          value={
+                            status === "submitting"
+                              ? "Sending..."
+                              : "Send Message"
+                          }
+                          className="btn-main"
                           disabled={status === "submitting"}
-                          loading={status === "submitting"}
-                        >
-                          Send Message
-                        </AnimatedButton>
+                        />
                       </div>
                     </div>
                   </div>
@@ -345,13 +349,13 @@ export default function ContactForm({
 
             <div className="col-md-12">
               <div className="text-start">
-                <AnimatedButton
+                <button
                   type="submit"
+                  className="btn-main"
                   disabled={status === "submitting"}
-                  loading={status === "submitting"}
                 >
-                  Send Message
-                </AnimatedButton>
+                  {status === "submitting" ? "Sending..." : "Send Message"}
+                </button>
               </div>
             </div>
           </div>
@@ -477,13 +481,9 @@ export default function ContactForm({
               </div>
 
               <div className="text-center">
-                <AnimatedButton
-                  type="submit"
-                  disabled={status === "submitting"}
-                  loading={status === "submitting"}
-                >
-                  Send Message
-                </AnimatedButton>
+                <Button type="submit" disabled={status === "submitting"}>
+                  {status === "submitting" ? "Sending..." : "Send Message"}
+                </Button>
               </div>
             </form>
             {status === "success" && (
