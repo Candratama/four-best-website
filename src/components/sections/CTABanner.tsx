@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { AnimatedButton } from "@/components/ui";
 
 interface CTABannerProps {
   title: string;
@@ -21,13 +21,9 @@ export default function CTABanner({
             <h3 className="mb-0 fs-32">{title}</h3>
           </div>
           <div className="col-lg-3 text-lg-end">
-            <Link
-              className="btn-main fx-slide btn-line"
-              href={buttonHref}
-              data-hover={buttonText}
-            >
-              <span>{buttonText}</span>
-            </Link>
+            <AnimatedButton href={buttonHref} variant="outline-light">
+              {buttonText}
+            </AnimatedButton>
           </div>
         </div>
       </div>
