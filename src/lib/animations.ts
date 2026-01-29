@@ -120,6 +120,45 @@ export const fadeIn: Variants = {
   },
 };
 
+// shake animation - for error feedback
+export const shake: Variants = {
+  hidden: { x: 0 },
+  visible: {
+    x: [0, -4, 4, -4, 4, 0],
+    transition: {
+      duration: 0.4,
+      ease: 'easeInOut',
+    },
+  },
+};
+
+// pulse animation - for attention grabbing
+export const pulse: Variants = {
+  hidden: { scale: 1 },
+  visible: {
+    scale: [1, 1.02, 1],
+    transition: {
+      duration: 1.5,
+      repeat: Infinity,
+      repeatDelay: 3,
+      ease: 'easeInOut',
+    },
+  },
+};
+
+// float animation - subtle floating effect
+export const float: Variants = {
+  hidden: { y: 0 },
+  visible: {
+    y: [-3, 3, -3],
+    transition: {
+      duration: 3,
+      repeat: Infinity,
+      ease: 'easeInOut',
+    },
+  },
+};
+
 /**
  * Helper function to create staggered children animations
  * @param staggerDelay - delay between each child animation
@@ -162,14 +201,17 @@ export const defaultViewport = {
 /**
  * Animation type mapping for easy reference
  */
-export type AnimationType = 
-  | 'fadeInUp' 
-  | 'fadeInDown' 
-  | 'fadeInLeft' 
-  | 'fadeInRight' 
-  | 'scaleIn' 
-  | 'zoomIn' 
-  | 'fadeIn';
+export type AnimationType =
+  | 'fadeInUp'
+  | 'fadeInDown'
+  | 'fadeInLeft'
+  | 'fadeInRight'
+  | 'scaleIn'
+  | 'zoomIn'
+  | 'fadeIn'
+  | 'shake'
+  | 'pulse'
+  | 'float';
 
 /**
  * Get animation variant by name
@@ -184,6 +226,9 @@ export const getAnimation = (type: AnimationType): Variants => {
     scaleIn,
     zoomIn,
     fadeIn,
+    shake,
+    pulse,
+    float,
   };
   return animations[type];
 };
