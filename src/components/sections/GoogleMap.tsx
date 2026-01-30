@@ -6,19 +6,22 @@ interface GoogleMapProps {
   mapUrl?: string;
   address?: string;
   height?: string;
+  lat?: number;
+  lng?: number;
 }
 
 export default function GoogleMap({
   mapUrl,
   address = "Perum Ungaran Asri, No C1, Ungaran",
   height = "400px",
+  lat = -7.156002,
+  lng = 110.3945777,
 }: GoogleMapProps) {
-  // Default map URL - embed URL for Ungaran area
-  // This should be replaced with actual Google Maps embed URL from database
-  const defaultMapUrl =
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3959.0!2d110.4!3d-7.15!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sUngaran%2C%20Semarang!5e0!3m2!1sen!2sid!4v1234567890";
+  // Use OpenStreetMap embed with marker
+  const osmUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${lng - 0.01}%2C${lat - 0.008}%2C${lng + 0.01}%2C${lat + 0.008}&layer=mapnik&marker=${lat}%2C${lng}`;
 
-  const embedUrl = mapUrl || defaultMapUrl;
+  // Fallback to Google Maps if mapUrl is provided
+  const embedUrl = mapUrl || osmUrl;
 
   return (
     <section className="section-map">

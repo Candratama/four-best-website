@@ -1,10 +1,15 @@
-import { getCompanyInfo, getSocialLinks } from "@/lib/db";
+import { getCompanyInfo, getSocialLinks, getPageSectionContent } from "@/lib/db";
+import type { HeroSectionContent } from "@/lib/db";
 import { Hero } from "@/components/sections";
 import ContactPageClient from "./ContactPageClient";
+
+// Force dynamic rendering to always fetch fresh data from database
+export const dynamic = "force-dynamic";
 
 export default async function ContactPage() {
   const companyInfo = await getCompanyInfo();
   const socialLinks = await getSocialLinks({ activeOnly: true });
+  const heroContent = await getPageSectionContent<HeroSectionContent>("contact", "hero");
 
   // Find Instagram from social links
   const instagramLink = socialLinks.find(
@@ -31,9 +36,9 @@ export default async function ContactPage() {
     <>
       <Hero
         variant="parallax-contact"
-        title="Hubungi Kami"
-        subtitle="Kami Siap Membantu Anda!"
-        backgroundImage="https://cdn.4best.id/backgrounds/8.webp"
+        title={heroContent?.title || "Hubungi Kami"}
+        subtitle={heroContent?.subtitle || "Kami Siap Membantu Anda!"}
+        backgroundImage={heroContent?.background_image || "https://cdn.4best.id/backgrounds/8.webp"}
       />
       <ContactPageClient contactData={contactData} />
     </>

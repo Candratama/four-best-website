@@ -2,6 +2,8 @@
 
 import { useState, useCallback } from "react";
 import { AnimatedSection, Button } from "@/components/ui";
+import { DatePicker } from "@/components/ui/date-picker";
+import { TimePicker } from "@/components/ui/time-picker";
 import {
   validateContactForm,
   hasValidationErrors,
@@ -30,7 +32,7 @@ export default function ContactForm({
     name: "",
     email: "",
     date: "",
-    time: "10:00",
+    time: "08:00",
     message: "",
   });
   const [errors, setErrors] = useState<ContactFormErrors>({});
@@ -80,8 +82,36 @@ export default function ContactForm({
     [errors]
   );
 
-  // Time options from 10:00 to 20:00
+  // Handle date change from DatePicker
+  const handleDateChange = useCallback((date: Date | undefined) => {
+    if (date) {
+      // Format date as YYYY-MM-DD in local timezone to avoid timezone issues
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      const localDateString = `${year}-${month}-${day}`;
+      setFormData((prev) => ({ ...prev, date: localDateString }));
+    } else {
+      setFormData((prev) => ({ ...prev, date: "" }));
+    }
+  }, []);
+
+  // Handle time change from TimePicker
+  const handleTimeChange = useCallback((time: string) => {
+    setFormData((prev) => ({ ...prev, time }));
+  }, []);
+
+  // Convert string date to Date object for DatePicker
+  // Parse as local date to avoid timezone shift
+  const selectedDate = formData.date ? (() => {
+    const [year, month, day] = formData.date.split('-').map(Number);
+    return new Date(year, month - 1, day);
+  })() : undefined;
+
+  // Time options from 08:00 to 17:00
   const timeOptions = [
+    "08:00",
+    "09:00",
     "10:00",
     "11:00",
     "12:00",
@@ -90,9 +120,6 @@ export default function ContactForm({
     "15:00",
     "16:00",
     "17:00",
-    "18:00",
-    "19:00",
-    "20:00",
   ];
 
   // Contact page variant - matches template exactly
@@ -108,7 +135,7 @@ export default function ContactForm({
                 onSubmit={handleSubmit}
               >
                 <div className="row g-4">
-                  <div className="col-md-6">
+                  <div className="col-md-12">
                     <input
                       type="text"
                       name="name"
@@ -118,8 +145,8 @@ export default function ContactForm({
                       className={`form-control ${
                         errors.name ? "is-invalid" : ""
                       }`}
-                      placeholder="Your Name"
-                      aria-label="Your Name"
+                      placeholder="Nama Lengkap"
+                      aria-label="Nama Lengkap"
                       aria-invalid={!!errors.name}
                       aria-describedby={errors.name ? "name-error" : undefined}
                     />
@@ -134,7 +161,7 @@ export default function ContactForm({
                     )}
                   </div>
 
-                  <div className="col-md-6">
+                  <div className="col-md-12">
                     <input
                       type="email"
                       name="email"
@@ -144,8 +171,8 @@ export default function ContactForm({
                       className={`form-control ${
                         errors.email ? "is-invalid" : ""
                       }`}
-                      placeholder="Your Email"
-                      aria-label="Your Email"
+                      placeholder="Email Anda"
+                      aria-label="Email Anda"
                       aria-invalid={!!errors.email}
                       aria-describedby={
                         errors.email ? "email-error" : undefined
@@ -163,37 +190,22 @@ export default function ContactForm({
                   </div>
 
                   <div className="col-md-6">
-                    <div id="date" className="relative input-group date">
-                      <i className="absolute top-0 end-0 id-color pt-3 pe-3 icofont-calendar"></i>
-                      <input
-                        className="form-control"
-                        name="date"
-                        type="date"
-                        value={formData.date}
-                        onChange={handleChange}
-                        aria-label="Select Date"
-                      />
-                    </div>
+                    <DatePicker
+                      date={selectedDate}
+                      onDateChange={handleDateChange}
+                      placeholder="Pilih Tanggal"
+                      className="w-full"
+                    />
                   </div>
 
                   <div className="col-md-6">
-                    <div className="relative">
-                      <select
-                        name="time"
-                        id="time"
-                        value={formData.time}
-                        onChange={handleChange}
-                        className="form-control"
-                        aria-label="Select Time"
-                      >
-                        {timeOptions.map((time) => (
-                          <option key={time} value={time}>
-                            {time}
-                          </option>
-                        ))}
-                      </select>
-                      <i className="absolute top-0 end-0 id-color pt-3 pe-3 icofont-simple-down"></i>
-                    </div>
+                    <TimePicker
+                      value={formData.time}
+                      onValueChange={handleTimeChange}
+                      placeholder="Pilih Waktu"
+                      timeOptions={timeOptions}
+                      className="w-full"
+                    />
                   </div>
 
                   <div className="col-md-12">
@@ -205,8 +217,8 @@ export default function ContactForm({
                       className={`form-control h-150px ${
                         errors.message ? "is-invalid" : ""
                       }`}
-                      placeholder="Submit Request"
-                      aria-label="Your Message"
+                      placeholder="Tulis pesan Anda..."
+                      aria-label="Pesan Anda"
                       aria-invalid={!!errors.message}
                       aria-describedby={
                         errors.message ? "message-error" : undefined
@@ -231,11 +243,11 @@ export default function ContactForm({
                           id="send_message"
                           value={
                             status === "submitting"
-                              ? "Sending..."
-                              : "Send Message"
+                              ? "Mengirim..."
+                              : "Kirim Pesan"
                           }
                           className="btn-main fx-slide"
-                          data-hover={status === "submitting" ? "Sending..." : "Send Message"}
+                          data-hover={status === "submitting" ? "Mengirim..." : "Kirim Pesan"}
                           disabled={status === "submitting"}
                         />
                       </div>
@@ -245,13 +257,12 @@ export default function ContactForm({
               </form>
               {status === "success" && (
                 <div id="success_message_col" className="success">
-                  Your message has been sent successfully. Refresh this page if
-                  you want to send more messages.
+                  Pesan Anda berhasil terkirim. Kami akan segera menghubungi Anda.
                 </div>
               )}
               {status === "error" && (
                 <div id="error_message" className="error">
-                  Sorry there was an error sending your form.
+                  Maaf, terjadi kesalahan saat mengirim pesan. Silakan coba lagi.
                 </div>
               )}
             </div>
@@ -267,15 +278,15 @@ export default function ContactForm({
       <>
         <form onSubmit={handleSubmit}>
           <div className="row g-4">
-            <div className="col-md-6">
+            <div className="col-md-12">
               <input
                 type="text"
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
                 className={`form-control ${errors.name ? "is-invalid" : ""}`}
-                placeholder="Your Name"
-                aria-label="Your Name"
+                placeholder="Nama Lengkap"
+                aria-label="Nama Lengkap"
               />
               {errors.name && (
                 <div className="invalid-feedback" style={{ display: "block" }}>
@@ -284,15 +295,15 @@ export default function ContactForm({
               )}
             </div>
 
-            <div className="col-md-6">
+            <div className="col-md-12">
               <input
                 type="email"
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
                 className={`form-control ${errors.email ? "is-invalid" : ""}`}
-                placeholder="Your Email"
-                aria-label="Your Email"
+                placeholder="Email Anda"
+                aria-label="Email Anda"
               />
               {errors.email && (
                 <div className="invalid-feedback" style={{ display: "block" }}>
@@ -302,32 +313,22 @@ export default function ContactForm({
             </div>
 
             <div className="col-md-6">
-              <input
-                type="date"
-                name="date"
-                value={formData.date}
-                onChange={handleChange}
-                className="form-control"
-                aria-label="Select Date"
+              <DatePicker
+                date={selectedDate}
+                onDateChange={handleDateChange}
+                placeholder="Pilih Tanggal"
+                className="w-full"
               />
             </div>
 
             <div className="col-md-6">
-              <div className="relative">
-                <select
-                  name="time"
-                  value={formData.time}
-                  onChange={handleChange}
-                  className="form-control"
-                  aria-label="Select Time"
-                >
-                  {timeOptions.map((time) => (
-                    <option key={time} value={time}>
-                      {time}
-                    </option>
-                  ))}
-                </select>
-              </div>
+              <TimePicker
+                value={formData.time}
+                onValueChange={handleTimeChange}
+                placeholder="Pilih Waktu"
+                timeOptions={timeOptions}
+                className="w-full"
+              />
             </div>
 
             <div className="col-md-12">
@@ -338,8 +339,8 @@ export default function ContactForm({
                 className={`form-control h-150px ${
                   errors.message ? "is-invalid" : ""
                 }`}
-                placeholder="Submit Request"
-                aria-label="Your Message"
+                placeholder="Tulis pesan Anda..."
+                aria-label="Pesan Anda"
               />
               {errors.message && (
                 <div className="invalid-feedback" style={{ display: "block" }}>
@@ -353,10 +354,10 @@ export default function ContactForm({
                 <button
                   type="submit"
                   className="btn-main fx-slide"
-                  data-hover={status === "submitting" ? "Sending..." : "Send Message"}
+                  data-hover={status === "submitting" ? "Mengirim..." : "Kirim Pesan"}
                   disabled={status === "submitting"}
                 >
-                  <span>{status === "submitting" ? "Sending..." : "Send Message"}</span>
+                  <span>{status === "submitting" ? "Mengirim..." : "Kirim Pesan"}</span>
                 </button>
               </div>
             </div>
@@ -364,13 +365,12 @@ export default function ContactForm({
         </form>
         {status === "success" && (
           <div className="success mt-3">
-            Your message has been sent successfully. Refresh this page if you
-            want to send more messages.
+            Pesan Anda berhasil terkirim. Kami akan segera menghubungi Anda.
           </div>
         )}
         {status === "error" && (
           <div className="error mt-3">
-            Sorry there was an error sending your form.
+            Maaf, terjadi kesalahan saat mengirim pesan. Silakan coba lagi.
           </div>
         )}
       </>

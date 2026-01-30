@@ -5,46 +5,84 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { UserCheck, TrendingUp, Shield, Award, Target } from "lucide-react";
+import { UserCheck, TrendingUp, Shield, Award, Target, LucideIcon } from "lucide-react";
+import type { ValueProposition as ValuePropositionType } from "@/lib/db";
 
-interface ValueItem {
-  icon: React.ReactNode;
-  title: string;
-  description: string;
-  className?: string;
+// Icon mapping from string to Lucide component
+const iconMap: Record<string, LucideIcon> = {
+  UserCheck,
+  TrendingUp,
+  Shield,
+  Award,
+  Target,
+};
+
+interface ValuePropositionProps {
+  items?: ValuePropositionType[];
 }
 
-const values: ValueItem[] = [
+// Default values for fallback
+const defaultValues: ValuePropositionType[] = [
   {
-    icon: <UserCheck className="h-8 w-8" strokeWidth={1.5} />,
+    id: 1,
+    icon: "UserCheck",
     title: "Pendekatan Personal",
-    description:
-      "Setiap klien ditangani secara khusus sesuai kebutuhan dan tujuan.",
+    description: "Setiap klien ditangani secara khusus sesuai kebutuhan dan tujuan.",
+    grid_class: null,
+    is_active: 1,
+    display_order: 1,
+    created_at: "",
+    updated_at: "",
   },
   {
-    icon: <TrendingUp className="h-8 w-8" strokeWidth={1.5} />,
+    id: 2,
+    icon: "TrendingUp",
     title: "Market Insight Akurat",
     description: "Analisis pasar yang tepat untuk hasil optimal.",
+    grid_class: null,
+    is_active: 1,
+    display_order: 2,
+    created_at: "",
+    updated_at: "",
   },
   {
-    icon: <Shield className="h-8 w-8" strokeWidth={1.5} />,
+    id: 3,
+    icon: "Shield",
     title: "Proses Transparan & Aman",
     description: "Komunikasi jelas dari awal hingga transaksi selesai.",
+    grid_class: null,
+    is_active: 1,
+    display_order: 3,
+    created_at: "",
+    updated_at: "",
   },
   {
-    icon: <Award className="h-8 w-8" strokeWidth={1.5} />,
+    id: 4,
+    icon: "Award",
     title: "Agen Profesional & Terpercaya",
     description: "Berpengalaman dan berorientasi pada kepuasan klien.",
-    className: "md:col-span-2",
+    grid_class: "md:col-span-2",
+    is_active: 1,
+    display_order: 4,
+    created_at: "",
+    updated_at: "",
   },
   {
-    icon: <Target className="h-8 w-8" strokeWidth={1.5} />,
+    id: 5,
+    icon: "Target",
     title: "Fokus Nilai Investasi",
     description: "Membantu memaksimalkan potensi jangka pendek dan panjang.",
+    grid_class: null,
+    is_active: 1,
+    display_order: 5,
+    created_at: "",
+    updated_at: "",
   },
 ];
 
-export default function ValueProposition() {
+export default function ValueProposition({ items }: ValuePropositionProps) {
+  const values = items && items.length > 0 ? items : defaultValues;
+
   return (
     <section className="py-20 ">
       <div className="container">
@@ -55,26 +93,29 @@ export default function ValueProposition() {
 
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
-          {values.map((item, index) => (
-            <Card
-              key={index}
-              className={`group hover:shadow-lg hover:scale-105 transition-all duration-300 border-border/50 hover:border-primary/30 ${
-                item.className || ""
-              }`}
-            >
-              <CardHeader className="pb-2">
-                <div className="icon-box w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 transition-all duration-300 text-[#162d50]">
-                  {item.icon}
-                </div>
-                <CardTitle className="text-xl">{item.title}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-base">
-                  {item.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-          ))}
+          {values.map((item) => {
+            const IconComponent = iconMap[item.icon] || UserCheck;
+            return (
+              <Card
+                key={item.id}
+                className={`group hover:shadow-lg hover:scale-105 transition-all duration-300 border-border/50 hover:border-primary/30 ${
+                  item.grid_class || ""
+                }`}
+              >
+                <CardHeader className="pb-2">
+                  <div className="icon-box w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 transition-all duration-300 text-[#162d50]">
+                    <IconComponent className="h-8 w-8" strokeWidth={1.5} />
+                  </div>
+                  <CardTitle className="text-xl">{item.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-base">
+                    {item.description}
+                  </CardDescription>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
     </section>

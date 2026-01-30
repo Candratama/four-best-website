@@ -1,5 +1,6 @@
-import { getPartnersWithProductCount } from "@/lib/db";
+import { getPartnersWithProductCount, getPageSectionContent } from "@/lib/db";
 import type { PartnerCardProps } from "@/components/cards/PartnerCard";
+import type { HeroSectionContent } from "@/lib/db";
 import PartnersClient from "./PartnersClient";
 
 export default async function PartnersPage() {
@@ -21,5 +22,14 @@ export default async function PartnersPage() {
     error = "Gagal memuat data partner";
   }
 
-  return <PartnersClient partnerCards={partnerCards} error={error} />;
+  // Fetch hero content from database
+  const heroContent = await getPageSectionContent<HeroSectionContent>('partners', 'hero');
+
+  return (
+    <PartnersClient 
+      partnerCards={partnerCards} 
+      error={error} 
+      heroData={heroContent || undefined}
+    />
+  );
 }

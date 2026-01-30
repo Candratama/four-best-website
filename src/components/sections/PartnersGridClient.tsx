@@ -1,21 +1,29 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { PartnerCard } from "@/components/cards";
-import type { PartnerCardProps } from "@/components/cards/PartnerCard";
 import { fadeInUp, staggerContainer } from "@/lib/animations";
 
-interface RoomGridProps {
-  subtitle?: string;
-  title: string;
-  rooms: PartnerCardProps[];
+interface Partner {
+  name: string;
+  slug: string;
+  image: string;
+  productCount: number;
+  href: string;
 }
 
-export default function RoomGrid({
-  subtitle = "Elevated Comfort",
-  title = "Choose a Room",
-  rooms,
-}: RoomGridProps) {
+interface PartnersGridClientProps {
+  subtitle?: string;
+  title?: string;
+  partners: Partner[];
+}
+
+export default function PartnersGridClient({
+  subtitle = "Our Partners",
+  title = "Trusted Partners",
+  partners,
+}: PartnersGridClientProps) {
   return (
     <section className="relative">
       <div className="container relative z-2">
@@ -49,16 +57,35 @@ export default function RoomGrid({
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {rooms.map((room, index) => (
+          {partners.map((partner, index) => (
             <motion.div
-              key={room.slug}
+              key={partner.slug}
               className="col-md-6"
               variants={fadeInUp}
               transition={{ delay: index * 0.15 }}
             >
-              <PartnerCard {...room} />
+              <PartnerCard {...partner} />
             </motion.div>
           ))}
+        </motion.div>
+
+        <motion.div
+          className="row mt-4"
+          variants={fadeInUp}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+        >
+          <div className="col-12 text-center">
+            <Link
+              href="/partners"
+              className="btn-main btn-line fx-slide"
+              data-hover="View All Partners"
+            >
+              <span>View All Partners</span>
+            </Link>
+          </div>
         </motion.div>
       </div>
     </section>

@@ -50,7 +50,7 @@ export default function ContactPageClient({ contactData }: ContactPageClientProp
             </div>
             <div className="col-lg-8">
               <div className="contact-form-wrapper">
-                <h3 className="contact-info-title mb-4">Jadwalkan Kunjungan</h3>
+                <h3 className="contact-info-title mb-4">Kirim Pesan</h3>
                 {submitStatus && (
                   <div
                     className={`alert mb-4 ${submitStatus.success ? "alert-info" : "alert-danger"}`}
@@ -65,7 +65,11 @@ export default function ContactPageClient({ contactData }: ContactPageClientProp
           </div>
         </div>
       </section>
-      <GoogleMap mapUrl={contactData.mapUrl} address={contactData.address} height="450px" />
+      <GoogleMap 
+        mapUrl={contactData.mapUrl}
+        address={contactData.address} 
+        height="450px"
+      />
     </>
   );
 }

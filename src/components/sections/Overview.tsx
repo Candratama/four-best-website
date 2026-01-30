@@ -1,6 +1,8 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Link from "next/link";
+import { fadeInUp, scaleIn } from "@/lib/animations";
 
 interface OverviewProps {
   subtitle?: string;
@@ -31,22 +33,48 @@ export default function Overview({
           {/* Text Content */}
           <div className="col-lg-5">
             <div className="ps-lg-3">
-              <div className="subtitle wow fadeInUp" data-wow-delay=".2s">
-                {subtitle}
-              </div>
-              <h2 className="wow fadeInUp" data-wow-delay=".4s">
-                {title}
-              </h2>
-              <p className="wow fadeInUp" data-wow-delay=".6s">
-                {description}
-              </p>
-              <Link
-                href={ctaHref}
-                className="btn-main fx-slide"
-                data-hover={ctaText}
+              <motion.div
+                className="subtitle"
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
               >
-                <span>{ctaText}</span>
-              </Link>
+                {subtitle}
+              </motion.div>
+              <motion.h2
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
+                {title}
+              </motion.h2>
+              <motion.p
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+              >
+                {description}
+              </motion.p>
+              <motion.div
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.6 }}
+              >
+                <Link
+                  href={ctaHref}
+                  className="btn-main fx-slide"
+                  data-hover={ctaText}
+                >
+                  <span>{ctaText}</span>
+                </Link>
+              </motion.div>
             </div>
           </div>
 
@@ -54,32 +82,47 @@ export default function Overview({
           <div className="col-lg-6">
             <div className="row g-4">
               <div className="col-6">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <motion.img
                   src={images[0]}
-                  className="img-fluid mb-4 w-70 ms-30 wow scaleIn rounded-2xl"
+                  className="img-fluid mb-4 w-70 ms-30 rounded-2xl"
                   alt="Overview 1"
+                  variants={scaleIn}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
                 />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <motion.img
                   src={images[1]}
-                  className="img-fluid wow scaleIn rounded-2xl"
+                  className="img-fluid rounded-2xl"
                   alt="Overview 2"
+                  variants={scaleIn}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.15 }}
                 />
               </div>
               <div className="col-6">
                 <div className="spacer-single sm-hide"></div>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <motion.img
                   src={images[2]}
-                  className="img-fluid mb-4 wow scaleIn rounded-2xl"
+                  className="img-fluid mb-4 rounded-2xl"
                   alt="Overview 3"
+                  variants={scaleIn}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.3 }}
                 />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+                <motion.img
                   src={images[3]}
-                  className="img-fluid w-70 wow scaleIn rounded-2xl"
+                  className="img-fluid w-70 rounded-2xl"
                   alt="Overview 4"
+                  variants={scaleIn}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.45 }}
                 />
               </div>
             </div>

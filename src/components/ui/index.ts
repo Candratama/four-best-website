@@ -8,6 +8,7 @@ export { default as HotspotImage } from './HotspotImage';
 export { default as ImageSlider } from './ImageSlider';
 export { default as Lightbox } from './Lightbox';
 export { default as LoadingDots } from './LoadingDots';
+export { default as StaggeredGrid } from './StaggeredGrid';
 export { default as Tabs } from './Tabs';
 export { default as Toast } from './Toast';
 export * from './card';

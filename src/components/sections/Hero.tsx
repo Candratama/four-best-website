@@ -1,7 +1,9 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay, EffectFade } from "swiper/modules";
+import { fadeInUp, fadeInUpBig } from "@/lib/animations";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -61,12 +63,16 @@ export default function Hero({
             <div className="row">
               <div className="col-lg-12">
                 <div className="relative overflow-hidden">
-                  <div className="wow fadeInUpBig" data-wow-duration="1.5s">
+                  <motion.div
+                    variants={fadeInUpBig}
+                    initial="hidden"
+                    animate="visible"
+                  >
                     <h1 className="fs-120 text-uppercase fs-sm-10vw mb-2 lh-1">
                       {title}
                     </h1>
                     {subtitle && <h3>{subtitle}</h3>}
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             </div>
@@ -98,12 +104,16 @@ export default function Hero({
             <div className="row">
               <div className="col-lg-12">
                 <div className="relative overflow-hidden">
-                  <div className="wow fadeInUpBig" data-wow-duration="1.5s">
+                  <motion.div
+                    variants={fadeInUpBig}
+                    initial="hidden"
+                    animate="visible"
+                  >
                     <h1 className="fs-120 text-uppercase fs-sm-10vw mb-2 lh-1">
                       {title}
                     </h1>
                     {subtitle && <h3>{subtitle}</h3>}
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             </div>
@@ -131,11 +141,23 @@ export default function Hero({
           <div className="row">
             <div className="col-lg-6">
               {subtitle && (
-                <div className="subtitle wow fadeInUp">{subtitle}</div>
+                <motion.div
+                  className="subtitle"
+                  variants={fadeInUp}
+                  initial="hidden"
+                  animate="visible"
+                >
+                  {subtitle}
+                </motion.div>
               )}
-              <h1 className="fs-120 text-uppercase fs-sm-10vw mb-4 lh-1">
+              <motion.h1
+                className="fs-120 text-uppercase fs-sm-10vw mb-4 lh-1"
+                variants={fadeInUpBig}
+                initial="hidden"
+                animate="visible"
+              >
                 {title}
-              </h1>
+              </motion.h1>
             </div>
           </div>
         </div>
@@ -154,11 +176,22 @@ export default function Hero({
         <div className="container">
           <div className="row">
             <div className="col-lg-12">
-              <h1 className="fs-120 text-uppercase fs-sm-10vw mb-2 lh-1 hero-title">
+              <motion.h1
+                className="fs-120 text-uppercase fs-sm-10vw mb-2 lh-1 hero-title"
+                variants={fadeInUpBig}
+                initial="hidden"
+                animate="visible"
+              >
                 {title}
-              </h1>
+              </motion.h1>
               {address && (
-                <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center">
+                <motion.div
+                  className="d-flex flex-column flex-md-row align-items-start align-items-md-center"
+                  variants={fadeInUp}
+                  initial="hidden"
+                  animate="visible"
+                  transition={{ delay: 0.3 }}
+                >
                   <h4 className="fw-500 mb-3 mb-md-0 me-md-4 hero-address">
                     {address}
                   </h4>
@@ -176,7 +209,7 @@ export default function Hero({
                       </a>
                     )}
                   </div>
-                </div>
+                </motion.div>
               )}
             </div>
           </div>

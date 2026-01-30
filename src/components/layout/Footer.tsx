@@ -1,18 +1,30 @@
 import Image from "next/image";
-import { getCompanyInfo } from "@/lib/db";
+import { getCompanyInfo, getSocialLinks, getSiteSettings } from "@/lib/db";
 
 export default async function Footer() {
   const currentYear = new Date().getFullYear();
 
-  // Fetch company info from database (removed unused socialLinks)
+  // Fetch data from database
   const companyInfo = await getCompanyInfo();
+  const socialLinks = await getSocialLinks({ activeOnly: true });
+  const siteSettings = await getSiteSettings();
 
   const address = companyInfo?.address || "Perum Ungaran Asri, No C1, Ungaran";
   const phone =
     companyInfo?.whatsapp || companyInfo?.phone || "+62 812 3456 7890";
   const openingHours = companyInfo?.opening_hours || "Sen - Sab 08:00 - 17:00";
   const email = companyInfo?.email || "contact@4best.id";
-  const instagram = "@4best.id";
+  
+  // Get Instagram from social links
+  const instagramLink = socialLinks.find(
+    (link) => link.platform.toLowerCase() === "instagram"
+  );
+  const instagram = instagramLink?.url
+    ? `@${instagramLink.url.replace(/^https?:\/\/(www\.)?instagram\.com\//, "").replace(/\/$/, "")}`
+    : "@4best.id";
+  
+  // Get logo from site settings
+  const logo = siteSettings?.logo || "https://cdn.4best.id/branding/logo.svg";
 
   return (
     <footer className="section-dark footer-compact">
@@ -21,7 +33,7 @@ export default async function Footer() {
         <div className="text-center">
           <div className="footer-logo-wrapper">
             <Image
-              src="https://cdn.4best.id/branding/logo.svg"
+              src={logo}
               alt="4best Logo"
               width={150}
               height={50}

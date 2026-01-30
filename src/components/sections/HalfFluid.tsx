@@ -1,5 +1,8 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { fadeInUp } from "@/lib/animations";
+
 interface HalfFluidProps {
   subtitle?: string;
   title: string;
@@ -49,13 +52,33 @@ export default function HalfFluid({
                   isRight ? "me-lg-5 pe-lg-5" : "ms-lg-5 ps-lg-5"
                 } py-5 my-5`}
               >
-                <div className="subtitle wow fadeInUp" data-wow-delay=".0s">
+                <motion.div
+                  className="subtitle"
+                  variants={fadeInUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                >
                   {subtitle}
-                </div>
-                <h2 className="wow fadeInUp" data-wow-delay=".2s">
+                </motion.div>
+                <motion.h2
+                  variants={fadeInUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 }}
+                >
                   {title}
-                </h2>
-                <p>{description}</p>
+                </motion.h2>
+                <motion.p
+                  variants={fadeInUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 }}
+                >
+                  {description}
+                </motion.p>
               </div>
             </div>
           </div>

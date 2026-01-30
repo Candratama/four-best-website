@@ -1,5 +1,8 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { fadeInUp, zoomIn } from "@/lib/animations";
+
 interface AboutContentProps {
   subtitle?: string;
   title: string;
@@ -25,14 +28,20 @@ export default function AboutContent({
               <div className="col-sm-6">
                 <div className="row g-4">
                   <div className="col-lg-12">
-                    <div className="overflow-hidden wow zoomIn">
+                    <motion.div
+                      className="overflow-hidden"
+                      variants={zoomIn}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                    >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={images.left}
-                        className="w-100 wow scaleIn"
+                        className="w-100 rounded-2xl"
                         alt=""
                       />
-                    </div>
+                    </motion.div>
                   </div>
                 </div>
               </div>
@@ -40,18 +49,21 @@ export default function AboutContent({
                 <div className="row g-4">
                   <div className="spacer-single sm-hide"></div>
                   <div className="col-lg-12">
-                    <div
-                      className="overflow-hidden wow zoomIn"
-                      data-wow-delay=".3s"
+                    <motion.div
+                      className="overflow-hidden rounded-2xl"
+                      variants={zoomIn}
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.3 }}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={images.right}
-                        className="w-100 wow scaleIn"
+                        className="w-100"
                         alt=""
-                        data-wow-delay=".3s"
                       />
-                    </div>
+                    </motion.div>
                   </div>
                 </div>
               </div>
@@ -59,15 +71,33 @@ export default function AboutContent({
           </div>
 
           <div className="col-lg-6">
-            <div className="subtitle wow fadeInUp" data-wow-delay=".2s">
+            <motion.div
+              className="subtitle"
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
               {subtitle}
-            </div>
-            <h2 className="wow fadeInUp" data-wow-delay=".4s">
+            </motion.div>
+            <motion.h2
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
               {title}
-            </h2>
-            <p className="wow fadeInUp" data-wow-delay=".6s">
+            </motion.h2>
+            <motion.p
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+            >
               {description}
-            </p>
+            </motion.p>
           </div>
         </div>
       </div>

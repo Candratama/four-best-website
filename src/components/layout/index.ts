@@ -3,3 +3,4 @@ export { default as Footer } from './Footer';
 export { default as Preloader } from './Preloader';
 export { default as ScrollToTop } from './ScrollToTop';
 export { default as ScrollBar } from './ScrollBar';
+export { default as GlobalCTA } from './GlobalCTA';

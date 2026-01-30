@@ -8,7 +8,6 @@ import {
   ValueProposition,
   Stats,
   Team,
-  CTABanner,
 } from "@/components/sections";
 import { AboutPage } from "@/lib/db";
 
@@ -144,13 +143,6 @@ export default function AboutPageClient({
       {teamData.length > 0 && (
         <Team subtitle="Tim Kami" title="Kenali Tim 4BEST" members={teamData} />
       )}
-
-      {/* CTA Banner */}
-      <CTABanner
-        title={data.cta_title || defaultAboutData.cta_title}
-        buttonText={data.cta_button_text || defaultAboutData.cta_button_text}
-        buttonHref={data.cta_button_href || defaultAboutData.cta_button_href}
-      />
     </>
   );
 }

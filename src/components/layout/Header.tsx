@@ -5,7 +5,27 @@ import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import { usePathname } from "next/navigation";
 
-export default function Header() {
+interface NavigationItem {
+  id: number;
+  label: string;
+  href: string;
+  display_order: number;
+}
+
+interface HeaderProps {
+  navigationItems?: NavigationItem[];
+  logo?: string;
+}
+
+export default function Header({ 
+  navigationItems = [
+    { id: 1, label: "Beranda", href: "/", display_order: 1 },
+    { id: 2, label: "Partner", href: "/partners", display_order: 2 },
+    { id: 3, label: "Tentang", href: "/about", display_order: 3 },
+    { id: 4, label: "Kontak", href: "/contact", display_order: 4 },
+  ],
+  logo = "https://cdn.4best.id/branding/logo.svg"
+}: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isSmaller, setIsSmaller] = useState(false);
   const pathname = usePathname();
@@ -77,42 +97,17 @@ export default function Header() {
                   {/* Left Navigation */}
                   <div className="col-start">
                     <ul id="mainmenu">
-                      <li>
-                        <Link
-                          className={`menu-item ${isActive("/") ? "active" : ""}`}
-                          href="/"
-                          onClick={closeMobileMenu}
-                        >
-                          Beranda
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          className={`menu-item ${isActive("/partners") ? "active" : ""}`}
-                          href="/partners"
-                          onClick={closeMobileMenu}
-                        >
-                          Partner
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          className={`menu-item ${isActive("/about") ? "active" : ""}`}
-                          href="/about"
-                          onClick={closeMobileMenu}
-                        >
-                          Tentang
-                        </Link>
-                      </li>
-                      <li>
-                        <Link
-                          className={`menu-item ${isActive("/contact") ? "active" : ""}`}
-                          href="/contact"
-                          onClick={closeMobileMenu}
-                        >
-                          Kontak
-                        </Link>
-                      </li>
+                      {navigationItems.map((item) => (
+                        <li key={item.id}>
+                          <Link
+                            className={`menu-item ${isActive(item.href) ? "active" : ""}`}
+                            href={item.href}
+                            onClick={closeMobileMenu}
+                          >
+                            {item.label}
+                          </Link>
+                        </li>
+                      ))}
                     </ul>
                   </div>
 
@@ -120,7 +115,7 @@ export default function Header() {
                   <div className="col-center">
                     <Link href="/" onClick={closeMobileMenu}>
                       <Image
-                        src="https://cdn.4best.id/branding/logo.svg"
+                        src={logo}
                         alt="4best Logo"
                         width={150}
                         height={50}
@@ -136,10 +131,10 @@ export default function Header() {
                       <Link
                         href="/contact"
                         className="btn-main btn-line fx-slide sm-hide"
-                        data-hover="Jadwalkan Kunjungan"
+                        data-hover="Hubungi Kami"
                         onClick={closeMobileMenu}
                       >
-                        <span>Jadwalkan Kunjungan</span>
+                        <span>Hubungi Kami</span>
                       </Link>
                       <span
                         id="menu-btn"

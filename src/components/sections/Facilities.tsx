@@ -1,5 +1,8 @@
 "use client";
 
+import { motion } from "framer-motion";
+import { fadeInUp } from "@/lib/animations";
+
 interface FacilitiesProps {
   subtitle?: string;
   title: string;
@@ -24,33 +27,59 @@ export default function Facilities({
         <div className="row g-4 justify-content-between">
           <div className="col-lg-4 relative z-3">
             <div className="me-lg-3">
-              <div className="subtitle wow fadeInUp" data-wow-delay=".0s">
+              <motion.div
+                className="subtitle"
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+              >
                 {subtitle}
-              </div>
-              <h2 className="wow fadeInUp" data-wow-delay=".2s">
+              </motion.div>
+              <motion.h2
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
                 {title}
-              </h2>
+              </motion.h2>
             </div>
           </div>
 
           <div className="col-lg-6">
             <div className="spacer-single spacer-double"></div>
             <div className="row">
-              <div className="col-md-5 wow fadeInUp" data-wow-delay=".2s">
+              <motion.div
+                className="col-md-5"
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 }}
+              >
                 <ul className="ul-check fs-500 text-light">
                   {leftColumn.map((facility, index) => (
                     <li key={index}>{facility}</li>
                   ))}
                 </ul>
-              </div>
+              </motion.div>
 
-              <div className="col-md-5 wow fadeInUp" data-wow-delay=".4s">
+              <motion.div
+                className="col-md-5"
+                variants={fadeInUp}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true }}
+                transition={{ delay: 0.4 }}
+              >
                 <ul className="ul-check fs-500 text-light">
                   {rightColumn.map((facility, index) => (
                     <li key={index}>{facility}</li>
                   ))}
                 </ul>
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>

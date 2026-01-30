@@ -1,7 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Lightbox from "../ui/Lightbox";
+import { fadeInUp, staggerContainer } from "@/lib/animations";
 
 export interface GalleryItem {
   id: string;
@@ -34,18 +36,36 @@ export default function Gallery({ items, filters }: GalleryProps) {
       <div className="container">
         <div className="row g-4 gx-5 justify-content-center">
           <div className="col-lg-6 text-center">
-            <div className="subtitle s2 mb-3 wow fadeInUp" data-wow-delay=".0s">
+            <motion.div
+              className="subtitle s2 mb-3"
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
               Discover Gallery
-            </div>
-            <h2 className="wow fadeInUp" data-wow-delay=".2s">
+            </motion.div>
+            <motion.h2
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
               Exterior &amp; Interior
-            </h2>
+            </motion.h2>
           </div>
         </div>
 
         <div className="row">
           <div className="col-md-12 text-center">
-            <ul id="filters" className="wow fadeInUp" data-wow-delay="0s">
+            <motion.ul
+              id="filters"
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
               <li>
                 <a
                   href="#"
@@ -74,40 +94,55 @@ export default function Gallery({ items, filters }: GalleryProps) {
                   </a>
                 </li>
               ))}
-            </ul>
+            </motion.ul>
           </div>
         </div>
 
-        <div id="gallery" className="row g-3 wow fadeInUp" data-wow-delay=".3s">
-          {filteredItems.map((item, idx) => (
-            <div
-              key={item.id}
-              className={`col-md-3 col-sm-6 col-12 item ${item.category}`}
-            >
-              <a
-                href="#"
-                className="image-popup d-block hover"
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleImageClick(idx);
-                }}
+        <motion.div
+          id="gallery"
+          className="row g-3"
+          variants={staggerContainer(0.1)}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredItems.map((item, idx) => (
+              <motion.div
+                key={item.id}
+                className={`col-md-3 col-sm-6 col-12 item ${item.category}`}
+                variants={fadeInUp}
+                initial="hidden"
+                animate="visible"
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ delay: idx * 0.05 }}
+                layout
               >
-                <div className="relative overflow-hidden rounded-2xl">
-                  <div className="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-2 text-center text-white z-3">
-                    View
+                <a
+                  href="#"
+                  className="image-popup d-block hover"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleImageClick(idx);
+                  }}
+                >
+                  <div className="relative overflow-hidden rounded-2xl">
+                    <div className="absolute start-0 w-100 hover-op-1 p-5 abs-middle z-2 text-center text-white z-3">
+                      View
+                    </div>
+                    <div className="absolute start-0 w-100 h-100 overlay-dark-7 hover-op-1 z-2"></div>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={item.image}
+                      className="w-100 hover-scale-1-2"
+                      alt=""
+                    />
                   </div>
-                  <div className="absolute start-0 w-100 h-100 overlay-dark-7 hover-op-1 z-2"></div>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={item.image}
-                    className="w-100 hover-scale-1-2"
-                    alt=""
-                  />
-                </div>
-              </a>
-            </div>
-          ))}
-        </div>
+                </a>
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </motion.div>
       </div>
 
       {lightboxOpen && (

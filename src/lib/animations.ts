@@ -14,7 +14,7 @@ import { Variants } from 'framer-motion';
 export const fadeInUp: Variants = {
   hidden: {
     opacity: 0,
-    y: 40,
+    y: 80,
   },
   visible: {
     opacity: 1,
@@ -30,7 +30,7 @@ export const fadeInUp: Variants = {
 export const fadeInDown: Variants = {
   hidden: {
     opacity: 0,
-    y: -40,
+    y: -80,
   },
   visible: {
     opacity: 1,
@@ -46,7 +46,7 @@ export const fadeInDown: Variants = {
 export const fadeInLeft: Variants = {
   hidden: {
     opacity: 0,
-    x: -40,
+    x: -80,
   },
   visible: {
     opacity: 1,
@@ -62,11 +62,27 @@ export const fadeInLeft: Variants = {
 export const fadeInRight: Variants = {
   hidden: {
     opacity: 0,
-    x: 40,
+    x: 80,
   },
   visible: {
     opacity: 1,
     x: 0,
+    transition: {
+      duration: 0.6,
+      ease: 'easeOut',
+    },
+  },
+};
+
+// fadeInUpBig animation - larger movement for hero sections
+export const fadeInUpBig: Variants = {
+  hidden: {
+    opacity: 0,
+    y: 80,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
     transition: {
       duration: 0.6,
       ease: 'easeOut',

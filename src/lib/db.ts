@@ -204,6 +204,19 @@ export interface Agent {
   updated_at: string;
 }
 
+export interface CTASection {
+  id: number;
+  subtitle: string | null;
+  title: string | null;
+  description: string | null;
+  primary_button_text: string | null;
+  primary_button_href: string | null;
+  secondary_button_text: string | null;
+  secondary_button_href: string | null;
+  background_image: string | null;
+  updated_at: string;
+}
+
 export interface PageSection {
   id: number;
   page_slug: string;
@@ -1102,4 +1115,32 @@ export async function updatePageSectionContent<T>(
 export async function deletePageSection(id: number): Promise<void> {
   const db = await getDB();
   await db.prepare("DELETE FROM page_sections WHERE id = ?").bind(id).run();
+}
+
+// =============================================
+// CTA SECTION QUERIES
+// =============================================
+
+export async function getCTASection(): Promise<CTASection | null> {
+  try {
+    const db = await getDB();
+    return db.prepare("SELECT * FROM cta_section WHERE id = 1").first<CTASection>();
+  } catch (error) {
+    console.error("Error fetching CTA section:", error);
+    return null;
+  }
+}
+
+export async function updateCTASection(data: Partial<CTASection>): Promise<void> {
+  const db = await getDB();
+  const fields = Object.keys(data)
+    .filter((k) => k !== "id")
+    .map((k) => `${k} = ?`)
+    .join(", ");
+  const values = Object.values(data).filter((_, i) => Object.keys(data)[i] !== "id");
+
+  await db
+    .prepare(`UPDATE cta_section SET ${fields}, updated_at = datetime('now') WHERE id = 1`)
+    .bind(...values)
+    .run();
 }

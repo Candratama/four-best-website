@@ -1,17 +1,27 @@
 "use client";
 
 import { useEffect } from "react";
+import { motion } from "framer-motion";
 import { PartnerCard } from "@/components/cards";
 import type { PartnerCardProps } from "@/components/cards/PartnerCard";
+import { fadeInUp, fadeInUpBig } from "@/lib/animations";
+
+interface HeroData {
+  title: string;
+  subtitle?: string | null;
+  background_image?: string | null;
+}
 
 interface PartnersClientProps {
   partnerCards: PartnerCardProps[];
   error: string | null;
+  heroData?: HeroData;
 }
 
 export default function PartnersClient({
   partnerCards,
   error,
+  heroData,
 }: PartnersClientProps) {
   useEffect(() => {
     // Initialize jarallax for parallax effect
@@ -24,6 +34,10 @@ export default function PartnersClient({
     }
   }, []);
 
+  const title = heroData?.title || "Partner";
+  const subtitle = heroData?.subtitle || "Kolaborasi untuk Hasil Terbaik";
+  const backgroundImage = heroData?.background_image || "https://cdn.4best.id/misc/gallery/l15.webp";
+
   return (
     <>
       {/* Hero Section - Exact match to template */}
@@ -34,19 +48,29 @@ export default function PartnersClient({
         data-speed="0.5"
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="https://cdn.4best.id/misc/gallery/l15.webp" className="jarallax-img" alt="" />
+        <img src={backgroundImage} className="jarallax-img" alt="" />
         <div className="gradient-edge-top op-6"></div>
         <div className="abs bottom-10 z-2 w-100">
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
                 <div className="relative overflow-hidden">
-                  <div className="wow fadeInUpBig" data-wow-duration="1.5s">
-                    <h1 className="fs-120 text-uppercase fs-sm-10vw mb-2 lh-1">
-                      Partner
-                    </h1>
-                    <h3>Kolaborasi untuk Hasil Terbaik</h3>
-                  </div>
+                  <motion.h1
+                    className="fs-120 text-uppercase fs-sm-10vw mb-2 lh-1"
+                    variants={fadeInUpBig}
+                    initial="hidden"
+                    animate="visible"
+                  >
+                    {title}
+                  </motion.h1>
+                  <motion.h3
+                    variants={fadeInUpBig}
+                    initial="hidden"
+                    animate="visible"
+                    transition={{ delay: 0.1 }}
+                  >
+                    {subtitle}
+                  </motion.h3>
                 </div>
               </div>
             </div>
@@ -68,10 +92,18 @@ export default function PartnersClient({
                 <p>Belum ada partner.</p>
               </div>
             ) : (
-              partnerCards.map((partner) => (
-                <div key={partner.slug} className="col-md-6">
+              partnerCards.map((partner, index) => (
+                <motion.div 
+                  key={partner.slug} 
+                  className="col-md-6"
+                  variants={fadeInUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 }}
+                >
                   <PartnerCard {...partner} />
-                </div>
+                </motion.div>
               ))
             )}
           </div>

@@ -284,16 +284,18 @@ export default function PartnerDetailsClient({
             {filteredProducts.length > 0 ? (
               <motion.div 
                 className="row g-4"
-                variants={staggerContainer(0.1)}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true }}
               >
-                {filteredProducts.map((product) => (
+                {filteredProducts.map((product, index) => (
                   <motion.div
                     key={product.id}
                     className="col-lg-4 col-md-6"
-                    variants={fadeInUp}
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: index * 0.1, ease: 'easeOut' }}
                   >
                     <div className="de-item hover-shadow rounded-2xl overflow-hidden">
                       <div className="d-img position-relative">

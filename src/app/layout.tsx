@@ -18,7 +18,9 @@ import {
   Preloader,
   ScrollToTop,
   ScrollBar,
+  GlobalCTA,
 } from "@/components/layout";
+import { getCTASection, getSiteSettings, getNavigationItems } from "@/lib/db";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,24 +32,39 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "4best - Property Agent",
-  description:
-    "Your trusted property agent partner for finding the perfect home",
-  icons: {
-    icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon.png", type: "image/png" },
-    ],
-    apple: "/favicon.png",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await getSiteSettings();
+  return {
+    title: settings?.name ? `${settings.name} - ${settings.tagline || 'Property Agent'}` : "4best - Property Agent",
+    description: settings?.tagline || "Your trusted property agent partner for finding the perfect home",
+    icons: {
+      icon: [
+        { url: settings?.favicon || "/favicon.svg", type: "image/svg+xml" },
+        { url: "/favicon.png", type: "image/png" },
+      ],
+      apple: "/favicon.png",
+    },
+  };
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Fetch data from database
+  const ctaData = await getCTASection();
+  const siteSettings = await getSiteSettings();
+  const navItems = await getNavigationItems({ activeOnly: true });
+
+  // Transform navigation items for Header component
+  const navigationItems = navItems.map(item => ({
+    id: item.id,
+    label: item.label,
+    href: item.href,
+    display_order: item.display_order,
+  }));
+
   return (
     <html lang="id" suppressHydrationWarning>
       <head>
@@ -77,8 +94,21 @@ export default function RootLayout({
           <ScrollToTop />
           <ScrollBar />
           <Preloader />
-          <Header />
+          <Header 
+            navigationItems={navigationItems}
+            logo={siteSettings?.logo || undefined}
+          />
           <main>{children}</main>
+          <GlobalCTA
+            subtitle={ctaData?.subtitle || undefined}
+            title={ctaData?.title || undefined}
+            description={ctaData?.description || undefined}
+            primaryButtonText={ctaData?.primary_button_text || undefined}
+            primaryButtonHref={ctaData?.primary_button_href || undefined}
+            secondaryButtonText={ctaData?.secondary_button_text || undefined}
+            secondaryButtonHref={ctaData?.secondary_button_href || undefined}
+            backgroundImage={ctaData?.background_image || undefined}
+          />
           <Footer />
         </div>
       </body>

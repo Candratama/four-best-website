@@ -11,7 +11,7 @@ export { default as Gallery } from './Gallery';
 export { default as AboutContent } from './AboutContent';
 export { default as Mission } from './Mission';
 export { default as Team } from './Team';
-export { default as CTABanner } from './CTABanner';
+export { default as CTASection } from './CTASection';
 export { default as PartnersGrid } from './PartnersGrid';
 export { default as ValueProposition } from './ValueProposition';
 export { default as VideoSection } from './VideoSection';

@@ -1,6 +1,5 @@
-import Link from "next/link";
 import { getPartners, getProducts } from "@/lib/db";
-import { PartnerCard } from "@/components/cards";
+import PartnersGridClient from "./PartnersGridClient";
 
 interface PartnersGridProps {
   subtitle?: string;
@@ -51,39 +50,10 @@ export default async function PartnersGrid({
   }
 
   return (
-    <section className="relative">
-      <div className="container relative z-2">
-        <div className="row g-4 justify-content-center">
-          <div className="col-lg-6 text-center">
-            <div className="subtitle wow fadeInUp" data-wow-delay=".0s">
-              {subtitle}
-            </div>
-            <h2 className="wow fadeInUp" data-wow-delay=".2s">
-              {title}
-            </h2>
-          </div>
-        </div>
-
-        <div className="row g-4">
-          {partners.map((partner) => (
-            <div key={partner.slug} className="col-md-6">
-              <PartnerCard {...partner} />
-            </div>
-          ))}
-        </div>
-
-        <div className="row mt-4">
-          <div className="col-12 text-center">
-            <Link
-              href="/partners"
-              className="btn-main btn-line fx-slide"
-              data-hover="View All Partners"
-            >
-              <span>View All Partners</span>
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
+    <PartnersGridClient
+      subtitle={subtitle}
+      title={title}
+      partners={partners}
+    />
   );
 }

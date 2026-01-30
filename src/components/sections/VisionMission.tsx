@@ -1,6 +1,8 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Handshake, Users, Laptop, Heart } from "lucide-react";
+import { fadeInUp } from "@/lib/animations";
 
 interface MissionItem {
   text: string;
@@ -52,17 +54,35 @@ export default function VisionMission({
         {/* Vision Section - Top */}
         <div className="row mb-5">
           <div className="col-lg-8 offset-lg-2 text-center">
-            <div className="subtitle s2 wow fadeInUp">{visionSubtitle}</div>
-            <h2 className="wow fadeInUp" data-wow-delay=".2s">
+            <motion.div
+              className="subtitle s2"
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {visionSubtitle}
+            </motion.div>
+            <motion.h2
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
               {visionTitle}
-            </h2>
-            <p
-              className="fs-18 lh-1-8 wow fadeInUp"
-              data-wow-delay=".4s"
+            </motion.h2>
+            <motion.p
+              className="fs-18 lh-1-8"
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
               style={{ color: "#555" }}
             >
               {visionText}
-            </p>
+            </motion.p>
           </div>
         </div>
 
@@ -76,10 +96,24 @@ export default function VisionMission({
         {/* Mission Section - Bottom */}
         <div className="row">
           <div className="col-lg-8 offset-lg-2 text-center mb-4">
-            <div className="subtitle s2 wow fadeInUp">{missionSubtitle}</div>
-            <h2 className="wow fadeInUp" data-wow-delay=".2s">
+            <motion.div
+              className="subtitle s2"
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+            >
+              {missionSubtitle}
+            </motion.div>
+            <motion.h2
+              variants={fadeInUp}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+            >
               {missionTitle}
-            </h2>
+            </motion.h2>
           </div>
         </div>
 
@@ -87,10 +121,14 @@ export default function VisionMission({
           <div className="col-lg-8 offset-lg-2" style={{ overflow: "hidden" }}>
             <ul className="list-unstyled" style={{ width: "100%" }}>
               {missions.map((mission, index) => (
-                <li
+                <motion.li
                   key={index}
-                  className="d-flex align-items-start py-4 wow fadeInUp"
-                  data-wow-delay={`${0.2 + index * 0.1}s`}
+                  className="d-flex align-items-start py-4"
+                  variants={fadeInUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 + index * 0.1 }}
                   style={{
                     gap: "16px",
                     borderBottom:
@@ -125,7 +163,7 @@ export default function VisionMission({
                       {mission.text}
                     </p>
                   </div>
-                </li>
+                </motion.li>
               ))}
             </ul>
           </div>
