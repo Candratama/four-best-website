@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useCallback } from "react";
 import { ContactSubmission } from "@/lib/db";
 import SubmissionStatsComponent from "@/components/admin/SubmissionStats";
 import SubmissionsTable from "@/components/admin/SubmissionsTable";
@@ -44,34 +44,50 @@ export default function SubmissionsPageClient({
     setIsModalOpen(true);
   };
 
-  const handleFilterChange = (newFilters: { search: string; status: string }) => {
+  const handleFilterChange = useCallback((newFilters: { search: string; status: string }) => {
     setFilters(newFilters);
     startTransition(async () => {
-      const submissionFilters = {
-        search: newFilters.search || undefined,
-        status: newFilters.status !== "all" ? newFilters.status : undefined,
-      };
-      const result = await getSubmissions(submissionFilters, 1, pagination.limit);
-      if (result.success && result.submissions && result.pagination) {
-        setSubmissions(result.submissions);
-        setPagination(result.pagination);
+      try {
+        const submissionFilters = {
+          search: newFilters.search || undefined,
+          status: newFilters.status !== "all" ? newFilters.status : undefined,
+        };
+        const result = await getSubmissions(submissionFilters, 1, pagination.limit);
+        if (result.success && result.submissions && result.pagination) {
+          setSubmissions(result.submissions);
+          setPagination(result.pagination);
+        } else {
+          console.error("Failed to apply filters:", result);
+          toast.error("Failed to apply filters");
+        }
+      } catch (error) {
+        console.error("Error applying filters:", error);
+        toast.error("Error loading submissions");
       }
     });
-  };
+  }, [pagination.limit]);
 
-  const handlePageChange = (page: number) => {
+  const handlePageChange = useCallback((page: number) => {
     startTransition(async () => {
-      const submissionFilters = {
-        search: filters.search || undefined,
-        status: filters.status !== "all" ? filters.status : undefined,
-      };
-      const result = await getSubmissions(submissionFilters, page, pagination.limit);
-      if (result.success && result.submissions && result.pagination) {
-        setSubmissions(result.submissions);
-        setPagination(result.pagination);
+      try {
+        const submissionFilters = {
+          search: filters.search || undefined,
+          status: filters.status !== "all" ? filters.status : undefined,
+        };
+        const result = await getSubmissions(submissionFilters, page, pagination.limit);
+        if (result.success && result.submissions && result.pagination) {
+          setSubmissions(result.submissions);
+          setPagination(result.pagination);
+        } else {
+          console.error("Failed to load page:", result);
+          toast.error("Failed to load page");
+        }
+      } catch (error) {
+        console.error("Error changing page:", error);
+        toast.error("Error loading submissions");
       }
     });
-  };
+  }, [filters, pagination.limit]);
 
   const handleExport = async () => {
     try {
