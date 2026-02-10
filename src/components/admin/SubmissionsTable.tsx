@@ -148,8 +148,8 @@ export default function SubmissionsTable({
         <Table>
           <TableHeader>
             <TableRow className="bg-white hover:bg-white border-b-2">
-              <TableHead className="font-semibold px-6 py-4 first:rounded-tl-md">Name</TableHead>
-              <TableHead className="font-semibold px-6 py-4">Contact</TableHead>
+              <TableHead className="text-center font-semibold px-6 py-4 first:rounded-tl-md">Name</TableHead>
+              <TableHead className="text-center font-semibold px-6 py-4">Contact</TableHead>
               <TableHead className="text-center font-semibold px-6 py-4">Submitted</TableHead>
               <TableHead className="text-center font-semibold px-6 py-4">Status</TableHead>
               <TableHead className="text-center font-semibold px-6 py-4">Due Date</TableHead>
