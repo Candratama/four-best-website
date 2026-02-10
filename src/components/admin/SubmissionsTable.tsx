@@ -127,7 +127,7 @@ export default function SubmissionsTable({
       <div className="rounded-md border">
         <Table>
           <TableHeader>
-            <TableRow className="bg-muted/50 hover:bg-muted/50">
+            <TableRow className="bg-white hover:bg-white border-b-2">
               <TableHead className="text-center font-semibold px-6 py-4">Name</TableHead>
               <TableHead className="font-semibold px-6 py-4">Contact</TableHead>
               <TableHead className="text-center font-semibold px-6 py-4">Submitted</TableHead>
