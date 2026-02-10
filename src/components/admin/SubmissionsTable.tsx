@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FileText, AlertTriangle, CheckCircle2, ExternalLink, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
+import { FileText, AlertTriangle, CheckCircle2, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
 import type { ContactSubmission } from "@/lib/db";
 
 interface SubmissionsTableProps {
@@ -148,7 +148,7 @@ export default function SubmissionsTable({
         <Table>
           <TableHeader>
             <TableRow className="bg-white hover:bg-white border-b-2">
-              <TableHead className="text-center font-semibold px-6 py-4 first:rounded-tl-md">Name</TableHead>
+              <TableHead className="font-semibold px-6 py-4 first:rounded-tl-md">Name</TableHead>
               <TableHead className="font-semibold px-6 py-4">Contact</TableHead>
               <TableHead className="text-center font-semibold px-6 py-4">Submitted</TableHead>
               <TableHead className="text-center font-semibold px-6 py-4">Status</TableHead>
@@ -168,21 +168,13 @@ export default function SubmissionsTable({
               submissions.map((submission) => (
                 <TableRow key={submission.id} className="hover:bg-muted/30">
                   {/* Name */}
-                  <TableCell className="font-medium text-center px-6 py-4">{submission.name}</TableCell>
+                  <TableCell className="font-medium px-6 py-4">{submission.name}</TableCell>
 
                   {/* Contact */}
                   <TableCell className="px-6 py-4">
                     <div className="flex flex-col gap-1">
                       <span className="text-sm">{submission.email}</span>
-                      <a
-                        href={getWhatsAppLink(submission.phone, submission.name)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-1 text-sm text-green-600 hover:underline"
-                      >
-                        {submission.phone}
-                        <ExternalLink className="h-3 w-3" />
-                      </a>
+                      <span className="text-sm text-muted-foreground">{submission.phone}</span>
                     </div>
                   </TableCell>
 
