@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { formatDistanceToNow } from "date-fns";
+import { toZonedTime } from "date-fns-tz";
 import { id as idLocale } from "date-fns/locale";
 import {
   Table,
@@ -30,6 +31,8 @@ interface SubmissionsTableProps {
   onExport: () => void;
 }
 
+const JAKARTA_TZ = "Asia/Jakarta";
+
 export default function SubmissionsTable({
   submissions,
   onViewDetails,
@@ -55,7 +58,7 @@ export default function SubmissionsTable({
       case "new":
         return <Badge variant="default">New</Badge>;
       case "in_progress":
-        return <Badge variant="secondary">In Progress</Badge>;
+        return <Badge className="bg-gray-200 text-gray-800 hover:bg-gray-200">In Progress</Badge>;
       case "closed":
         return <Badge variant="outline">Closed</Badge>;
       default:
@@ -125,35 +128,27 @@ export default function SubmissionsTable({
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[50px]"></TableHead>
-              <TableHead>Name</TableHead>
+              <TableHead className="text-center">Name</TableHead>
               <TableHead>Contact</TableHead>
-              <TableHead>Submitted</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Due Date</TableHead>
-              <TableHead>Email</TableHead>
-              <TableHead className="text-right">Actions</TableHead>
+              <TableHead className="text-center">Submitted</TableHead>
+              <TableHead className="text-center">Status</TableHead>
+              <TableHead className="text-center">Due Date</TableHead>
+              <TableHead className="text-center">Email</TableHead>
+              <TableHead className="text-center">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredSubmissions.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={8} className="text-center text-muted-foreground">
+                <TableCell colSpan={7} className="text-center text-muted-foreground">
                   No submissions found
                 </TableCell>
               </TableRow>
             ) : (
               filteredSubmissions.map((submission) => (
                 <TableRow key={submission.id}>
-                  {/* Visual Indicator */}
-                  <TableCell>
-                    {submission.status === "new" && (
-                      <div className="h-2 w-2 rounded-full bg-red-500"></div>
-                    )}
-                  </TableCell>
-
                   {/* Name */}
-                  <TableCell className="font-medium">{submission.name}</TableCell>
+                  <TableCell className="font-medium text-center">{submission.name}</TableCell>
 
                   {/* Contact */}
                   <TableCell>
@@ -172,23 +167,23 @@ export default function SubmissionsTable({
                   </TableCell>
 
                   {/* Submitted */}
-                  <TableCell className="text-sm text-muted-foreground">
-                    {formatDistanceToNow(new Date(submission.created_at), {
+                  <TableCell className="text-sm text-muted-foreground text-center">
+                    {formatDistanceToNow(toZonedTime(new Date(submission.created_at), JAKARTA_TZ), {
                       addSuffix: true,
                       locale: idLocale,
                     })}
                   </TableCell>
 
                   {/* Status */}
-                  <TableCell>{getStatusBadge(submission.status)}</TableCell>
+                  <TableCell className="text-center">{getStatusBadge(submission.status)}</TableCell>
 
                   {/* Due Date */}
-                  <TableCell>
+                  <TableCell className="text-center">
                     {getDueDateIndicator(submission.due_date, submission.status)}
                   </TableCell>
 
                   {/* Email Status */}
-                  <TableCell>
+                  <TableCell className="text-center">
                     {submission.email_sent ? (
                       <Badge variant="outline" className="bg-green-50 text-green-700">
                         Sent
@@ -201,7 +196,7 @@ export default function SubmissionsTable({
                   </TableCell>
 
                   {/* Actions */}
-                  <TableCell className="text-right">
+                  <TableCell className="text-center">
                     <Button
                       variant="ghost"
                       size="sm"
