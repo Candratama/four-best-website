@@ -1319,6 +1319,38 @@ export async function getContactSubmissions(
   return result.results;
 }
 
+export async function getContactSubmissionsCount(
+  filters?: SubmissionFilters
+): Promise<number> {
+  const db = await getDB();
+  let query = "SELECT COUNT(*) as total FROM contact_submissions WHERE 1=1";
+  const bindings: (string | number)[] = [];
+
+  if (filters?.status && filters.status !== "all") {
+    query += " AND status = ?";
+    bindings.push(filters.status);
+  }
+
+  if (filters?.search) {
+    query += " AND (name LIKE ? OR email LIKE ? OR phone LIKE ?)";
+    const searchPattern = `%${filters.search}%`;
+    bindings.push(searchPattern, searchPattern, searchPattern);
+  }
+
+  if (filters?.dateFrom) {
+    query += " AND created_at >= ?";
+    bindings.push(filters.dateFrom);
+  }
+
+  if (filters?.dateTo) {
+    query += " AND created_at <= ?";
+    bindings.push(filters.dateTo);
+  }
+
+  const result = await db.prepare(query).bind(...bindings).first<{ total: number }>();
+  return result?.total || 0;
+}
+
 export async function getContactSubmissionById(id: number): Promise<ContactSubmission | null> {
   const db = await getDB();
   return db

@@ -5,6 +5,7 @@ import {
   getContactSubmissionById,
   updateContactSubmission,
   getSubmissionStats,
+  getContactSubmissionsCount,
   type ContactSubmission,
   type SubmissionFilters,
   type SubmissionStats,
@@ -13,10 +14,28 @@ import { sendAdminNotification, sendVisitorConfirmation, addToContactList } from
 import { revalidatePath } from "next/cache";
 
 // Get submissions with filters
-export async function getSubmissions(filters?: SubmissionFilters) {
+export async function getSubmissions(
+  filters?: SubmissionFilters,
+  page: number = 1,
+  limit: number = 20
+) {
   try {
-    const submissions = await getContactSubmissions(filters);
-    return { success: true, submissions };
+    const offset = (page - 1) * limit;
+    const submissions = await getContactSubmissions(filters, limit, offset);
+
+    // Get total count for pagination
+    const total = await getContactSubmissionsCount(filters);
+
+    return {
+      success: true,
+      submissions,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit)
+      }
+    };
   } catch (error) {
     console.error("Failed to fetch submissions:", error);
     return { success: false, error: "Failed to fetch submissions" };

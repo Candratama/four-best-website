@@ -22,13 +22,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Eye, AlertTriangle, CheckCircle2, ExternalLink } from "lucide-react";
+import { Eye, AlertTriangle, CheckCircle2, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
 import type { ContactSubmission } from "@/lib/db";
 
 interface SubmissionsTableProps {
   submissions: ContactSubmission[];
   onViewDetails: (submission: ContactSubmission) => void;
   onExport: () => void;
+  pagination?: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+  };
+  onPageChange?: (page: number) => void;
 }
 
 const JAKARTA_TZ = "Asia/Jakarta";
@@ -37,21 +44,14 @@ export default function SubmissionsTable({
   submissions,
   onViewDetails,
   onExport,
+  pagination,
+  onPageChange,
 }: SubmissionsTableProps) {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
 
-  // Filter submissions
-  const filteredSubmissions = submissions.filter((sub) => {
-    const matchesSearch =
-      sub.name.toLowerCase().includes(search.toLowerCase()) ||
-      sub.email.toLowerCase().includes(search.toLowerCase()) ||
-      sub.phone.includes(search);
-
-    const matchesStatus = statusFilter === "all" || sub.status === statusFilter;
-
-    return matchesSearch && matchesStatus;
-  });
+  // Note: Filtering is now handled on server-side
+  // Display submissions as-is from server
 
   const getStatusBadge = (status: ContactSubmission["status"]) => {
     switch (status) {
@@ -124,28 +124,28 @@ export default function SubmissionsTable({
       </div>
 
       {/* Table */}
-      <div className="rounded-md border">
+      <div className="rounded-md border overflow-hidden">
         <Table>
           <TableHeader>
             <TableRow className="bg-white hover:bg-white border-b-2">
-              <TableHead className="text-center font-semibold px-6 py-4">Name</TableHead>
+              <TableHead className="text-center font-semibold px-6 py-4 first:rounded-tl-md">Name</TableHead>
               <TableHead className="font-semibold px-6 py-4">Contact</TableHead>
               <TableHead className="text-center font-semibold px-6 py-4">Submitted</TableHead>
               <TableHead className="text-center font-semibold px-6 py-4">Status</TableHead>
               <TableHead className="text-center font-semibold px-6 py-4">Due Date</TableHead>
               <TableHead className="text-center font-semibold px-6 py-4">Email</TableHead>
-              <TableHead className="text-center font-semibold px-6 py-4">Actions</TableHead>
+              <TableHead className="text-center font-semibold px-6 py-4 last:rounded-tr-md">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filteredSubmissions.length === 0 ? (
+            {submissions.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
                   No submissions found
                 </TableCell>
               </TableRow>
             ) : (
-              filteredSubmissions.map((submission) => (
+              submissions.map((submission) => (
                 <TableRow key={submission.id} className="hover:bg-muted/30">
                   {/* Name */}
                   <TableCell className="font-medium text-center px-6 py-4">{submission.name}</TableCell>
@@ -213,9 +213,74 @@ export default function SubmissionsTable({
         </Table>
       </div>
 
-      {/* Results Count */}
-      <div className="text-sm text-muted-foreground">
-        Showing {filteredSubmissions.length} of {submissions.length} submissions
+      {/* Pagination and Results Count */}
+      <div className="flex items-center justify-between">
+        <div className="text-sm text-muted-foreground">
+          {pagination && (
+            <>
+              Showing {((pagination.page - 1) * pagination.limit) + 1} to{" "}
+              {Math.min(pagination.page * pagination.limit, pagination.total)} of{" "}
+              {pagination.total} submissions
+            </>
+          )}
+        </div>
+
+        {pagination && pagination.totalPages > 1 && onPageChange && (
+          <div className="flex items-center gap-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onPageChange(pagination.page - 1)}
+              disabled={pagination.page === 1}
+            >
+              <ChevronLeft className="h-4 w-4 mr-1" />
+              Previous
+            </Button>
+
+            <div className="flex items-center gap-1">
+              {Array.from({ length: pagination.totalPages }, (_, i) => i + 1)
+                .filter((page) => {
+                  // Show first page, last page, current page, and pages around current
+                  return (
+                    page === 1 ||
+                    page === pagination.totalPages ||
+                    Math.abs(page - pagination.page) <= 1
+                  );
+                })
+                .map((page, idx, array) => {
+                  // Add ellipsis
+                  const prevPage = array[idx - 1];
+                  const showEllipsis = prevPage && page - prevPage > 1;
+
+                  return (
+                    <div key={page} className="flex items-center gap-1">
+                      {showEllipsis && (
+                        <span className="px-2 text-muted-foreground">...</span>
+                      )}
+                      <Button
+                        variant={page === pagination.page ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => onPageChange(page)}
+                        className="min-w-[40px]"
+                      >
+                        {page}
+                      </Button>
+                    </div>
+                  );
+                })}
+            </div>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onPageChange(pagination.page + 1)}
+              disabled={pagination.page === pagination.totalPages}
+            >
+              Next
+              <ChevronRight className="h-4 w-4 ml-1" />
+            </Button>
+          </div>
+        )}
       </div>
     </div>
   );
