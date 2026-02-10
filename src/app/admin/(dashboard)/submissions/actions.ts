@@ -150,7 +150,7 @@ export async function resendEmail(submissionId: number) {
     let emailError: string | null = null;
 
     try {
-      const [adminResult, contactResult, confirmationResult] = await Promise.all([
+      const [adminResult] = await Promise.all([
         sendAdminNotification(payload),
         addToContactList(payload),
         sendVisitorConfirmation(payload),

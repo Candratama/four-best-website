@@ -42,7 +42,7 @@ export default function SubmissionDetailModal({
   onUpdate,
 }: SubmissionDetailModalProps) {
   const [isPending, startTransition] = useTransition();
-  const [status, setStatus] = useState(submission?.status || "new");
+  const [status, setStatus] = useState<ContactSubmission["status"]>(submission?.status || "new");
   const [notes, setNotes] = useState(submission?.notes || "");
   const [dueDate, setDueDate] = useState<Date | undefined>(
     submission?.due_date ? new Date(submission.due_date) : undefined
@@ -190,7 +190,7 @@ export default function SubmissionDetailModal({
             <div className="grid gap-4">
               <div>
                 <Label htmlFor="status">Status</Label>
-                <Select value={status} onValueChange={setStatus}>
+                <Select value={status} onValueChange={(value) => setStatus(value as ContactSubmission["status"])}>
                   <SelectTrigger id="status">
                     <SelectValue />
                   </SelectTrigger>
