@@ -1248,7 +1248,7 @@ export interface SubmissionStats {
   thisWeek: number;
   overdue: number;
   newCount: number;
-  responseRate: number;
+  totalMessages: number;
 }
 
 export async function createContactSubmission(
@@ -1406,24 +1406,16 @@ export async function getSubmissionStats(): Promise<SubmissionStats> {
     .prepare("SELECT COUNT(*) as count FROM contact_submissions WHERE status = 'new'")
     .first<{ count: number }>();
 
-  // Response rate
+  // Total messages
   const totalResult = await db
     .prepare("SELECT COUNT(*) as count FROM contact_submissions")
     .first<{ count: number }>();
-
-  const respondedResult = await db
-    .prepare("SELECT COUNT(*) as count FROM contact_submissions WHERE is_responded = 1")
-    .first<{ count: number }>();
-
-  const responseRate = totalResult?.count
-    ? Math.round((respondedResult?.count || 0) / totalResult.count * 100)
-    : 0;
 
   return {
     thisWeek: thisWeekResult?.count || 0,
     overdue: overdueResult?.count || 0,
     newCount: newResult?.count || 0,
-    responseRate,
+    totalMessages: totalResult?.count || 0,
   };
 }
 

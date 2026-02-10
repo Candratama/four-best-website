@@ -43,13 +43,13 @@ export default function SubmissionStatsComponent({ stats }: SubmissionStatsProps
         </div>
       </Card>
 
-      {/* Response Rate */}
+      {/* Total Messages */}
       <Card className="p-6">
         <div className="flex flex-col space-y-2">
-          <p className="text-sm font-medium text-muted-foreground">Response Rate</p>
+          <p className="text-sm font-medium text-muted-foreground">Total Messages</p>
           <div className="flex items-baseline space-x-2">
-            <h3 className="text-3xl font-bold">{stats.responseRate}%</h3>
-            <span className="text-sm text-muted-foreground">responded</span>
+            <h3 className="text-3xl font-bold">{stats.totalMessages}</h3>
+            <span className="text-sm text-muted-foreground">messages</span>
           </div>
         </div>
       </Card>

@@ -14,7 +14,7 @@ interface SubmissionsPageClientProps {
     thisWeek: number;
     overdue: number;
     newCount: number;
-    responseRate: number;
+    totalMessages: number;
   };
   initialPagination: {
     page: number;
