@@ -1,11 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 export default function ScrollToTop() {
+  const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [isDark, setIsDark] = useState(false);
+
+  // Hide on admin pages
+  const isAdminPage = pathname?.startsWith("/admin");
 
   useEffect(() => {
     setMounted(true);
@@ -51,6 +56,11 @@ export default function ScrollToTop() {
       behavior: "smooth",
     });
   };
+
+  // Don't render on admin pages
+  if (isAdminPage) {
+    return null;
+  }
 
   // Don't render until mounted to avoid hydration mismatch
   if (!mounted) {

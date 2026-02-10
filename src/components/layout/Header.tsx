@@ -76,6 +76,11 @@ export default function Header({
     document.documentElement.style.overflow = "";
   }, []);
 
+  // Don't render header on admin pages (must be after all hooks)
+  if (pathname.startsWith("/admin")) {
+    return null;
+  }
+
   // Simple header class - mobile detection via CSS media queries
   const headerClass = `transparent logo-center header-mobile ${isSmaller ? "smaller" : ""} ${mobileMenuOpen ? "menu-open" : ""}`;
 

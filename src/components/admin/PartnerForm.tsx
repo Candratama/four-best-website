@@ -72,7 +72,7 @@ export default function PartnerForm({ partner, mode }: PartnerFormProps) {
       });
 
       if (!res.ok) {
-        const data = await res.json();
+        const data = await res.json() as { error?: string };
         throw new Error(data.error || "Failed to save partner");
       }
 
@@ -101,27 +101,14 @@ export default function PartnerForm({ partner, mode }: PartnerFormProps) {
               <CardTitle>Basic Information</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Name *</Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={handleNameChange}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="slug">Slug *</Label>
-                  <Input
-                    id="slug"
-                    value={formData.slug}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, slug: e.target.value }))
-                    }
-                    required
-                  />
-                </div>
+              <div className="space-y-2">
+                <Label htmlFor="name">Name *</Label>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  onChange={handleNameChange}
+                  required
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="short_description">Short Description</Label>
@@ -249,20 +236,6 @@ export default function PartnerForm({ partner, mode }: PartnerFormProps) {
                   checked={formData.is_featured}
                   onCheckedChange={(checked) =>
                     setFormData((prev) => ({ ...prev, is_featured: checked }))
-                  }
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="display_order">Display Order</Label>
-                <Input
-                  id="display_order"
-                  type="number"
-                  value={formData.display_order}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      display_order: parseInt(e.target.value) || 0,
-                    }))
                   }
                 />
               </div>

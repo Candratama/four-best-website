@@ -28,8 +28,8 @@ export default function GlobalCTA({
 }: GlobalCTAProps) {
   const pathname = usePathname();
 
-  // Don't render CTA on excluded pages
-  if (EXCLUDED_PATHS.includes(pathname)) {
+  // Don't render CTA on excluded pages or admin pages
+  if (EXCLUDED_PATHS.includes(pathname) || pathname.startsWith("/admin")) {
     return null;
   }
 

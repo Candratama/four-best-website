@@ -15,6 +15,7 @@ import "./globals.css";
 import {
   Header,
   Footer,
+  FooterWrapper,
   Preloader,
   ScrollToTop,
   ScrollBar,
@@ -109,7 +110,9 @@ export default async function RootLayout({
             secondaryButtonHref={ctaData?.secondary_button_href || undefined}
             backgroundImage={ctaData?.background_image || undefined}
           />
-          <Footer />
+          <FooterWrapper>
+            <Footer />
+          </FooterWrapper>
         </div>
       </body>
     </html>

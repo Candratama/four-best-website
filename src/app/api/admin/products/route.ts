@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getProducts, createProduct } from "@/lib/db";
+import { getProducts, createProduct, getMaxProductDisplayOrder } from "@/lib/db";
 
 export async function GET() {
   try {
@@ -13,9 +13,18 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const body = await request.json() as {
+      partner_id?: number;
+      name?: string;
+      slug?: string;
+      category?: "commercial" | "subsidi";
+      location?: string;
+      description?: string;
+      main_image?: string;
+      is_active?: number;
+    };
     const { partner_id, name, slug, category, location, description,
-            main_image, is_active, display_order } = body;
+            main_image, is_active } = body;
 
     if (!partner_id || !name || !slug || !category) {
       return NextResponse.json(
@@ -23,6 +32,9 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Auto-increment display_order
+    const maxOrder = await getMaxProductDisplayOrder();
 
     const id = await createProduct({
       partner_id,
@@ -33,7 +45,7 @@ export async function POST(request: NextRequest) {
       description: description || null,
       main_image: main_image || null,
       is_active: is_active ?? 1,
-      display_order: display_order || 0,
+      display_order: maxOrder + 1,
     });
 
     return NextResponse.json({ success: true, id });

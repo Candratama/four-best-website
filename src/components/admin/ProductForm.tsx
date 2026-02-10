@@ -68,7 +68,7 @@ export default function ProductForm({ product, partners, mode }: ProductFormProp
       });
 
       if (!res.ok) {
-        const data = await res.json();
+        const data = await res.json() as { error?: string };
         throw new Error(data.error || "Failed to save product");
       }
 
@@ -114,34 +114,21 @@ export default function ProductForm({ product, partners, mode }: ProductFormProp
                   </SelectContent>
                 </Select>
               </div>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Name *</Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) => {
-                      const name = e.target.value;
-                      setFormData((prev) => ({
-                        ...prev,
-                        name,
-                        slug: mode === "create" ? generateSlug(name) : prev.slug,
-                      }));
-                    }}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="slug">Slug *</Label>
-                  <Input
-                    id="slug"
-                    value={formData.slug}
-                    onChange={(e) =>
-                      setFormData((prev) => ({ ...prev, slug: e.target.value }))
-                    }
-                    required
-                  />
-                </div>
+              <div className="space-y-2">
+                <Label htmlFor="name">Name *</Label>
+                <Input
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => {
+                    const name = e.target.value;
+                    setFormData((prev) => ({
+                      ...prev,
+                      name,
+                      slug: mode === "create" ? generateSlug(name) : prev.slug,
+                    }));
+                  }}
+                  required
+                />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
@@ -222,20 +209,6 @@ export default function ProductForm({ product, partners, mode }: ProductFormProp
                   checked={formData.is_active}
                   onCheckedChange={(checked) =>
                     setFormData((prev) => ({ ...prev, is_active: checked }))
-                  }
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="display_order">Display Order</Label>
-                <Input
-                  id="display_order"
-                  type="number"
-                  value={formData.display_order}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      display_order: parseInt(e.target.value) || 0,
-                    }))
                   }
                 />
               </div>

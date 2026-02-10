@@ -656,6 +656,11 @@ export async function getSocialLinks(options?: { activeOnly?: boolean }): Promis
   return result.results;
 }
 
+export async function getSocialLinkById(id: number): Promise<SocialLink | null> {
+  const db = await getDB();
+  return db.prepare("SELECT * FROM social_links WHERE id = ?").bind(id).first<SocialLink>();
+}
+
 export async function createSocialLink(
   data: Omit<SocialLink, "id" | "created_at" | "updated_at">
 ): Promise<number> {
@@ -800,6 +805,11 @@ export async function updateHeroSlide(id: number, data: Partial<HeroSlide>): Pro
 export async function deleteHeroSlide(id: number): Promise<void> {
   const db = await getDB();
   await db.prepare("DELETE FROM hero_slides WHERE id = ?").bind(id).run();
+}
+
+export async function getHeroSlideById(id: number): Promise<HeroSlide | null> {
+  const db = await getDB();
+  return db.prepare("SELECT * FROM hero_slides WHERE id = ?").bind(id).first<HeroSlide>();
 }
 
 // =============================================
@@ -1044,6 +1054,11 @@ export async function getPageSections(options?: {
   return result.results;
 }
 
+export async function getPageSectionById(id: number): Promise<PageSection | null> {
+  const db = await getDB();
+  return db.prepare("SELECT * FROM page_sections WHERE id = ?").bind(id).first<PageSection>();
+}
+
 export async function getPageSection(
   pageSlug: string,
   sectionKey: string
@@ -1143,4 +1158,44 @@ export async function updateCTASection(data: Partial<CTASection>): Promise<void>
     .prepare(`UPDATE cta_section SET ${fields}, updated_at = datetime('now') WHERE id = 1`)
     .bind(...values)
     .run();
+}
+
+export async function getMaxPartnerDisplayOrder(): Promise<number> {
+  const db = await getDB();
+  const result = await db
+    .prepare("SELECT MAX(display_order) as max_order FROM partners")
+    .first<{ max_order: number | null }>();
+  return result?.max_order || 0;
+}
+
+export async function getMaxProductDisplayOrder(): Promise<number> {
+  const db = await getDB();
+  const result = await db
+    .prepare("SELECT MAX(display_order) as max_order FROM products")
+    .first<{ max_order: number | null }>();
+  return result?.max_order || 0;
+}
+
+export async function swapPartnerOrder(id1: number, id2: number): Promise<void> {
+  const db = await getDB();
+  const partner1 = await getPartnerById(id1);
+  const partner2 = await getPartnerById(id2);
+  if (!partner1 || !partner2) return;
+  
+  await db.batch([
+    db.prepare("UPDATE partners SET display_order = ? WHERE id = ?").bind(partner2.display_order, id1),
+    db.prepare("UPDATE partners SET display_order = ? WHERE id = ?").bind(partner1.display_order, id2),
+  ]);
+}
+
+export async function swapProductOrder(id1: number, id2: number): Promise<void> {
+  const db = await getDB();
+  const product1 = await getProductById(id1);
+  const product2 = await getProductById(id2);
+  if (!product1 || !product2) return;
+  
+  await db.batch([
+    db.prepare("UPDATE products SET display_order = ? WHERE id = ?").bind(product2.display_order, id1),
+    db.prepare("UPDATE products SET display_order = ? WHERE id = ?").bind(product1.display_order, id2),
+  ]);
 }

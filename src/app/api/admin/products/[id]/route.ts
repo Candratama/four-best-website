@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getProductById, updateProduct, deleteProduct } from "@/lib/db";
+import { getProductById, updateProduct, deleteProduct, Product } from "@/lib/db";
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest, { params }: Props) {
 export async function PUT(request: NextRequest, { params }: Props) {
   try {
     const { id } = await params;
-    const body = await request.json();
+    const body = await request.json() as Partial<Product>;
     const product = await getProductById(parseInt(id));
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });

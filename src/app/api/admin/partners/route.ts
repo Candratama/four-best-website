@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getPartners, createPartner } from "@/lib/db";
+import { getPartners, createPartner, getMaxPartnerDisplayOrder } from "@/lib/db";
 
 export async function GET() {
   try {
@@ -16,10 +16,21 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
+    const body = await request.json() as {
+      name?: string;
+      slug?: string;
+      short_description?: string;
+      full_profile?: string;
+      logo?: string;
+      hero_image?: string;
+      contact_phone?: string;
+      contact_email?: string;
+      is_featured?: number;
+      is_active?: number;
+    };
 
     const { name, slug, short_description, full_profile, logo, hero_image,
-            contact_phone, contact_email, is_featured, is_active, display_order } = body;
+            contact_phone, contact_email, is_featured, is_active } = body;
 
     if (!name || !slug) {
       return NextResponse.json(
@@ -27,6 +38,9 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Auto-increment display_order
+    const maxOrder = await getMaxPartnerDisplayOrder();
 
     const id = await createPartner({
       name,
@@ -39,7 +53,7 @@ export async function POST(request: NextRequest) {
       contact_email: contact_email || null,
       is_featured: is_featured || 0,
       is_active: is_active ?? 1,
-      display_order: display_order || 0,
+      display_order: maxOrder + 1,
     });
 
     return NextResponse.json({ success: true, id });
