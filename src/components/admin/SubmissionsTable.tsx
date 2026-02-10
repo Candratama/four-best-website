@@ -22,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Eye, AlertTriangle, CheckCircle2, ExternalLink, ChevronLeft, ChevronRight } from "lucide-react";
+import { FileText, AlertTriangle, CheckCircle2, ExternalLink, ChevronLeft, ChevronRight, MessageCircle } from "lucide-react";
 import type { ContactSubmission } from "@/lib/db";
 
 interface SubmissionsTableProps {
@@ -217,14 +217,30 @@ export default function SubmissionsTable({
 
                   {/* Actions */}
                   <TableCell className="text-center px-6 py-4">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => onViewDetails(submission)}
-                    >
-                      <Eye className="h-4 w-4 mr-2" />
-                      View
-                    </Button>
+                    <div className="flex items-center justify-center gap-2">
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => onViewDetails(submission)}
+                        className="h-8 w-8"
+                      >
+                        <FileText className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        asChild
+                        className="h-8 w-8 text-green-600 hover:text-green-700 hover:bg-green-50"
+                      >
+                        <a
+                          href={getWhatsAppLink(submission.phone, submission.name)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <MessageCircle className="h-4 w-4" />
+                        </a>
+                      </Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))
