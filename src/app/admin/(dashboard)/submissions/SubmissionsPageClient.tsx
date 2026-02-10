@@ -33,6 +33,10 @@ export default function SubmissionsPageClient({
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [submissions, setSubmissions] = useState(initialSubmissions);
   const [pagination, setPagination] = useState(initialPagination);
+  const [filters, setFilters] = useState<{ search: string; status: string }>({
+    search: "",
+    status: "all",
+  });
   const [isPending, startTransition] = useTransition();
 
   const handleViewDetails = (submission: ContactSubmission) => {
@@ -40,9 +44,28 @@ export default function SubmissionsPageClient({
     setIsModalOpen(true);
   };
 
+  const handleFilterChange = (newFilters: { search: string; status: string }) => {
+    setFilters(newFilters);
+    startTransition(async () => {
+      const submissionFilters = {
+        search: newFilters.search || undefined,
+        status: newFilters.status !== "all" ? newFilters.status : undefined,
+      };
+      const result = await getSubmissions(submissionFilters, 1, pagination.limit);
+      if (result.success && result.submissions && result.pagination) {
+        setSubmissions(result.submissions);
+        setPagination(result.pagination);
+      }
+    });
+  };
+
   const handlePageChange = (page: number) => {
     startTransition(async () => {
-      const result = await getSubmissions(undefined, page, pagination.limit);
+      const submissionFilters = {
+        search: filters.search || undefined,
+        status: filters.status !== "all" ? filters.status : undefined,
+      };
+      const result = await getSubmissions(submissionFilters, page, pagination.limit);
       if (result.success && result.submissions && result.pagination) {
         setSubmissions(result.submissions);
         setPagination(result.pagination);
@@ -91,6 +114,7 @@ export default function SubmissionsPageClient({
         onExport={handleExport}
         pagination={pagination}
         onPageChange={handlePageChange}
+        onFilterChange={handleFilterChange}
       />
 
       {/* Detail Modal */}

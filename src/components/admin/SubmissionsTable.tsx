@@ -36,6 +36,7 @@ interface SubmissionsTableProps {
     totalPages: number;
   };
   onPageChange?: (page: number) => void;
+  onFilterChange?: (filters: { search: string; status: string }) => void;
 }
 
 const JAKARTA_TZ = "Asia/Jakarta";
@@ -46,6 +47,7 @@ export default function SubmissionsTable({
   onExport,
   pagination,
   onPageChange,
+  onFilterChange,
 }: SubmissionsTableProps) {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
@@ -54,6 +56,17 @@ export default function SubmissionsTable({
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Debounce search and trigger filter change
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (onFilterChange) {
+        onFilterChange({ search, status: statusFilter });
+      }
+    }, 500); // 500ms debounce for search
+
+    return () => clearTimeout(timer);
+  }, [search, statusFilter, onFilterChange]);
 
   // Note: Filtering is now handled on server-side
   // Display submissions as-is from server
