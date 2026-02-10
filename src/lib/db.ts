@@ -90,6 +90,26 @@ export interface ContactPage {
   updated_at: string;
 }
 
+export interface ContactSubmission {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  preferred_date: string | null;
+  preferred_time: string | null;
+  status: "new" | "in_progress" | "closed";
+  notes: string | null;
+  due_date: string | null;
+  is_responded: number;
+  closed_reason: string | null;
+  email_sent: number;
+  email_error: string | null;
+  source: string;
+  created_at: string;
+  updated_at: string;
+}
+
 // =============================================
 // SITE CONFIGURATION TYPES
 // =============================================
@@ -187,6 +207,7 @@ export interface TeamMember {
   social_instagram: string | null;
   social_linkedin: string | null;
   is_active: number;
+  is_director: number;
   display_order: number;
   created_at: string;
   updated_at: string;
@@ -979,6 +1000,18 @@ export async function deleteTeamMember(id: number): Promise<void> {
   await db.prepare("DELETE FROM team_members WHERE id = ?").bind(id).run();
 }
 
+export async function getDirector(): Promise<TeamMember | null> {
+  try {
+    const db = await getDB();
+    return await db
+      .prepare("SELECT * FROM team_members WHERE is_director = 1 AND is_active = 1 LIMIT 1")
+      .first<TeamMember>();
+  } catch (error) {
+    console.error("Error fetching director:", error);
+    return null;
+  }
+}
+
 // =============================================
 // AGENTS QUERIES
 // =============================================
@@ -1193,9 +1226,176 @@ export async function swapProductOrder(id1: number, id2: number): Promise<void> 
   const product1 = await getProductById(id1);
   const product2 = await getProductById(id2);
   if (!product1 || !product2) return;
-  
+
   await db.batch([
     db.prepare("UPDATE products SET display_order = ? WHERE id = ?").bind(product2.display_order, id1),
     db.prepare("UPDATE products SET display_order = ? WHERE id = ?").bind(product1.display_order, id2),
   ]);
+}
+
+// =============================================
+// CONTACT SUBMISSIONS QUERIES
+// =============================================
+
+export interface SubmissionFilters {
+  status?: string;
+  search?: string;
+  dateFrom?: string;
+  dateTo?: string;
+}
+
+export interface SubmissionStats {
+  thisWeek: number;
+  overdue: number;
+  newCount: number;
+  responseRate: number;
+}
+
+export async function createContactSubmission(
+  data: Omit<ContactSubmission, "id" | "created_at" | "updated_at">
+): Promise<number> {
+  const db = await getDB();
+  const result = await db
+    .prepare(
+      `INSERT INTO contact_submissions
+       (name, email, phone, message, preferred_date, preferred_time, status, notes, due_date,
+        is_responded, closed_reason, email_sent, email_error, source)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+    )
+    .bind(
+      data.name,
+      data.email,
+      data.phone,
+      data.message,
+      data.preferred_date,
+      data.preferred_time,
+      data.status,
+      data.notes,
+      data.due_date,
+      data.is_responded,
+      data.closed_reason,
+      data.email_sent,
+      data.email_error,
+      data.source
+    )
+    .run();
+  return result.meta.last_row_id as number;
+}
+
+export async function getContactSubmissions(
+  filters?: SubmissionFilters,
+  limit: number = 20,
+  offset: number = 0
+): Promise<ContactSubmission[]> {
+  const db = await getDB();
+  let query = "SELECT * FROM contact_submissions WHERE 1=1";
+  const bindings: (string | number)[] = [];
+
+  if (filters?.status && filters.status !== "all") {
+    query += " AND status = ?";
+    bindings.push(filters.status);
+  }
+
+  if (filters?.search) {
+    query += " AND (name LIKE ? OR email LIKE ? OR phone LIKE ?)";
+    const searchPattern = `%${filters.search}%`;
+    bindings.push(searchPattern, searchPattern, searchPattern);
+  }
+
+  if (filters?.dateFrom) {
+    query += " AND created_at >= ?";
+    bindings.push(filters.dateFrom);
+  }
+
+  if (filters?.dateTo) {
+    query += " AND created_at <= ?";
+    bindings.push(filters.dateTo);
+  }
+
+  query += " ORDER BY created_at DESC LIMIT ? OFFSET ?";
+  bindings.push(limit, offset);
+
+  const result = await db.prepare(query).bind(...bindings).all<ContactSubmission>();
+  return result.results;
+}
+
+export async function getContactSubmissionById(id: number): Promise<ContactSubmission | null> {
+  const db = await getDB();
+  return db
+    .prepare("SELECT * FROM contact_submissions WHERE id = ?")
+    .bind(id)
+    .first<ContactSubmission>();
+}
+
+export async function updateContactSubmission(
+  id: number,
+  data: Partial<ContactSubmission>
+): Promise<void> {
+  const db = await getDB();
+  const fields = Object.keys(data)
+    .filter((k) => !["id", "created_at"].includes(k))
+    .map((k) => `${k} = ?`)
+    .join(", ");
+  const values = Object.values(data).filter(
+    (_, i) => !["id", "created_at"].includes(Object.keys(data)[i])
+  );
+
+  await db
+    .prepare(`UPDATE contact_submissions SET ${fields}, updated_at = datetime('now') WHERE id = ?`)
+    .bind(...values, id)
+    .run();
+}
+
+export async function getSubmissionStats(): Promise<SubmissionStats> {
+  const db = await getDB();
+
+  // Get date 7 days ago
+  const weekAgo = new Date();
+  weekAgo.setDate(weekAgo.getDate() - 7);
+  const weekAgoStr = weekAgo.toISOString();
+
+  // This week submissions
+  const thisWeekResult = await db
+    .prepare("SELECT COUNT(*) as count FROM contact_submissions WHERE created_at >= ?")
+    .bind(weekAgoStr)
+    .first<{ count: number }>();
+
+  // Overdue submissions
+  const today = new Date().toISOString().split('T')[0];
+  const overdueResult = await db
+    .prepare(
+      "SELECT COUNT(*) as count FROM contact_submissions WHERE due_date < ? AND status != 'closed'"
+    )
+    .bind(today)
+    .first<{ count: number }>();
+
+  // New submissions
+  const newResult = await db
+    .prepare("SELECT COUNT(*) as count FROM contact_submissions WHERE status = 'new'")
+    .first<{ count: number }>();
+
+  // Response rate
+  const totalResult = await db
+    .prepare("SELECT COUNT(*) as count FROM contact_submissions")
+    .first<{ count: number }>();
+
+  const respondedResult = await db
+    .prepare("SELECT COUNT(*) as count FROM contact_submissions WHERE is_responded = 1")
+    .first<{ count: number }>();
+
+  const responseRate = totalResult?.count
+    ? Math.round((respondedResult?.count || 0) / totalResult.count * 100)
+    : 0;
+
+  return {
+    thisWeek: thisWeekResult?.count || 0,
+    overdue: overdueResult?.count || 0,
+    newCount: newResult?.count || 0,
+    responseRate,
+  };
+}
+
+export async function deleteContactSubmission(id: number): Promise<void> {
+  const db = await getDB();
+  await db.prepare("DELETE FROM contact_submissions WHERE id = ?").bind(id).run();
 }
