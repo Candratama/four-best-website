@@ -13,6 +13,7 @@ import {
   Building2,
   Share2,
   Palette,
+  Mail,
 } from "lucide-react";
 
 import {
@@ -56,6 +57,11 @@ const navGroups: NavGroup[] = [
         label: "Dashboard",
         icon: LayoutDashboard,
         href: "/admin",
+      },
+      {
+        label: "Submissions",
+        icon: Mail,
+        href: "/admin/submissions",
       },
     ],
   },

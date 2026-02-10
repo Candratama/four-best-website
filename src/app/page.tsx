@@ -4,13 +4,15 @@ import {
   ValueProposition,
   PartnersGrid,
   Team,
+  DirectorMessage,
 } from "@/components/sections";
-import { 
-  getTeamMembers, 
-  getCompanyInfo, 
-  getHeroSlides, 
-  getPageSectionContent, 
-  getValuePropositions 
+import {
+  getTeamMembers,
+  getCompanyInfo,
+  getHeroSlides,
+  getPageSectionContent,
+  getValuePropositions,
+  getDirector,
 } from "@/lib/db";
 import type { OverviewSectionContent, HeroSectionContent } from "@/lib/db";
 
@@ -20,6 +22,7 @@ export const dynamic = "force-dynamic";
 export default async function Home() {
   // Fetch all data from database
   const teamMembers = await getTeamMembers({ activeOnly: true });
+  const director = await getDirector();
   const companyInfo = await getCompanyInfo();
   const heroSlides = await getHeroSlides({ pageSlug: 'home', activeOnly: true });
   const heroContent = await getPageSectionContent<HeroSectionContent>('home', 'hero');
@@ -73,12 +76,22 @@ export default async function Home() {
       {/* Value Proposition Section */}
       <ValueProposition items={valueProps.length > 0 ? valueProps : undefined} />
 
-      {/* Team Section */}
-      {teamMembers.length > 0 && (
+      {/* Director Message Section */}
+      {director && director.bio && (
+        <DirectorMessage
+          name={director.name}
+          role={director.role || "Direktur Utama"}
+          image={director.image || "https://cdn.4best.id/team/placeholder.webp"}
+          message={director.bio}
+        />
+      )}
+
+      {/* Team Section - hide if only director is active */}
+      {teamMembers.filter(m => !m.is_director).length > 0 && (
         <Team
           subtitle="Tim Kami"
           title="Kenali Tim 4BEST"
-          members={teamMembers}
+          members={teamMembers.filter(m => !m.is_director)}
         />
       )}
     </>

@@ -25,6 +25,7 @@ export default function ContactPageClient({ contactData }: ContactPageClientProp
   const handleFormSubmit = async (data: {
     name: string;
     email: string;
+    phone: string;
     date: string;
     time: string;
     message: string;

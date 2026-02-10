@@ -1,4 +1,4 @@
-import { getAboutPage, getMissions, getStats, getTeamMembers } from "@/lib/db";
+import { getAboutPage, getMissions, getStats, getTeamMembers, getDirector } from "@/lib/db";
 import AboutPageClient from "./AboutPageClient";
 
 // Force dynamic rendering to fetch from database at runtime
@@ -6,11 +6,12 @@ export const dynamic = "force-dynamic";
 
 export default async function AboutPage() {
   // Fetch data from database
-  const [aboutData, missions, stats, teamMembers] = await Promise.all([
+  const [aboutData, missions, stats, teamMembers, director] = await Promise.all([
     getAboutPage(),
     getMissions({ activeOnly: true }),
     getStats({ activeOnly: true }),
     getTeamMembers({ activeOnly: true }),
+    getDirector(),
   ]);
 
   // Transform missions data for component
@@ -23,8 +24,10 @@ export default async function AboutPage() {
     suffix: s.suffix || undefined,
   }));
 
-  // Transform team members data for component
-  const teamData = teamMembers.map((t) => ({
+  // Transform team members data for component (exclude director)
+  const teamData = teamMembers
+    .filter((t) => !t.is_director)
+    .map((t) => ({
     id: t.id,
     name: t.name,
     role: t.role,
@@ -35,12 +38,23 @@ export default async function AboutPage() {
     social_linkedin: t.social_linkedin,
   }));
 
+  // Transform director data for component
+  const directorData = director
+    ? {
+        name: director.name,
+        role: director.role || "Direktur Utama",
+        image: director.image || "https://cdn.4best.id/team/placeholder.webp",
+        message: director.bio || "",
+      }
+    : null;
+
   return (
     <AboutPageClient
       aboutData={aboutData}
       missionItems={missionItems}
       statsData={statsData}
       teamData={teamData}
+      directorData={directorData}
     />
   );
 }

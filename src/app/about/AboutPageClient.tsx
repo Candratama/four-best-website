@@ -8,6 +8,7 @@ import {
   ValueProposition,
   Stats,
   Team,
+  DirectorMessage,
 } from "@/components/sections";
 import { AboutPage } from "@/lib/db";
 
@@ -32,11 +33,19 @@ interface MissionItem {
   text: string;
 }
 
+interface DirectorData {
+  name: string;
+  role: string;
+  image: string;
+  message: string;
+}
+
 interface AboutPageClientProps {
   aboutData: AboutPage | null;
   missionItems: MissionItem[];
   statsData: StatData[];
   teamData: TeamMemberData[];
+  directorData: DirectorData | null;
 }
 
 // Default fallback data
@@ -88,6 +97,7 @@ export default function AboutPageClient({
   missionItems,
   statsData,
   teamData,
+  directorData,
 }: AboutPageClientProps) {
   useWow();
 
@@ -139,7 +149,17 @@ export default function AboutPageClient({
       {/* Stats Section */}
       <Stats stats={stats} className="relative" />
 
-      {/* Team Section */}
+      {/* Director Message Section */}
+      {directorData && directorData.message && (
+        <DirectorMessage
+          name={directorData.name}
+          role={directorData.role}
+          image={directorData.image}
+          message={directorData.message}
+        />
+      )}
+
+      {/* Team Section - hide if only director is active */}
       {teamData.length > 0 && (
         <Team subtitle="Tim Kami" title="Kenali Tim 4BEST" members={teamData} />
       )}

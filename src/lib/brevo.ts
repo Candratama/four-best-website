@@ -33,6 +33,7 @@ const CONTACT_LIST_ID = 2; // ID list di Brevo (buat list dulu di dashboard Brev
 export interface ContactFormPayload {
   name: string;
   email: string;
+  phone: string;
   date: string;
   time: string;
   message: string;
@@ -69,6 +70,12 @@ export async function sendAdminNotification(
                 <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Email</td>
                 <td style="padding: 10px; border-bottom: 1px solid #eee;">
                   <a href="mailto:${data.email}">${data.email}</a>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Nomor Telepon/WhatsApp</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">
+                  <a href="https://wa.me/${data.phone.replace(/[\s\-\+]/g, '')}">${data.phone}</a>
                 </td>
               </tr>
               <tr>
@@ -118,6 +125,7 @@ export async function addToContactList(
       FIRSTNAME: data.name.split(" ")[0],
       LASTNAME: data.name.split(" ").slice(1).join(" ") || "",
       NAMA_LENGKAP: data.name,
+      SMS: data.phone,
       TANGGAL_KUNJUNGAN: data.date || "",
       WAKTU_KUNJUNGAN: data.time || "",
       PESAN: data.message,
@@ -162,6 +170,7 @@ export async function sendVisitorConfirmation(
             <p>Kami telah menerima permintaan kunjungan Anda dengan detail berikut:</p>
 
             <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0;">
+              <p><strong>Nomor Kontak:</strong> ${data.phone}</p>
               <p><strong>Tanggal:</strong> ${data.date || "Akan dikonfirmasi"}</p>
               <p><strong>Waktu:</strong> ${data.time || "Akan dikonfirmasi"}</p>
             </div>

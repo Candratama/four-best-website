@@ -76,7 +76,7 @@ const Example = () => (
           </div>
         </div>
         <p className="text-sm text-muted-foreground">
-          Choose which notifications you want to receive and how you'd like to
+          Choose which notifications you want to receive and how you&apos;d like to
           be notified.
         </p>
       </div>

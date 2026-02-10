@@ -31,6 +31,7 @@ export default function ContactForm({
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
+    phone: "",
     date: "",
     time: "08:00",
     message: "",
@@ -189,6 +190,34 @@ export default function ContactForm({
                     )}
                   </div>
 
+                  <div className="col-md-12">
+                    <input
+                      type="tel"
+                      name="phone"
+                      id="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className={`form-control ${
+                        errors.phone ? "is-invalid" : ""
+                      }`}
+                      placeholder="Nomor Telepon/WhatsApp"
+                      aria-label="Nomor Telepon/WhatsApp"
+                      aria-invalid={!!errors.phone}
+                      aria-describedby={
+                        errors.phone ? "phone-error" : undefined
+                      }
+                    />
+                    {errors.phone && (
+                      <div
+                        id="phone-error"
+                        className="invalid-feedback"
+                        style={{ display: "block" }}
+                      >
+                        {errors.phone}
+                      </div>
+                    )}
+                  </div>
+
                   <div className="col-md-6">
                     <DatePicker
                       date={selectedDate}
@@ -312,6 +341,23 @@ export default function ContactForm({
               )}
             </div>
 
+            <div className="col-md-12">
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className={`form-control ${errors.phone ? "is-invalid" : ""}`}
+                placeholder="Nomor Telepon/WhatsApp"
+                aria-label="Nomor Telepon/WhatsApp"
+              />
+              {errors.phone && (
+                <div className="invalid-feedback" style={{ display: "block" }}>
+                  {errors.phone}
+                </div>
+              )}
+            </div>
+
             <div className="col-md-6">
               <DatePicker
                 date={selectedDate}
@@ -431,6 +477,26 @@ export default function ContactForm({
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium mb-2">
+                    Phone/WhatsApp
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-(--primary-color)"
+                    placeholder="+62 812 3456 7890"
+                    aria-label="Your Phone/WhatsApp"
+                  />
+                  {errors.phone && (
+                    <div className="text-red-500 text-sm mt-1">
+                      {errors.phone}
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-2">
                     Preferred Date
                   </label>
                   <input
@@ -442,24 +508,25 @@ export default function ContactForm({
                     aria-label="Select Date"
                   />
                 </div>
-                <div>
-                  <label className="block text-sm font-medium mb-2">
-                    Preferred Time
-                  </label>
-                  <select
-                    name="time"
-                    value={formData.time}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-(--primary-color)"
-                    aria-label="Select Time"
-                  >
-                    {timeOptions.map((time) => (
-                      <option key={time} value={time}>
-                        {time}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-2">
+                  Preferred Time
+                </label>
+                <select
+                  name="time"
+                  value={formData.time}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-gray-300 rounded focus:outline-none focus:border-(--primary-color)"
+                  aria-label="Select Time"
+                >
+                  {timeOptions.map((time) => (
+                    <option key={time} value={time}>
+                      {time}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               <div>

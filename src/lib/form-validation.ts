@@ -6,6 +6,7 @@
 export interface ContactFormData {
   name: string;
   email: string;
+  phone: string;
   date: string;
   time: string;
   message: string;
@@ -14,6 +15,7 @@ export interface ContactFormData {
 export interface ContactFormErrors {
   name?: string;
   email?: string;
+  phone?: string;
   message?: string;
 }
 
@@ -33,6 +35,12 @@ export function validateContactForm(data: ContactFormData): ContactFormErrors {
     errors.email = "Email is required";
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
     errors.email = "Please enter a valid email address";
+  }
+
+  if (!data.phone || data.phone.trim() === "") {
+    errors.phone = "Nomor telepon/WhatsApp diperlukan";
+  } else if (!/^(\+62|62|0)[0-9]{9,12}$/.test(data.phone.replace(/[\s-]/g, ""))) {
+    errors.phone = "Nomor telepon tidak valid (contoh: 08123456789 atau +628123456789)";
   }
 
   if (!data.message || data.message.trim() === "") {

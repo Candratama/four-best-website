@@ -17,6 +17,7 @@ export default async function CTASectionPage() {
     secondary_button_text: "",
     secondary_button_href: "",
     background_image: "",
+    updated_at: new Date().toISOString(),
   };
 
   return (
