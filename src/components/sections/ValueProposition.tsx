@@ -94,7 +94,7 @@ export default function ValueProposition({ items }: ValuePropositionProps) {
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto">
           {values.map((item) => {
-            const IconComponent = iconMap[item.icon] || UserCheck;
+            const IconComponent = (item.icon && iconMap[item.icon]) || UserCheck;
             return (
               <Card
                 key={item.id}
