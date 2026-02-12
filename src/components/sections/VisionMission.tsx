@@ -1,11 +1,16 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Handshake, Users, Laptop, Heart } from "lucide-react";
+import {
+  Handshake, Users, Laptop, Heart, Target, Star, Shield, Lightbulb, TrendingUp,
+  Building2, Home, Award, Briefcase, Globe, Rocket, Zap, CheckCircle, ThumbsUp,
+  type LucideIcon,
+} from "lucide-react";
 import { fadeInUp } from "@/lib/animations";
 
 interface MissionItem {
   text: string;
+  icon?: string;
 }
 
 interface VisionMissionProps {
@@ -17,13 +22,33 @@ interface VisionMissionProps {
   missions?: MissionItem[];
 }
 
-// Default icons for missions
-const missionIcons = [
-  <Handshake key="handshake" className="h-5 w-5" strokeWidth={1.5} />,
-  <Users key="users" className="h-5 w-5" strokeWidth={1.5} />,
-  <Laptop key="laptop" className="h-5 w-5" strokeWidth={1.5} />,
-  <Heart key="heart" className="h-5 w-5" strokeWidth={1.5} />,
-];
+const iconMap: Record<string, LucideIcon> = {
+  handshake: Handshake,
+  users: Users,
+  laptop: Laptop,
+  heart: Heart,
+  target: Target,
+  star: Star,
+  shield: Shield,
+  lightbulb: Lightbulb,
+  "trending-up": TrendingUp,
+  building: Building2,
+  home: Home,
+  award: Award,
+  briefcase: Briefcase,
+  globe: Globe,
+  rocket: Rocket,
+  zap: Zap,
+  "check-circle": CheckCircle,
+  "thumbs-up": ThumbsUp,
+};
+
+const defaultIconCycle: LucideIcon[] = [Handshake, Users, Laptop, Heart];
+
+function getMissionIcon(icon: string | undefined, index: number): LucideIcon {
+  if (icon && iconMap[icon]) return iconMap[icon];
+  return defaultIconCycle[index % defaultIconCycle.length];
+}
 
 const defaultMissions: MissionItem[] = [
   {
@@ -148,7 +173,7 @@ export default function VisionMission({
                       color: "#fff",
                     }}
                   >
-                    {missionIcons[index % missionIcons.length]}
+                    {(() => { const Icon = getMissionIcon(mission.icon, index); return <Icon className="h-5 w-5" strokeWidth={1.5} />; })()}
                   </div>
                   <div style={{ flex: 1, minWidth: 0, overflow: "hidden" }}>
                     <p

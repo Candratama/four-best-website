@@ -1,5 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getCompanyInfo, updateCompanyInfo, CompanyInfo } from "@/lib/db";
+import { z } from "zod";
+import { getCompanyInfo, updateCompanyInfo } from "@/lib/db";
+
+const companyInfoSchema = z.object({
+  address: z.string().optional(),
+  phone: z.string().optional(),
+  whatsapp: z.string().optional(),
+  email: z.string().email("Format email tidak valid").optional().or(z.literal("")),
+  opening_hours: z.string().optional(),
+  map_url: z.string().optional(),
+});
 
 export async function GET() {
   try {
@@ -16,9 +26,16 @@ export async function GET() {
 
 export async function PUT(request: NextRequest) {
   try {
-    const body = await request.json() as Partial<CompanyInfo>;
+    const body = await request.json();
+    const result = companyInfoSchema.safeParse(body);
+    if (!result.success) {
+      return NextResponse.json(
+        { error: result.error.issues[0]?.message || "Data tidak valid" },
+        { status: 400 }
+      );
+    }
 
-    await updateCompanyInfo(body);
+    await updateCompanyInfo(result.data);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error updating company info:", error);

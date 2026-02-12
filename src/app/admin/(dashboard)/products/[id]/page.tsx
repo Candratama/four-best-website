@@ -19,7 +19,7 @@ export default async function EditProductPage({ params }: Props) {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Edit Product: {product.name}</h1>
+      <h1 className="text-3xl font-bold">Edit Perumahan: {product.name}</h1>
       <ProductForm product={product} partners={partners} mode="edit" />
     </div>
   );

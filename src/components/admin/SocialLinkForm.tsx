@@ -9,6 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Loader2, Instagram, Facebook, Twitter, Youtube, Linkedin, Share2 } from "lucide-react";
+import { toast } from "sonner";
 import type { SocialLink } from "@/lib/db";
 
 interface SocialLinkFormProps {
@@ -29,7 +30,6 @@ const platforms = [
 export default function SocialLinkForm({ socialLink, mode }: SocialLinkFormProps) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const [formData, setFormData] = useState({
     platform: socialLink?.platform || "instagram",
@@ -41,7 +41,6 @@ export default function SocialLinkForm({ socialLink, mode }: SocialLinkFormProps
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
     setIsLoading(true);
 
     try {
@@ -60,13 +59,14 @@ export default function SocialLinkForm({ socialLink, mode }: SocialLinkFormProps
 
       if (!res.ok) {
         const data = await res.json() as { error?: string };
-        throw new Error(data.error || "Failed to save social link");
+        throw new Error(data.error || "Gagal menyimpan media sosial");
       }
 
-      router.push("/admin/settings/social");
+      toast.success(mode === "create" ? "Media sosial berhasil dibuat!" : "Media sosial berhasil diperbarui!");
+      router.push("/admin/settings/company");
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+      toast.error(err instanceof Error ? err.message : "Terjadi kesalahan");
     } finally {
       setIsLoading(false);
     }
@@ -77,17 +77,11 @@ export default function SocialLinkForm({ socialLink, mode }: SocialLinkFormProps
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {error && (
-        <div className="p-3 text-sm text-red-600 bg-red-50 rounded-md">
-          {error}
-        </div>
-      )}
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Social Link Details</CardTitle>
+              <CardTitle>Detail Media Sosial</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
@@ -99,7 +93,7 @@ export default function SocialLinkForm({ socialLink, mode }: SocialLinkFormProps
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select platform" />
+                    <SelectValue placeholder="Pilih platform" />
                   </SelectTrigger>
                   <SelectContent>
                     {platforms.map((platform) => (
@@ -126,14 +120,14 @@ export default function SocialLinkForm({ socialLink, mode }: SocialLinkFormProps
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="icon">Custom Icon (optional)</Label>
+                <Label htmlFor="icon">Ikon Kustom (opsional)</Label>
                 <Input
                   id="icon"
                   value={formData.icon}
                   onChange={(e) =>
                     setFormData((prev) => ({ ...prev, icon: e.target.value }))
                   }
-                  placeholder="Leave empty to use default icon"
+                  placeholder="Kosongkan untuk menggunakan ikon default"
                 />
               </div>
             </CardContent>
@@ -153,7 +147,7 @@ export default function SocialLinkForm({ socialLink, mode }: SocialLinkFormProps
                 <div>
                   <span className="font-medium capitalize">{formData.platform}</span>
                   <p className="text-sm text-muted-foreground truncate max-w-[200px]">
-                    {formData.url || "No URL set"}
+                    {formData.url || "URL belum diisi"}
                   </p>
                 </div>
               </div>
@@ -162,11 +156,11 @@ export default function SocialLinkForm({ socialLink, mode }: SocialLinkFormProps
 
           <Card>
             <CardHeader>
-              <CardTitle>Settings</CardTitle>
+              <CardTitle>Pengaturan</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
-                <Label htmlFor="is_active">Active</Label>
+                <Label htmlFor="is_active">Aktif</Label>
                 <Switch
                   id="is_active"
                   checked={formData.is_active}
@@ -176,7 +170,7 @@ export default function SocialLinkForm({ socialLink, mode }: SocialLinkFormProps
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="display_order">Display Order</Label>
+                <Label htmlFor="display_order">Urutan Tampil</Label>
                 <Input
                   id="display_order"
                   type="number"
@@ -196,12 +190,12 @@ export default function SocialLinkForm({ socialLink, mode }: SocialLinkFormProps
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Saving...
+                Menyimpan...
               </>
             ) : mode === "create" ? (
-              "Create Social Link"
+              "Buat Media Sosial"
             ) : (
-              "Update Social Link"
+              "Perbarui Media Sosial"
             )}
           </Button>
         </div>

@@ -1,13 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, Palette } from "lucide-react";
-import Image from "next/image";
+import { toast } from "sonner";
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
+import { cn } from "@/lib/utils";
 import type { SiteSettings } from "@/lib/db";
 
 interface SiteSettingsFormProps {
@@ -16,9 +18,7 @@ interface SiteSettingsFormProps {
 
 export default function SiteSettingsForm({ settings }: SiteSettingsFormProps) {
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [isLoading, setIsLoading] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     name: settings?.name || "",
@@ -29,46 +29,37 @@ export default function SiteSettingsForm({ settings }: SiteSettingsFormProps) {
     secondary_color: settings?.secondary_color || "#0056d6",
   });
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
-    setIsLoading(true);
+  // Dirty-state tracking
+  const initialDataRef = useRef(formData);
+  const isDirty = useMemo(
+    () => JSON.stringify(formData) !== JSON.stringify(initialDataRef.current),
+    [formData],
+  );
 
+  const handleSubmit = async () => {
+    setIsLoading("save");
     try {
       const res = await fetch("/api/admin/site-settings", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
-
       if (!res.ok) {
-        const data = await res.json() as { error?: string };
-        throw new Error(data.error || "Failed to save settings");
+        const data = (await res.json()) as { error?: string };
+        throw new Error(data.error || "Gagal menyimpan pengaturan");
       }
-
-      setSuccess("Settings saved successfully!");
+      initialDataRef.current = formData;
+      toast.success("Pengaturan berhasil disimpan!");
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+      toast.error(err instanceof Error ? err.message : "Terjadi kesalahan");
     } finally {
-      setIsLoading(false);
+      setIsLoading(null);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      {error && (
-        <div className="p-3 text-sm text-red-600 bg-red-50 rounded-md">
-          {error}
-        </div>
-      )}
-      {success && (
-        <div className="p-3 text-sm text-green-600 bg-green-50 rounded-md">
-          {success}
-        </div>
-      )}
-
+    <div className="space-y-6">
       <Card>
         <CardHeader>
           <div className="flex items-center gap-2">
@@ -76,28 +67,13 @@ export default function SiteSettingsForm({ settings }: SiteSettingsFormProps) {
             <CardTitle>Branding</CardTitle>
           </div>
           <CardDescription>
-            Configure your site name, logo, and colors
+            Atur nama situs, logo, dan warna
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {formData.logo && (
-            <div className="space-y-2">
-              <Label>Current Logo</Label>
-              <div className="p-4 bg-muted rounded-lg inline-block">
-                <Image
-                  src={formData.logo}
-                  alt="Site Logo"
-                  width={150}
-                  height={50}
-                  className="h-12 w-auto"
-                />
-              </div>
-            </div>
-          )}
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="name">Site Name</Label>
+              <Label htmlFor="name">Nama Situs</Label>
               <Input
                 id="name"
                 value={formData.name}
@@ -107,7 +83,6 @@ export default function SiteSettingsForm({ settings }: SiteSettingsFormProps) {
                 placeholder="4best"
               />
             </div>
-
             <div className="space-y-2">
               <Label htmlFor="tagline">Tagline</Label>
               <Input
@@ -119,33 +94,48 @@ export default function SiteSettingsForm({ settings }: SiteSettingsFormProps) {
                 placeholder="Property Agent"
               />
             </div>
+          </div>
 
-            <div className="space-y-2">
-              <Label htmlFor="logo">Logo URL</Label>
-              <Input
-                id="logo"
+          {/* Logo & Favicon with ImageUploadField */}
+          <div className="flex flex-col md:flex-row gap-6">
+            <div className="flex-1">
+              <ImageUploadField
                 value={formData.logo}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, logo: e.target.value }))
+                onChange={(url) =>
+                  setFormData((prev) => ({ ...prev, logo: url }))
                 }
-                placeholder="https://cdn.4best.id/branding/logo.svg"
+                onRemove={() =>
+                  setFormData((prev) => ({ ...prev, logo: "" }))
+                }
+                category="branding"
+                slug="logo"
+                label="Logo"
+                aspectRatio="3/1"
+                maxSizeMB={2}
               />
             </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="favicon">Favicon URL</Label>
-              <Input
-                id="favicon"
+            <div className="w-32">
+              <ImageUploadField
                 value={formData.favicon}
-                onChange={(e) =>
-                  setFormData((prev) => ({ ...prev, favicon: e.target.value }))
+                onChange={(url) =>
+                  setFormData((prev) => ({ ...prev, favicon: url }))
                 }
-                placeholder="/favicon.svg"
+                onRemove={() =>
+                  setFormData((prev) => ({ ...prev, favicon: "" }))
+                }
+                category="branding"
+                slug="favicon"
+                label="Favicon"
+                aspectRatio="1/1"
+                maxSizeMB={1}
               />
             </div>
+          </div>
 
+          {/* Color pickers with native input */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
-              <Label htmlFor="primary_color">Primary Color</Label>
+              <Label htmlFor="primary_color">Warna Utama</Label>
               <div className="flex gap-2">
                 <Input
                   id="primary_color"
@@ -158,15 +148,21 @@ export default function SiteSettingsForm({ settings }: SiteSettingsFormProps) {
                   }
                   placeholder="#162d50"
                 />
-                <div
-                  className="w-10 h-10 rounded border shrink-0"
-                  style={{ backgroundColor: formData.primary_color }}
+                <input
+                  type="color"
+                  value={formData.primary_color}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      primary_color: e.target.value,
+                    }))
+                  }
+                  className="w-10 h-10 rounded border cursor-pointer shrink-0 p-0.5"
                 />
               </div>
             </div>
-
             <div className="space-y-2">
-              <Label htmlFor="secondary_color">Secondary Color</Label>
+              <Label htmlFor="secondary_color">Warna Sekunder</Label>
               <div className="flex gap-2">
                 <Input
                   id="secondary_color"
@@ -179,28 +175,49 @@ export default function SiteSettingsForm({ settings }: SiteSettingsFormProps) {
                   }
                   placeholder="#0056d6"
                 />
-                <div
-                  className="w-10 h-10 rounded border shrink-0"
-                  style={{ backgroundColor: formData.secondary_color }}
+                <input
+                  type="color"
+                  value={formData.secondary_color}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      secondary_color: e.target.value,
+                    }))
+                  }
+                  className="w-10 h-10 rounded border cursor-pointer shrink-0 p-0.5"
                 />
               </div>
             </div>
           </div>
-
-          <div className="flex justify-end pt-4">
-            <Button type="submit" disabled={isLoading}>
-              {isLoading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                "Save Changes"
-              )}
-            </Button>
-          </div>
         </CardContent>
       </Card>
-    </form>
+
+      {/* Fixed save button */}
+      <div
+        className={cn(
+          "fixed bottom-0 left-0 right-0 z-50 backdrop-blur-sm border-t p-3 md:left-[var(--sidebar-width,256px)] flex justify-center px-4",
+          isDirty ? "bg-amber-50/95 border-amber-200" : "bg-background/95",
+        )}
+      >
+        <Button
+          onClick={handleSubmit}
+          disabled={isLoading === "save" || !isDirty}
+          className="w-full max-w-md"
+          variant={isDirty ? "default" : "outline"}
+        >
+          {isLoading === "save" ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Menyimpan...
+            </>
+          ) : isDirty ? (
+            "Simpan Perubahan"
+          ) : (
+            "Tidak Ada Perubahan"
+          )}
+        </Button>
+      </div>
+      <div className="h-16" />
+    </div>
   );
 }

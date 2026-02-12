@@ -1,5 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getSocialLinkById, updateSocialLink, deleteSocialLink, SocialLink } from "@/lib/db";
+import { z } from "zod";
+import { getSocialLinkById, updateSocialLink, deleteSocialLink } from "@/lib/db";
+
+const updateSocialLinkSchema = z.object({
+  platform: z.string().min(1).optional(),
+  url: z.string().url("URL tidak valid").optional(),
+  icon: z.string().nullable().optional(),
+  is_active: z.number().int().min(0).max(1).optional(),
+  display_order: z.number().int().optional(),
+});
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -30,7 +39,14 @@ export async function GET(request: NextRequest, { params }: Props) {
 export async function PUT(request: NextRequest, { params }: Props) {
   try {
     const { id } = await params;
-    const body = await request.json() as Partial<SocialLink>;
+    const body = await request.json();
+    const result = updateSocialLinkSchema.safeParse(body);
+    if (!result.success) {
+      return NextResponse.json(
+        { error: result.error.issues[0]?.message || "Data tidak valid" },
+        { status: 400 }
+      );
+    }
 
     const socialLink = await getSocialLinkById(parseInt(id));
     if (!socialLink) {
@@ -40,7 +56,7 @@ export async function PUT(request: NextRequest, { params }: Props) {
       );
     }
 
-    await updateSocialLink(parseInt(id), body);
+    await updateSocialLink(parseInt(id), result.data);
     return NextResponse.json({ success: true });
   } catch (error) {
     console.error("Error updating social link:", error);

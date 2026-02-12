@@ -1,25 +1,10 @@
-import { notFound } from "next/navigation";
-import { getSocialLinkById } from "@/lib/db";
-import SocialLinkForm from "@/components/admin/SocialLinkForm";
-
-export const dynamic = "force-dynamic";
+import { redirect } from "next/navigation";
 
 interface Props {
   params: Promise<{ id: string }>;
 }
 
-export default async function EditSocialLinkPage({ params }: Props) {
+export default async function EditSocialLinkRedirect({ params }: Props) {
   const { id } = await params;
-  const socialLink = await getSocialLinkById(parseInt(id));
-
-  if (!socialLink) {
-    notFound();
-  }
-
-  return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Edit Social Link</h1>
-      <SocialLinkForm socialLink={socialLink} mode="edit" />
-    </div>
-  );
+  redirect(`/admin/settings/company/social/${id}`);
 }

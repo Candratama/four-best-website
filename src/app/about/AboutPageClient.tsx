@@ -10,7 +10,7 @@ import {
   Team,
   DirectorMessage,
 } from "@/components/sections";
-import { AboutPage } from "@/lib/db";
+import { AboutPage, HeroSectionContent } from "@/lib/db";
 
 interface TeamMemberData {
   id: number;
@@ -31,6 +31,7 @@ interface StatData {
 
 interface MissionItem {
   text: string;
+  icon?: string;
 }
 
 interface DirectorData {
@@ -46,6 +47,7 @@ interface AboutPageClientProps {
   statsData: StatData[];
   teamData: TeamMemberData[];
   directorData: DirectorData | null;
+  heroData?: HeroSectionContent;
 }
 
 // Default fallback data
@@ -98,6 +100,7 @@ export default function AboutPageClient({
   statsData,
   teamData,
   directorData,
+  heroData,
 }: AboutPageClientProps) {
   useWow();
 
@@ -111,10 +114,10 @@ export default function AboutPageClient({
       {/* Hero Section */}
       <Hero
         variant="parallax-about"
-        title={data.hero_title || defaultAboutData.hero_title}
-        subtitle={data.hero_subtitle || defaultAboutData.hero_subtitle}
+        title={heroData?.title || data.hero_title || defaultAboutData.hero_title}
+        subtitle={heroData?.subtitle || data.hero_subtitle || defaultAboutData.hero_subtitle}
         backgroundImage={
-          data.hero_background_image || defaultAboutData.hero_background_image
+          heroData?.background_image || data.hero_background_image || defaultAboutData.hero_background_image
         }
       />
 

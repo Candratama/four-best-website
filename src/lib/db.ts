@@ -57,6 +57,8 @@ export interface AboutPage {
   intro_description: string | null;
   intro_image_left: string | null;
   intro_image_right: string | null;
+  intro_image_3: string | null;
+  intro_image_4: string | null;
   // Vision Section
   vision_subtitle: string | null;
   vision_title: string | null;
@@ -175,7 +177,7 @@ export interface HeroSlide {
 
 export interface ValueProposition {
   id: number;
-  icon: string;
+  icon: string | null;
   title: string;
   description: string | null;
   grid_class: string | null;
@@ -1145,18 +1147,18 @@ export async function updatePageSection(id: number, data: Partial<PageSection>):
     .run();
 }
 
-export async function updatePageSectionContent<T>(
+export async function updatePageSectionContent(
   pageSlug: string,
   sectionKey: string,
-  content: T
+  content: string
 ): Promise<void> {
   const db = await getDB();
   await db
     .prepare(
-      `UPDATE page_sections SET content = ?, updated_at = datetime('now') 
+      `UPDATE page_sections SET content = ?, updated_at = datetime('now')
        WHERE page_slug = ? AND section_key = ?`
     )
-    .bind(JSON.stringify(content), pageSlug, sectionKey)
+    .bind(content, pageSlug, sectionKey)
     .run();
 }
 

@@ -1,4 +1,5 @@
-import { getAboutPage, getMissions, getStats, getTeamMembers, getDirector } from "@/lib/db";
+import { getAboutPage, getMissions, getStats, getTeamMembers, getDirector, getPageSectionContent } from "@/lib/db";
+import type { HeroSectionContent } from "@/lib/db";
 import AboutPageClient from "./AboutPageClient";
 
 // Force dynamic rendering to fetch from database at runtime
@@ -6,16 +7,17 @@ export const dynamic = "force-dynamic";
 
 export default async function AboutPage() {
   // Fetch data from database
-  const [aboutData, missions, stats, teamMembers, director] = await Promise.all([
+  const [aboutData, missions, stats, teamMembers, director, heroContent] = await Promise.all([
     getAboutPage(),
     getMissions({ activeOnly: true }),
     getStats({ activeOnly: true }),
     getTeamMembers({ activeOnly: true }),
     getDirector(),
+    getPageSectionContent<HeroSectionContent>("about", "hero"),
   ]);
 
   // Transform missions data for component
-  const missionItems = missions.map((m) => ({ text: m.text }));
+  const missionItems = missions.map((m) => ({ text: m.text, icon: m.icon || undefined }));
 
   // Transform stats data for component
   const statsData = stats.map((s) => ({
@@ -55,6 +57,7 @@ export default async function AboutPage() {
       statsData={statsData}
       teamData={teamData}
       directorData={directorData}
+      heroData={heroContent || undefined}
     />
   );
 }

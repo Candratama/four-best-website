@@ -1,23 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getPageSection, updatePageSectionContent, createPageSection } from "@/lib/db";
+import { z } from "zod";
 
-interface UpdateRequest {
-  page_slug: string;
-  section_key: string;
-  content: string;
-}
+const pageSectionSchema = z.object({
+  page_slug: z.string().min(1, "page_slug wajib diisi"),
+  section_key: z.string().min(1, "section_key wajib diisi"),
+  content: z.string().min(1, "content wajib diisi").refine(
+    (val) => {
+      try { JSON.parse(val); return true; } catch { return false; }
+    },
+    { message: "content harus berupa JSON yang valid" }
+  ),
+});
 
 export async function PUT(request: NextRequest) {
   try {
-    const body = await request.json() as UpdateRequest;
-    const { page_slug, section_key, content } = body;
+    const body = await request.json();
+    const result = pageSectionSchema.safeParse(body);
 
-    if (!page_slug || !section_key || !content) {
+    if (!result.success) {
       return NextResponse.json(
-        { error: "Missing required fields: page_slug, section_key, content" },
+        { error: result.error.issues[0]?.message || "Data tidak valid" },
         { status: 400 }
       );
     }
+
+    const { page_slug, section_key, content } = result.data;
 
     // Check if section exists
     const existingSection = await getPageSection(page_slug, section_key);

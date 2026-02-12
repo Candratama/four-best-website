@@ -11,9 +11,9 @@ export default async function SiteSettingsPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Site Settings</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Pengaturan Situs</h1>
           <p className="text-muted-foreground">
-            Manage your website branding and appearance
+            Kelola branding dan tampilan website Anda
           </p>
         </div>
       </div>

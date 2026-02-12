@@ -74,11 +74,11 @@ export default function SubmissionsTable({
   const getStatusBadge = (status: ContactSubmission["status"]) => {
     switch (status) {
       case "new":
-        return <Badge variant="default">New</Badge>;
+        return <Badge variant="default">Baru</Badge>;
       case "in_progress":
-        return <Badge className="bg-gray-200 text-gray-800 hover:bg-gray-200">In Progress</Badge>;
+        return <Badge className="bg-gray-200 text-gray-800 hover:bg-gray-200">Diproses</Badge>;
       case "closed":
-        return <Badge variant="outline">Closed</Badge>;
+        return <Badge variant="outline">Selesai</Badge>;
       default:
         return <Badge>{status}</Badge>;
     }
@@ -94,7 +94,7 @@ export default function SubmissionsTable({
       return (
         <div className="flex items-center gap-1 text-red-600">
           <AlertTriangle className="h-4 w-4" />
-          <span className="text-xs">Overdue</span>
+          <span className="text-xs">Terlambat</span>
         </div>
       );
     }
@@ -119,7 +119,7 @@ export default function SubmissionsTable({
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-1 gap-4">
           <Input
-            placeholder="Search by name, email, or phone..."
+            placeholder="Cari berdasarkan nama, email, atau telepon..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="max-w-md"
@@ -127,19 +127,19 @@ export default function SubmissionsTable({
           {mounted && (
             <Select value={statusFilter} onValueChange={setStatusFilter}>
               <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Filter by status" />
+                <SelectValue placeholder="Filter status" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All Status</SelectItem>
-                <SelectItem value="new">New</SelectItem>
-                <SelectItem value="in_progress">In Progress</SelectItem>
-                <SelectItem value="closed">Closed</SelectItem>
+                <SelectItem value="all">Semua Status</SelectItem>
+                <SelectItem value="new">Baru</SelectItem>
+                <SelectItem value="in_progress">Diproses</SelectItem>
+                <SelectItem value="closed">Selesai</SelectItem>
               </SelectContent>
             </Select>
           )}
         </div>
         <Button onClick={onExport} variant="outline">
-          Export to CSV
+          Ekspor CSV
         </Button>
       </div>
 
@@ -147,31 +147,31 @@ export default function SubmissionsTable({
       <div className="rounded-md border overflow-hidden">
         <Table>
           <TableHeader>
-            <TableRow className="bg-white hover:bg-white border-b-2">
-              <TableHead className="text-center font-semibold px-6 py-4 first:rounded-tl-md">Name</TableHead>
-              <TableHead className="text-center font-semibold px-6 py-4">Contact</TableHead>
-              <TableHead className="text-center font-semibold px-6 py-4">Submitted</TableHead>
-              <TableHead className="text-center font-semibold px-6 py-4">Status</TableHead>
-              <TableHead className="text-center font-semibold px-6 py-4">Due Date</TableHead>
-              <TableHead className="text-center font-semibold px-6 py-4">Email</TableHead>
-              <TableHead className="text-center font-semibold px-6 py-4 last:rounded-tr-md">Actions</TableHead>
+            <TableRow className="bg-white hover:bg-white" style={{ borderBottom: "1px solid #d1d5db" }}>
+              <TableHead className="text-center font-semibold pl-16 pr-8 py-4 first:rounded-tl-md">Nama</TableHead>
+              <TableHead className="text-center font-semibold px-8 py-4">Kontak</TableHead>
+              <TableHead className="text-center font-semibold px-8 py-4">Dikirim</TableHead>
+              <TableHead className="text-center font-semibold px-8 py-4">Status</TableHead>
+              <TableHead className="text-center font-semibold px-8 py-4">Tenggat</TableHead>
+              <TableHead className="text-center font-semibold px-8 py-4">Email</TableHead>
+              <TableHead className="text-center font-semibold px-8 py-4 last:rounded-tr-md">Aksi</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {submissions.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={7} className="text-center text-muted-foreground py-8">
-                  No submissions found
+                  Tidak ada data ditemukan
                 </TableCell>
               </TableRow>
             ) : (
               submissions.map((submission) => (
-                <TableRow key={submission.id} className="hover:bg-muted/30">
+                <TableRow key={submission.id} className="bg-white hover:bg-muted/30">
                   {/* Name */}
-                  <TableCell className="font-medium px-6 py-4">{submission.name}</TableCell>
+                  <TableCell className="font-medium pr-8 py-4" style={{ paddingLeft: "3.5rem" }}>{submission.name}</TableCell>
 
                   {/* Contact */}
-                  <TableCell className="px-6 py-4">
+                  <TableCell className="px-8 py-4">
                     <div className="flex flex-col gap-1">
                       <span className="text-sm">{submission.email}</span>
                       <span className="text-sm text-muted-foreground">{submission.phone}</span>
@@ -179,7 +179,7 @@ export default function SubmissionsTable({
                   </TableCell>
 
                   {/* Submitted */}
-                  <TableCell className="text-sm text-muted-foreground text-center px-6 py-4">
+                  <TableCell className="text-sm text-muted-foreground text-center px-8 py-4">
                     {formatDistanceToNow(toZonedTime(new Date(submission.created_at), JAKARTA_TZ), {
                       addSuffix: true,
                       locale: idLocale,
@@ -187,28 +187,28 @@ export default function SubmissionsTable({
                   </TableCell>
 
                   {/* Status */}
-                  <TableCell className="text-center px-6 py-4">{getStatusBadge(submission.status)}</TableCell>
+                  <TableCell className="text-center px-8 py-4">{getStatusBadge(submission.status)}</TableCell>
 
                   {/* Due Date */}
-                  <TableCell className="text-center px-6 py-4">
+                  <TableCell className="text-center px-8 py-4">
                     {getDueDateIndicator(submission.due_date, submission.status)}
                   </TableCell>
 
                   {/* Email Status */}
-                  <TableCell className="text-center px-6 py-4">
+                  <TableCell className="text-center px-8 py-4">
                     {submission.email_sent ? (
                       <Badge variant="outline" className="bg-green-50 text-green-700">
-                        Sent
+                        Terkirim
                       </Badge>
                     ) : (
                       <Badge variant="outline" className="bg-red-50 text-red-700">
-                        Failed
+                        Gagal
                       </Badge>
                     )}
                   </TableCell>
 
                   {/* Actions */}
-                  <TableCell className="text-center px-6 py-4">
+                  <TableCell className="text-center px-8 py-4">
                     <div className="flex items-center justify-center gap-2">
                       <Button
                         variant="ghost"
@@ -246,9 +246,9 @@ export default function SubmissionsTable({
         <div className="text-sm text-muted-foreground">
           {pagination && (
             <>
-              Showing {((pagination.page - 1) * pagination.limit) + 1} to{" "}
-              {Math.min(pagination.page * pagination.limit, pagination.total)} of{" "}
-              {pagination.total} submissions
+              Menampilkan {((pagination.page - 1) * pagination.limit) + 1} sampai{" "}
+              {Math.min(pagination.page * pagination.limit, pagination.total)} dari{" "}
+              {pagination.total} data
             </>
           )}
         </div>
@@ -262,7 +262,7 @@ export default function SubmissionsTable({
               disabled={pagination.page === 1}
             >
               <ChevronLeft className="h-4 w-4 mr-1" />
-              Previous
+              Sebelumnya
             </Button>
 
             <div className="flex items-center gap-1">
@@ -304,7 +304,7 @@ export default function SubmissionsTable({
               onClick={() => onPageChange(pagination.page + 1)}
               disabled={pagination.page === pagination.totalPages}
             >
-              Next
+              Selanjutnya
               <ChevronRight className="h-4 w-4 ml-1" />
             </Button>
           </div>

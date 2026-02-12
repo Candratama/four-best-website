@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2 } from "lucide-react";
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
 import type { Partner } from "@/lib/db";
 
 interface PartnerFormProps {
@@ -73,13 +74,13 @@ export default function PartnerForm({ partner, mode }: PartnerFormProps) {
 
       if (!res.ok) {
         const data = await res.json() as { error?: string };
-        throw new Error(data.error || "Failed to save partner");
+        throw new Error(data.error || "Gagal menyimpan partner");
       }
 
       router.push("/admin/partners");
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+      setError(err instanceof Error ? err.message : "Terjadi kesalahan");
     } finally {
       setIsLoading(false);
     }
@@ -98,11 +99,11 @@ export default function PartnerForm({ partner, mode }: PartnerFormProps) {
         <div className="lg:col-span-2 space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Basic Information</CardTitle>
+              <CardTitle>Informasi Dasar</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">Name *</Label>
+                <Label htmlFor="name">Nama *</Label>
                 <Input
                   id="name"
                   value={formData.name}
@@ -111,7 +112,7 @@ export default function PartnerForm({ partner, mode }: PartnerFormProps) {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="short_description">Short Description</Label>
+                <Label htmlFor="short_description">Deskripsi Singkat</Label>
                 <Textarea
                   id="short_description"
                   value={formData.short_description}
@@ -125,7 +126,7 @@ export default function PartnerForm({ partner, mode }: PartnerFormProps) {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="full_profile">Full Profile</Label>
+                <Label htmlFor="full_profile">Profil Lengkap</Label>
                 <Textarea
                   id="full_profile"
                   value={formData.full_profile}
@@ -143,12 +144,12 @@ export default function PartnerForm({ partner, mode }: PartnerFormProps) {
 
           <Card>
             <CardHeader>
-              <CardTitle>Contact Information</CardTitle>
+              <CardTitle>Informasi Kontak</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="contact_phone">Phone</Label>
+                  <Label htmlFor="contact_phone">Telepon</Label>
                   <Input
                     id="contact_phone"
                     value={formData.contact_phone}
@@ -183,44 +184,45 @@ export default function PartnerForm({ partner, mode }: PartnerFormProps) {
         <div className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Images</CardTitle>
+              <CardTitle>Gambar</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="logo">Logo URL</Label>
-                <Input
-                  id="logo"
-                  value={formData.logo}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, logo: e.target.value }))
-                  }
-                  placeholder="https://..."
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="hero_image">Hero Image URL</Label>
-                <Input
-                  id="hero_image"
-                  value={formData.hero_image}
-                  onChange={(e) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      hero_image: e.target.value,
-                    }))
-                  }
-                  placeholder="https://..."
-                />
-              </div>
+              <ImageUploadField
+                value={formData.logo}
+                onChange={(url) =>
+                  setFormData((prev) => ({ ...prev, logo: url }))
+                }
+                onRemove={() =>
+                  setFormData((prev) => ({ ...prev, logo: "" }))
+                }
+                category="partners"
+                slug={formData.slug || "logo"}
+                label="Logo"
+                aspectRatio="1/1"
+              />
+              <ImageUploadField
+                value={formData.hero_image}
+                onChange={(url) =>
+                  setFormData((prev) => ({ ...prev, hero_image: url }))
+                }
+                onRemove={() =>
+                  setFormData((prev) => ({ ...prev, hero_image: "" }))
+                }
+                category="partners"
+                slug={formData.slug || "hero"}
+                label="Gambar Hero"
+                aspectRatio="16/9"
+              />
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>Settings</CardTitle>
+              <CardTitle>Pengaturan</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
-                <Label htmlFor="is_active">Active</Label>
+                <Label htmlFor="is_active">Aktif</Label>
                 <Switch
                   id="is_active"
                   checked={formData.is_active}
@@ -230,7 +232,7 @@ export default function PartnerForm({ partner, mode }: PartnerFormProps) {
                 />
               </div>
               <div className="flex items-center justify-between">
-                <Label htmlFor="is_featured">Featured</Label>
+                <Label htmlFor="is_featured">Unggulan</Label>
                 <Switch
                   id="is_featured"
                   checked={formData.is_featured}
@@ -246,12 +248,12 @@ export default function PartnerForm({ partner, mode }: PartnerFormProps) {
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Saving...
+                Menyimpan...
               </>
             ) : mode === "create" ? (
-              "Create Partner"
+              "Buat Partner"
             ) : (
-              "Update Partner"
+              "Perbarui Partner"
             )}
           </Button>
         </div>

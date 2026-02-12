@@ -63,11 +63,11 @@ export default function SubmissionDetailModal({
       });
 
       if (result.success) {
-        toast.success("Submission updated successfully");
+        toast.success("Data berhasil diperbarui");
         onUpdate();
         onOpenChange(false);
       } else {
-        toast.error("Failed to update submission");
+        toast.error("Gagal memperbarui data");
       }
     });
   };
@@ -77,10 +77,10 @@ export default function SubmissionDetailModal({
     try {
       const result = await resendEmail(submission.id);
       if (result.success) {
-        toast.success("Email sent successfully");
+        toast.success("Email berhasil dikirim");
         onUpdate();
       } else {
-        toast.error(result.error || "Failed to send email");
+        toast.error(result.error || "Gagal mengirim email");
       }
     } finally {
       setIsResending(false);
@@ -89,7 +89,7 @@ export default function SubmissionDetailModal({
 
   const copyToClipboard = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
-    toast.success(`${label} copied to clipboard`);
+    toast.success(`${label} disalin ke clipboard`);
   };
 
   const getWhatsAppLink = () => {
@@ -104,20 +104,20 @@ export default function SubmissionDetailModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Submission Details</DialogTitle>
+          <DialogTitle>Detail Pesan</DialogTitle>
           <DialogDescription>
-            Submitted {format(new Date(submission.created_at), "PPpp")}
+            Dikirim pada {format(new Date(submission.created_at), "PPpp")}
           </DialogDescription>
         </DialogHeader>
 
         <div className="space-y-6">
           {/* Contact Information */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">Contact Information</h3>
+            <h3 className="text-lg font-semibold">Informasi Kontak</h3>
 
             <div className="grid gap-4">
               <div>
-                <Label className="text-muted-foreground">Name</Label>
+                <Label className="text-muted-foreground">Nama</Label>
                 <p className="text-lg font-medium">{submission.name}</p>
               </div>
 
@@ -136,13 +136,13 @@ export default function SubmissionDetailModal({
               </div>
 
               <div>
-                <Label className="text-muted-foreground">Phone / WhatsApp</Label>
+                <Label className="text-muted-foreground">Telepon / WhatsApp</Label>
                 <div className="flex items-center gap-2">
                   <p className="text-lg">{submission.phone}</p>
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => copyToClipboard(submission.phone, "Phone")}
+                    onClick={() => copyToClipboard(submission.phone, "Telepon")}
                   >
                     <Copy className="h-4 w-4" />
                   </Button>
@@ -157,7 +157,7 @@ export default function SubmissionDetailModal({
                       rel="noopener noreferrer"
                       className="flex items-center gap-2"
                     >
-                      Open WhatsApp
+                      Buka WhatsApp
                       <ExternalLink className="h-4 w-4" />
                     </a>
                   </Button>
@@ -166,16 +166,16 @@ export default function SubmissionDetailModal({
 
               {submission.preferred_date && (
                 <div>
-                  <Label className="text-muted-foreground">Preferred Visit</Label>
+                  <Label className="text-muted-foreground">Jadwal Kunjungan</Label>
                   <p className="text-lg">
                     {format(new Date(submission.preferred_date), "PPP")}
-                    {submission.preferred_time && ` at ${submission.preferred_time}`}
+                    {submission.preferred_time && ` pukul ${submission.preferred_time}`}
                   </p>
                 </div>
               )}
 
               <div>
-                <Label className="text-muted-foreground">Message</Label>
+                <Label className="text-muted-foreground">Pesan</Label>
                 <p className="whitespace-pre-wrap rounded-md border bg-muted p-3">
                   {submission.message}
                 </p>
@@ -185,7 +185,7 @@ export default function SubmissionDetailModal({
 
           {/* CRM Management */}
           <div className="space-y-4">
-            <h3 className="text-lg font-semibold">CRM Management</h3>
+            <h3 className="text-lg font-semibold">Manajemen CRM</h3>
 
             <div className="grid gap-4">
               <div>
@@ -195,15 +195,15 @@ export default function SubmissionDetailModal({
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="new">New</SelectItem>
-                    <SelectItem value="in_progress">In Progress</SelectItem>
-                    <SelectItem value="closed">Closed</SelectItem>
+                    <SelectItem value="new">Baru</SelectItem>
+                    <SelectItem value="in_progress">Diproses</SelectItem>
+                    <SelectItem value="closed">Selesai</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div>
-                <Label htmlFor="dueDate">Follow-up Due Date</Label>
+                <Label htmlFor="dueDate">Tenggat Tindak Lanjut</Label>
                 <Popover>
                   <PopoverTrigger asChild>
                     <Button
@@ -215,7 +215,7 @@ export default function SubmissionDetailModal({
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4" />
-                      {dueDate ? format(dueDate, "PPP") : "Pick a date"}
+                      {dueDate ? format(dueDate, "PPP") : "Pilih tanggal"}
                     </Button>
                   </PopoverTrigger>
                   <PopoverContent className="w-auto p-0" align="start">
@@ -230,43 +230,43 @@ export default function SubmissionDetailModal({
               </div>
 
               <div>
-                <Label htmlFor="notes">Notes</Label>
+                <Label htmlFor="notes">Catatan</Label>
                 <Textarea
                   id="notes"
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  placeholder="Add internal notes..."
+                  placeholder="Tambahkan catatan internal..."
                   rows={4}
                 />
               </div>
 
               {status === "closed" && (
                 <div>
-                  <Label htmlFor="closedReason">Closed Reason</Label>
+                  <Label htmlFor="closedReason">Alasan Ditutup</Label>
                   <Select value={closedReason} onValueChange={setClosedReason}>
                     <SelectTrigger id="closedReason">
-                      <SelectValue placeholder="Select reason" />
+                      <SelectValue placeholder="Pilih alasan" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="won">Won</SelectItem>
-                      <SelectItem value="lost">Lost</SelectItem>
-                      <SelectItem value="not_interested">Not Interested</SelectItem>
+                      <SelectItem value="won">Berhasil</SelectItem>
+                      <SelectItem value="lost">Gagal</SelectItem>
+                      <SelectItem value="not_interested">Tidak Berminat</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
               )}
 
               <div>
-                <Label className="text-muted-foreground">Email Delivery Status</Label>
+                <Label className="text-muted-foreground">Status Pengiriman Email</Label>
                 <div className="flex items-center gap-4">
                   {submission.email_sent ? (
                     <Badge variant="outline" className="bg-green-50 text-green-700">
-                      Email Sent Successfully
+                      Email Berhasil Terkirim
                     </Badge>
                   ) : (
                     <>
                       <Badge variant="outline" className="bg-red-50 text-red-700">
-                        Email Failed
+                        Email Gagal Terkirim
                       </Badge>
                       <Button
                         variant="outline"
@@ -279,7 +279,7 @@ export default function SubmissionDetailModal({
                         ) : (
                           <Mail className="mr-2 h-4 w-4" />
                         )}
-                        Retry Sending
+                        Kirim Ulang
                       </Button>
                     </>
                   )}
@@ -294,10 +294,10 @@ export default function SubmissionDetailModal({
           {/* Actions */}
           <div className="flex justify-end gap-4">
             <Button variant="outline" onClick={() => onOpenChange(false)}>
-              Cancel
+              Batal
             </Button>
             <Button onClick={handleSave} disabled={isPending}>
-              {isPending ? "Saving..." : "Save Changes"}
+              {isPending ? "Menyimpan..." : "Simpan Perubahan"}
             </Button>
           </div>
         </div>

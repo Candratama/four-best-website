@@ -29,7 +29,7 @@ export default function AboutContent({
                 <div className="row g-4">
                   <div className="col-lg-12">
                     <motion.div
-                      className="overflow-hidden"
+                      className="overflow-hidden relative aspect-[4/5]"
                       variants={zoomIn}
                       initial="hidden"
                       whileInView="visible"
@@ -38,7 +38,7 @@ export default function AboutContent({
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={images.left}
-                        className="w-100 rounded-2xl"
+                        className="absolute inset-0 w-full h-full object-cover rounded-2xl"
                         alt=""
                       />
                     </motion.div>
@@ -50,7 +50,7 @@ export default function AboutContent({
                   <div className="spacer-single sm-hide"></div>
                   <div className="col-lg-12">
                     <motion.div
-                      className="overflow-hidden rounded-2xl"
+                      className="overflow-hidden rounded-2xl relative aspect-[4/5]"
                       variants={zoomIn}
                       initial="hidden"
                       whileInView="visible"
@@ -60,7 +60,7 @@ export default function AboutContent({
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={images.right}
-                        className="w-100"
+                        className="absolute inset-0 w-full h-full object-cover"
                         alt=""
                       />
                     </motion.div>

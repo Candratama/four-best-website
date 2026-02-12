@@ -6,7 +6,7 @@ export default async function NewProductPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Add New Product</h1>
+      <h1 className="text-3xl font-bold">Tambah Perumahan Baru</h1>
       <ProductForm partners={partners} mode="create" />
     </div>
   );

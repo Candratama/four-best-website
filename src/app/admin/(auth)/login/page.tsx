@@ -33,14 +33,14 @@ function LoginForm() {
       const data = await res.json() as { error?: string };
 
       if (!res.ok) {
-        setError(data.error || "Login failed");
+        setError(data.error || "Login gagal");
         return;
       }
 
       router.push(redirect);
       router.refresh();
     } catch {
-      setError("An error occurred. Please try again.");
+      setError("Terjadi kesalahan. Silakan coba lagi.");
     } finally {
       setIsLoading(false);
     }
@@ -50,7 +50,7 @@ function LoginForm() {
     <Card className="w-full max-w-md">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl">4best Admin</CardTitle>
-        <CardDescription>Sign in to access the admin panel</CardDescription>
+        <CardDescription>Masuk ke panel admin</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -60,25 +60,25 @@ function LoginForm() {
             </div>
           )}
           <div className="space-y-2">
-            <Label htmlFor="username">Username</Label>
+            <Label htmlFor="username">Nama Pengguna</Label>
             <Input
               id="username"
               type="text"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username"
+              placeholder="Masukkan nama pengguna"
               required
               disabled={isLoading}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
+            <Label htmlFor="password">Kata Sandi</Label>
             <Input
               id="password"
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
+              placeholder="Masukkan kata sandi"
               required
               disabled={isLoading}
             />
@@ -87,10 +87,10 @@ function LoginForm() {
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Signing in...
+                Memproses...
               </>
             ) : (
-              "Sign In"
+              "Masuk"
             )}
           </Button>
         </form>
@@ -104,7 +104,7 @@ function LoginFormFallback() {
     <Card className="w-full max-w-md">
       <CardHeader className="text-center">
         <CardTitle className="text-2xl">4best Admin</CardTitle>
-        <CardDescription>Sign in to access the admin panel</CardDescription>
+        <CardDescription>Masuk ke panel admin</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex items-center justify-center py-8">

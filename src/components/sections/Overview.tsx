@@ -10,6 +10,7 @@ interface OverviewProps {
   description: string;
   ctaText?: string;
   ctaHref?: string;
+  showCta?: boolean;
   images?: string[];
 }
 
@@ -19,6 +20,7 @@ export default function Overview({
   description,
   ctaText = "Schedule Visit",
   ctaHref = "/contact",
+  showCta = true,
   images = [
     "https://cdn.4best.id/misc/s2.webp",
     "https://cdn.4best.id/misc/s3.webp",
@@ -60,21 +62,23 @@ export default function Overview({
               >
                 {description}
               </motion.p>
-              <motion.div
-                variants={fadeInUp}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true }}
-                transition={{ delay: 0.6 }}
-              >
-                <Link
-                  href={ctaHref}
-                  className="btn-main fx-slide"
-                  data-hover={ctaText}
+              {showCta && (
+                <motion.div
+                  variants={fadeInUp}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.6 }}
                 >
-                  <span>{ctaText}</span>
-                </Link>
-              </motion.div>
+                  <Link
+                    href={ctaHref}
+                    className="btn-main fx-slide"
+                    data-hover={ctaText}
+                  >
+                    <span>{ctaText}</span>
+                  </Link>
+                </motion.div>
+              )}
             </div>
           </div>
 
@@ -82,48 +86,68 @@ export default function Overview({
           <div className="col-lg-6">
             <div className="row g-4">
               <div className="col-6">
-                <motion.img
-                  src={images[0]}
-                  className="img-fluid mb-4 w-70 ms-30 rounded-2xl"
-                  alt="Overview 1"
+                <motion.div
+                  className="relative aspect-[4/5] overflow-hidden mb-4 w-70 ms-30 rounded-2xl"
                   variants={scaleIn}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
-                />
-                <motion.img
-                  src={images[1]}
-                  className="img-fluid rounded-2xl"
-                  alt="Overview 2"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={images[0]}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    alt="Overview 1"
+                  />
+                </motion.div>
+                <motion.div
+                  className="relative aspect-[4/5] overflow-hidden rounded-2xl"
                   variants={scaleIn}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
                   transition={{ delay: 0.15 }}
-                />
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={images[1]}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    alt="Overview 2"
+                  />
+                </motion.div>
               </div>
               <div className="col-6">
                 <div className="spacer-single sm-hide"></div>
-                <motion.img
-                  src={images[2]}
-                  className="img-fluid mb-4 rounded-2xl"
-                  alt="Overview 3"
+                <motion.div
+                  className="relative aspect-[4/5] overflow-hidden mb-4 rounded-2xl"
                   variants={scaleIn}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
                   transition={{ delay: 0.3 }}
-                />
-                <motion.img
-                  src={images[3]}
-                  className="img-fluid w-70 rounded-2xl"
-                  alt="Overview 4"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={images[2]}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    alt="Overview 3"
+                  />
+                </motion.div>
+                <motion.div
+                  className="relative aspect-[4/5] overflow-hidden w-70 rounded-2xl"
                   variants={scaleIn}
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
                   transition={{ delay: 0.45 }}
-                />
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={images[3]}
+                    className="absolute inset-0 w-full h-full object-cover"
+                    alt="Overview 4"
+                  />
+                </motion.div>
               </div>
             </div>
           </div>

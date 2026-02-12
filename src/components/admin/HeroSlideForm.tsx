@@ -9,7 +9,7 @@ import { Switch } from "@/components/ui/switch";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
-import Image from "next/image";
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
 import type { HeroSlide } from "@/lib/db";
 
 interface HeroSlideFormProps {
@@ -56,7 +56,7 @@ export default function HeroSlideForm({ heroSlide, mode }: HeroSlideFormProps) {
         throw new Error(data.error || "Failed to save hero slide");
       }
 
-      router.push("/admin/content/hero-slides");
+      router.push("/admin/content/beranda");
       router.refresh();
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
@@ -77,11 +77,11 @@ export default function HeroSlideForm({ heroSlide, mode }: HeroSlideFormProps) {
         <div className="lg:col-span-2 space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Slide Content</CardTitle>
+              <CardTitle>Konten Slide</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="page_slug">Page</Label>
+                <Label htmlFor="page_slug">Halaman</Label>
                 <Select
                   value={formData.page_slug}
                   onValueChange={(value) =>
@@ -89,30 +89,31 @@ export default function HeroSlideForm({ heroSlide, mode }: HeroSlideFormProps) {
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select page" />
+                    <SelectValue placeholder="Pilih halaman" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="home">Home</SelectItem>
-                    <SelectItem value="about">About</SelectItem>
-                    <SelectItem value="partners">Partners</SelectItem>
-                    <SelectItem value="contact">Contact</SelectItem>
+                    <SelectItem value="home">Beranda</SelectItem>
+                    <SelectItem value="about">Tentang</SelectItem>
+                    <SelectItem value="partners">Partner</SelectItem>
+                    <SelectItem value="contact">Kontak</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
+              <ImageUploadField
+                value={formData.image}
+                onChange={(url) =>
+                  setFormData((prev) => ({ ...prev, image: url }))
+                }
+                onRemove={() =>
+                  setFormData((prev) => ({ ...prev, image: "" }))
+                }
+                category="slider"
+                slug={formData.page_slug || "slide"}
+                label="Gambar Slide *"
+                aspectRatio="16/9"
+              />
               <div className="space-y-2">
-                <Label htmlFor="image">Image URL *</Label>
-                <Input
-                  id="image"
-                  value={formData.image}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, image: e.target.value }))
-                  }
-                  placeholder="https://..."
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="title">Title</Label>
+                <Label htmlFor="title">Judul</Label>
                 <Input
                   id="title"
                   value={formData.title}
@@ -122,7 +123,7 @@ export default function HeroSlideForm({ heroSlide, mode }: HeroSlideFormProps) {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="subtitle">Subtitle</Label>
+                <Label htmlFor="subtitle">Subjudul</Label>
                 <Input
                   id="subtitle"
                   value={formData.subtitle}
@@ -132,7 +133,7 @@ export default function HeroSlideForm({ heroSlide, mode }: HeroSlideFormProps) {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="overlay_opacity">Overlay Opacity (%)</Label>
+                <Label htmlFor="overlay_opacity">Opasitas Overlay (%)</Label>
                 <Input
                   id="overlay_opacity"
                   type="number"
@@ -155,15 +156,15 @@ export default function HeroSlideForm({ heroSlide, mode }: HeroSlideFormProps) {
           {formData.image && (
             <Card>
               <CardHeader>
-                <CardTitle>Preview</CardTitle>
+                <CardTitle>Preview Overlay</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="aspect-video relative rounded-lg overflow-hidden bg-muted">
-                  <Image
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={formData.image}
                     alt="Preview"
-                    fill
-                    className="object-cover"
+                    className="h-full w-full object-cover"
                   />
                   <div
                     className="absolute inset-0 bg-black"
@@ -176,11 +177,11 @@ export default function HeroSlideForm({ heroSlide, mode }: HeroSlideFormProps) {
 
           <Card>
             <CardHeader>
-              <CardTitle>Settings</CardTitle>
+              <CardTitle>Pengaturan</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
-                <Label htmlFor="is_active">Active</Label>
+                <Label htmlFor="is_active">Aktif</Label>
                 <Switch
                   id="is_active"
                   checked={formData.is_active}
@@ -190,7 +191,7 @@ export default function HeroSlideForm({ heroSlide, mode }: HeroSlideFormProps) {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="display_order">Display Order</Label>
+                <Label htmlFor="display_order">Urutan Tampil</Label>
                 <Input
                   id="display_order"
                   type="number"
@@ -210,12 +211,12 @@ export default function HeroSlideForm({ heroSlide, mode }: HeroSlideFormProps) {
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Saving...
+                Menyimpan...
               </>
             ) : mode === "create" ? (
-              "Create Slide"
+              "Buat Slide"
             ) : (
-              "Update Slide"
+              "Perbarui Slide"
             )}
           </Button>
         </div>

@@ -18,7 +18,7 @@ export default async function AdminDashboard() {
 
   const stats = [
     {
-      title: "Total Partners",
+      title: "Total Partner",
       value: partners.length,
       active: activePartners,
       icon: Users,
@@ -27,7 +27,7 @@ export default async function AdminDashboard() {
       bgColor: "bg-blue-100",
     },
     {
-      title: "Total Products",
+      title: "Total Perumahan",
       value: products.length,
       active: activeProducts,
       icon: Package,
@@ -36,7 +36,7 @@ export default async function AdminDashboard() {
       bgColor: "bg-green-100",
     },
     {
-      title: "Commercial",
+      title: "Komersial",
       value: commercialCount,
       icon: Building,
       href: "/admin/products?category=commercial",
@@ -60,20 +60,20 @@ export default async function AdminDashboard() {
         <div>
           <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
           <p className="text-muted-foreground">
-            Welcome back! Here&apos;s an overview of your content.
+            Selamat datang! Berikut ringkasan konten Anda.
           </p>
         </div>
         <div className="flex gap-3">
           <Button asChild variant="outline">
             <Link href="/admin/partners/new">
               <Plus className="mr-2 h-4 w-4" />
-              Add Partner
+              Tambah Partner
             </Link>
           </Button>
           <Button asChild>
             <Link href="/admin/products/new">
               <Plus className="mr-2 h-4 w-4" />
-              Add Product
+              Tambah Perumahan
             </Link>
           </Button>
         </div>
@@ -97,7 +97,7 @@ export default async function AdminDashboard() {
                 {stat.active !== undefined && (
                   <div className="flex items-center gap-1 mt-1 text-sm text-muted-foreground">
                     <TrendingUp className="h-3 w-3 text-green-500" />
-                    <span className="text-green-600">{stat.active} active</span>
+                    <span className="text-green-600">{stat.active} aktif</span>
                   </div>
                 )}
               </CardContent>
@@ -112,12 +112,12 @@ export default async function AdminDashboard() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle>Recent Partners</CardTitle>
-              <CardDescription>Latest partner entries</CardDescription>
+              <CardTitle>Partner Terbaru</CardTitle>
+              <CardDescription>Data partner terkini</CardDescription>
             </div>
             <Button variant="ghost" size="sm" asChild>
               <Link href="/admin/partners">
-                View all
+                Lihat semua
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -137,22 +137,22 @@ export default async function AdminDashboard() {
                     <div>
                       <p className="font-medium">{partner.name}</p>
                       <p className="text-sm text-muted-foreground">
-                        {partner.short_description?.slice(0, 40) || "No description"}
+                        {partner.short_description?.slice(0, 40) || "Belum ada deskripsi"}
                         {partner.short_description && partner.short_description.length > 40 ? "..." : ""}
                       </p>
                     </div>
                   </div>
                   <Badge variant={partner.is_active ? "default" : "secondary"}>
-                    {partner.is_active ? "Active" : "Inactive"}
+                    {partner.is_active ? "Aktif" : "Nonaktif"}
                   </Badge>
                 </Link>
               ))}
               {partners.length === 0 && (
                 <div className="text-center py-8 text-muted-foreground">
                   <Users className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                  <p>No partners yet</p>
+                  <p>Belum ada partner</p>
                   <Button variant="link" asChild className="mt-2">
-                    <Link href="/admin/partners/new">Add your first partner</Link>
+                    <Link href="/admin/partners/new">Tambah partner pertama</Link>
                   </Button>
                 </div>
               )}
@@ -164,12 +164,12 @@ export default async function AdminDashboard() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between">
             <div>
-              <CardTitle>Recent Products</CardTitle>
-              <CardDescription>Latest product entries</CardDescription>
+              <CardTitle>Perumahan Terbaru</CardTitle>
+              <CardDescription>Data perumahan terkini</CardDescription>
             </div>
             <Button variant="ghost" size="sm" asChild>
               <Link href="/admin/products">
-                View all
+                Lihat semua
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -189,21 +189,21 @@ export default async function AdminDashboard() {
                     <div>
                       <p className="font-medium">{product.name}</p>
                       <p className="text-sm text-muted-foreground capitalize">
-                        {product.category} • {product.location || "No location"}
+                        {product.category === "commercial" ? "Komersial" : "Subsidi"} • {product.location || "Belum ada lokasi"}
                       </p>
                     </div>
                   </div>
                   <Badge variant={product.is_active ? "default" : "secondary"}>
-                    {product.is_active ? "Active" : "Inactive"}
+                    {product.is_active ? "Aktif" : "Nonaktif"}
                   </Badge>
                 </Link>
               ))}
               {products.length === 0 && (
                 <div className="text-center py-8 text-muted-foreground">
                   <Package className="h-12 w-12 mx-auto mb-3 opacity-50" />
-                  <p>No products yet</p>
+                  <p>Belum ada perumahan</p>
                   <Button variant="link" asChild className="mt-2">
-                    <Link href="/admin/products/new">Add your first product</Link>
+                    <Link href="/admin/products/new">Tambah perumahan pertama</Link>
                   </Button>
                 </div>
               )}

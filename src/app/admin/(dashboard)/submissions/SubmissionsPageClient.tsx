@@ -58,7 +58,7 @@ export default function SubmissionsPageClient({
           setPagination(result.pagination);
         } else {
           console.error("Failed to apply filters:", result);
-          toast.error("Failed to apply filters");
+          toast.error("Gagal menerapkan filter");
         }
       } catch (error) {
         console.error("Error applying filters:", error);
@@ -80,7 +80,7 @@ export default function SubmissionsPageClient({
           setPagination(result.pagination);
         } else {
           console.error("Failed to load page:", result);
-          toast.error("Failed to load page");
+          toast.error("Gagal memuat halaman");
         }
       } catch (error) {
         console.error("Error changing page:", error);
@@ -103,13 +103,13 @@ export default function SubmissionsPageClient({
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        toast.success("CSV exported successfully");
+        toast.success("CSV berhasil diekspor");
       } else {
-        toast.error("Failed to export CSV");
+        toast.error("Gagal mengekspor CSV");
       }
     } catch (error) {
       console.error("Export error:", error);
-      toast.error("Failed to export CSV");
+      toast.error("Gagal mengekspor CSV");
     }
   };
 

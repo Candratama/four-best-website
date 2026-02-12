@@ -11,7 +11,6 @@ import {
   HelpCircle,
   ChevronRight,
   Building2,
-  Share2,
   Palette,
   Mail,
 } from "lucide-react";
@@ -51,7 +50,7 @@ type NavGroup = {
 
 const navGroups: NavGroup[] = [
   {
-    title: "Overview",
+    title: "Ringkasan",
     items: [
       {
         label: "Dashboard",
@@ -59,68 +58,58 @@ const navGroups: NavGroup[] = [
         href: "/admin",
       },
       {
-        label: "Submissions",
+        label: "Pesan Masuk",
         icon: Mail,
         href: "/admin/submissions",
       },
     ],
   },
   {
-    title: "Content Management",
+    title: "Manajemen Konten",
     items: [
       {
-        label: "Partners",
+        label: "Partner",
         icon: Users,
         href: "/admin/partners",
-        children: [
-          { label: "All Partners", href: "/admin/partners" },
-          { label: "Add New", href: "/admin/partners/new" },
-        ],
       },
       {
-        label: "Products",
+        label: "Perumahan",
         icon: Package,
         href: "/admin/products",
-        children: [
-          { label: "All Products", href: "/admin/products" },
-          { label: "Add New", href: "/admin/products/new" },
-        ],
       },
       {
-        label: "Content",
+        label: "Konten",
         icon: FileText,
         href: "/admin/content",
         children: [
-          { label: "Page Sections", href: "/admin/content/page-sections" },
-          { label: "CTA Section", href: "/admin/content/cta" },
+          { label: "Beranda", href: "/admin/content/beranda" },
+          { label: "Partner", href: "/admin/content/partner" },
+          { label: "Tentang", href: "/admin/content/tentang" },
+          { label: "Kontak", href: "/admin/content/kontak" },
+          { label: "Bagian CTA", href: "/admin/content/cta" },
         ],
       },
     ],
   },
   {
-    title: "Settings",
+    title: "Pengaturan",
     items: [
       {
-        label: "Site Settings",
+        label: "Pengaturan Situs",
         icon: Palette,
         href: "/admin/settings/site",
       },
       {
-        label: "Company Info",
+        label: "Info Perusahaan",
         icon: Building2,
         href: "/admin/settings/company",
-      },
-      {
-        label: "Social Links",
-        icon: Share2,
-        href: "/admin/settings/social",
       },
     ],
   },
 ];
 
 const footerItems: NavItem[] = [
-  { label: "Help Center", icon: HelpCircle, href: "/admin/help" },
+  { label: "Pusat Bantuan", icon: HelpCircle, href: "/admin/help" },
 ];
 
 export default function AdminSidebar() {

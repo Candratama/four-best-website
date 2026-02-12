@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Loader2 } from "lucide-react";
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
 import type { Product, Partner } from "@/lib/db";
 
 interface ProductFormProps {
@@ -69,13 +70,13 @@ export default function ProductForm({ product, partners, mode }: ProductFormProp
 
       if (!res.ok) {
         const data = await res.json() as { error?: string };
-        throw new Error(data.error || "Failed to save product");
+        throw new Error(data.error || "Gagal menyimpan perumahan");
       }
 
       router.push("/admin/products");
       router.refresh();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An error occurred");
+      setError(err instanceof Error ? err.message : "Terjadi kesalahan");
     } finally {
       setIsLoading(false);
     }
@@ -91,7 +92,7 @@ export default function ProductForm({ product, partners, mode }: ProductFormProp
         <div className="lg:col-span-2 space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Basic Information</CardTitle>
+              <CardTitle>Informasi Dasar</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
@@ -103,7 +104,7 @@ export default function ProductForm({ product, partners, mode }: ProductFormProp
                   }
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a partner" />
+                    <SelectValue placeholder="Pilih partner" />
                   </SelectTrigger>
                   <SelectContent>
                     {partners.map((partner) => (
@@ -115,7 +116,7 @@ export default function ProductForm({ product, partners, mode }: ProductFormProp
                 </Select>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="name">Name *</Label>
+                <Label htmlFor="name">Nama *</Label>
                 <Input
                   id="name"
                   value={formData.name}
@@ -132,7 +133,7 @@ export default function ProductForm({ product, partners, mode }: ProductFormProp
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <Label htmlFor="category">Category *</Label>
+                  <Label htmlFor="category">Kategori *</Label>
                   <Select
                     value={formData.category}
                     onValueChange={(value) =>
@@ -146,13 +147,13 @@ export default function ProductForm({ product, partners, mode }: ProductFormProp
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="commercial">Commercial</SelectItem>
+                      <SelectItem value="commercial">Komersial</SelectItem>
                       <SelectItem value="subsidi">Subsidi</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="location">Location</Label>
+                  <Label htmlFor="location">Lokasi</Label>
                   <Input
                     id="location"
                     value={formData.location}
@@ -163,7 +164,7 @@ export default function ProductForm({ product, partners, mode }: ProductFormProp
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="description">Deskripsi</Label>
                 <Textarea
                   id="description"
                   value={formData.description}
@@ -180,30 +181,32 @@ export default function ProductForm({ product, partners, mode }: ProductFormProp
         <div className="space-y-6">
           <Card>
             <CardHeader>
-              <CardTitle>Image</CardTitle>
+              <CardTitle>Gambar</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-2">
-                <Label htmlFor="main_image">Main Image URL</Label>
-                <Input
-                  id="main_image"
-                  value={formData.main_image}
-                  onChange={(e) =>
-                    setFormData((prev) => ({ ...prev, main_image: e.target.value }))
-                  }
-                  placeholder="https://..."
-                />
-              </div>
+              <ImageUploadField
+                value={formData.main_image}
+                onChange={(url) =>
+                  setFormData((prev) => ({ ...prev, main_image: url }))
+                }
+                onRemove={() =>
+                  setFormData((prev) => ({ ...prev, main_image: "" }))
+                }
+                category="properties"
+                slug={formData.slug || "product"}
+                label="Gambar Utama"
+                aspectRatio="4/3"
+              />
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>Settings</CardTitle>
+              <CardTitle>Pengaturan</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex items-center justify-between">
-                <Label htmlFor="is_active">Active</Label>
+                <Label htmlFor="is_active">Aktif</Label>
                 <Switch
                   id="is_active"
                   checked={formData.is_active}
@@ -219,12 +222,12 @@ export default function ProductForm({ product, partners, mode }: ProductFormProp
             {isLoading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Saving...
+                Menyimpan...
               </>
             ) : mode === "create" ? (
-              "Create Product"
+              "Buat Perumahan"
             ) : (
-              "Update Product"
+              "Perbarui Perumahan"
             )}
           </Button>
         </div>
